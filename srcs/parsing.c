@@ -1,39 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/03 15:48:22 by lorampon         ###   ########.fr       */
+/*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
+/*   Updated: 2022/11/03 16:34:29 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **argv, char **env)
+int	ft_create_env(char **env, t_list **env_list)
 {
-	char	*buff;
-	
+	int	i;
 
-	(void)ac;
-	(void)argv;
-	buff = malloc(sizeof(buff) * 2048);
-	if (!buff)
-		return (0);
-	while (1)
-	{
-		signal(SIGINT, &ft_ctrl_c);
-		signal(SIGQUIT, SIG_IGN);
-		buff = readline("mineshell : ");
-		if (!buff)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-		if (ft_parsing(buff, env))
-			break;
-	}
-	return (0);	
+	i = 0;
+	(void)env_list;
+	(void)env;
+	// while(env[i])
+	// {
+	// 	ft_lstadd_back(env_list, ft_lstnew(env[i]));
+
+	// 	i++;
+	// }
+	return(0);
+}
+
+int	ft_parsing(char *str, char **env)
+{
+	t_list **env_list;
+	
+	(void)str;
+	env_list = malloc(sizeof(t_list));
+	 if (!env_list)
+	 	return (1);
+	if (ft_create_env(env, env_list))
+		return (1);
+	return (0);
 }
