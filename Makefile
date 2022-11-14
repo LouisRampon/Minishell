@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:27:53 by lorampon          #+#    #+#              #
-#    Updated: 2022/11/03 15:46:36 by lorampon         ###   ########.fr        #
+#    Updated: 2022/11/14 11:11:48 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = minishell
 SRCS = \
 				main.c\
 				signal.c\
-				parsing.c
+				parsing.c \
+				check_synthax.c
 
 OBJS_NAME = $(SRCS:.c=.o)
 
