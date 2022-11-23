@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:27:53 by lorampon          #+#    #+#              #
-#    Updated: 2022/11/14 11:11:48 by lorampon         ###   ########.fr        #
+#    Updated: 2022/11/23 15:31:25 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,11 @@ SRCS = \
 				main.c\
 				signal.c\
 				parsing.c \
-				check_synthax.c
+				check_synthax.c \
+				replace_var.c \
+				parsing_help.c \
+				clean_function.c\
+				manage_fd.c
 
 OBJS_NAME = $(SRCS:.c=.o)
 
@@ -28,14 +32,14 @@ SRC_DIR = srcs/
 CC = gcc 
 RM = rm -rf
 READLINE_FLAGS = -lreadline -L ~/.brew/opt/readline/lib
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 
 all: rcs $(OBJ_DIR) $(NAME)
 	printf "Cest compile"
 
 $(NAME) : $(OBJS) includes/minishell.h Makefile libft/libft.a
 	make -C $(LIB_DIR)
-	$(CC) -o $(NAME) $(OBJS) -L $(LIB_DIR) -lft $(READLINE_FLAGS)
+	$(CC) -o $(NAME) $(OBJS) -L $(LIB_DIR) -lft $(READLINE_FLAGS) 
 	echo "##### minishell compiling finished! #####"
 
 rcs: 

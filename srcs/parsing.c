@@ -6,125 +6,71 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/14 14:12:25 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:47:15 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t	ft_strlen_alnum(char *str)
+char **ft_str_to_arg(char *str)
 {
+	char *temp;
+	int		i;
+
+	i = 0;
+	temp = malloc(sizeof(char) * ft_strlen_to_c(str, '|') + 1);
+	if (!temp)
+		return (0);
+	while(str[i] && str[i] != '|')
+	{
+		temp[i] = str[i];
+		i++;
+	}
+	return(ft_split(temp, ' '));
+}
+
+t_command ft_fill_cmd(char *str, size_t i)
+{
+	t_command cmd;
+	
+	(void)i;
+	cmd.fd_in = ft_fd_in(str);
+	cmd.fd_out = ft_fd_out(str);
+	str = ft_clean_str_out(str);
+	str = ft_clean_str_in(str);
+	//printf("str before arg = %s\n", str);
+	cmd.arg = ft_str_to_arg(str);
+	return (cmd);
+}
+
+t_command	*ft_parsing(char *str, char **env)
+{
+	t_command *cmd;
+	size_t nb_cmd;
 	size_t	i;
-
+	int j = 0;
+	
 	i = 0;
-	while (str[i])
-	{
-		if (!ft_isalnum(str[i]))
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-char	*find_var_name(char *str, int i)
-{
-	size_t k;
-	size_t j;
-	char *var_name;
-
-	j = 0;
-	k = ft_strlen_alnum(&str[i]);
-	var_name = malloc(sizeof(char) * ft_strlen_alnum(str) + 1);
-	if (!var_name)
-		return (0);
-	while (j < k)
-	{
-		var_name[j] = str[i];
-		j++;
-		i++;
-	}
-	return (var_name);
-}
-
-char	*replace_var_help(char *var_name, char **env)
-{
-	int	i;
-
-	i = 0;
-	while(env[i])
-	{
-		if (!ft_strncmp(env[i], var_name, ft_strlen(var_name)))
-			return (&env[i][ft_strlen(var_name) + 1]);
-		i++;
-	}
-	return (0);
-}
-
-char *ft_fill_final(char *str, char *var, int size, int i)
-{
-	int j;
-	int k;
-	char *final;
-
-	j = 0;
-	final = malloc(sizeof(final) * size + 1);
-	while (j < i)
-	{
-		final[j] = str[j];
-		j++;
-	}
-	k = 0;
-	while (var[k])
-	{
-		final[j] = var[k];
-		k++;
-		j++;
-	}
-	i++;
-	while (ft_isalnum(str[i]))
-	{
-		i++;
-	}
-	while (j < size)
-	{
-		final[j] = str[i];
-		i++;
-		j++;
-	}
-	return (final);
-}
-
-char	*replace_var(char *str, char **env)
-{
-	int	i;
-	int size;
-	char *final;
-
-	i = 0;
-	size = 0;
-	while (str[i])
-	{
-		if (str[i] == '$' && str[i - 1] != '\'')
-		{
-			size = (ft_strlen(str) - ft_strlen(find_var_name(str , i + 1))
-					+ ft_strlen(replace_var_help(find_var_name(str , i + 1), env)));
-		//	printf("str = %zu, var_name = %zu, var = %zu, tot = %u\n", ft_strlen(str), ft_strlen(find_var_name(str , i + 1)), ft_strlen(replace_var_help(find_var_name(str , i + 1), env)), size);
-			final = ft_fill_final(str, replace_var_help(find_var_name(str, i + 1), env),
-					size, i);
-			printf("%s\n", final);
-			str = final;
-			i = -1;
-		}	
-		i++;
-	}
-	return (0);
-}
-
-int	ft_parsing(char *str, char **env)
-{
 	if (check_syntax(str))
-		return (-2);
-	if (replace_var(str, env))
 		return (0);
-	return (0);
+	str = replace_var(str, env);
+	nb_cmd = nb_pipe(str) + 1;
+	cmd = malloc(sizeof(t_command) * nb_cmd + 1);
+	if (!cmd)
+		return (0);
+	while (i < nb_cmd)
+	{
+		cmd[i] = ft_fill_cmd(str, i);
+		str = ft_clean_str_to_pipe(str);
+		j = 0;
+		// while(cmd[i].arg[j])
+		// {
+		// 	printf("arg %zu = %s\n", i, cmd[i].arg[j]);
+		// 	j++;
+		// }
+		// printf("fd_in = %d\n", cmd[i].fd_in);
+		// printf("fd_out = %d\n", cmd[i].fd_out);
+		i++;
+	}
+	return (cmd);
 }
