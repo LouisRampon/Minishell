@@ -6,10 +6,19 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 12:27:53 by lorampon          #+#    #+#              #
-#    Updated: 2022/11/23 15:31:25 by lorampon         ###   ########.fr        #
+#    Updated: 2022/11/24 14:23:31 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Colors
+GREY=$'\x1b[30m
+RED=$'\x1b[31m
+GREEN=$'\x1b[32m
+YELLOW=$'\x1b[33m
+BLUE=$'\x1b[34m
+PURPLE=$'\x1b[35m
+CYAN=$'\x1b[36m
+WHITE=$'\x1b[37m
 NAME = minishell
 
 SRCS = \
@@ -35,12 +44,11 @@ READLINE_FLAGS = -lreadline -L ~/.brew/opt/readline/lib
 FLAGS = -Wall -Wextra -Werror
 
 all: rcs $(OBJ_DIR) $(NAME)
-	printf "Cest compile"
 
-$(NAME) : $(OBJS) includes/minishell.h Makefile libft/libft.a
-	make -C $(LIB_DIR)
-	$(CC) -o $(NAME) $(OBJS) -L $(LIB_DIR) -lft $(READLINE_FLAGS) 
-	echo "##### minishell compiling finished! #####"
+$(NAME) : $(OBJS)
+	$(CC) -o $(NAME) $(OBJS) -L $(LIB_DIR) -lft $(READLINE_FLAGS) -fsanitize=address
+	printf "\n"
+	
 
 rcs: 
 	make -C $(LIB_DIR)
@@ -48,19 +56,17 @@ rcs:
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	echo "##### Creating" [ $@ ] " #####"
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c includes/minishell.h Makefile libft/libft.a	
 	gcc $(FLAGS) -o $@ -c $<
+	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
+
 
 clean:
-	make -C $(LIB_DIR) clean --silent
+	make fclean -C $(LIB_DIR)
 	$(RM) $(OBJS) $(OBJ_DIR)
-	echo "##### Removed object files #####"
 
 fclean: clean
-	make -C $(LIB_DIR) fclean --silent
 	$(RM) $(NAME)
-	echo "##### Removed binary files #####"
 
 re : fclean all
 

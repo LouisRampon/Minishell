@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/23 16:46:39 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:27:28 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@
 
 typedef struct s_command
 {
-	int			fd_in;
-	char		**arg;
-	int			fd_out;
-}	t_command;
+	int					fd_in;
+	int					fd_out;
+	char				**cmd;
+	char 				*path;
+	struct s_command	*next;
+}t_command;
 
 void	ft_ctrl_c(int signal);
 int 	rl_replace_line(const char *text, int clear_undo);
 
-t_command	*ft_parsing(char *str, char **env);
+t_command	*ft_parsing(char *str, char **env, t_command *head);
 int		check_syntax(char *str);
 int		check_double_pipe(char *str);
 
@@ -42,9 +44,7 @@ size_t	ft_strlen_to_c(char *str, char c);
 size_t	ft_strlen_alnum(char *str);
 size_t nb_pipe(char *str);
 
-char *ft_clean_str_out(char *str);
-char *ft_clean_str_in(char *str);
-char *ft_clean_str_to_pipe(char *str);
+char *ft_clean_str(char *str);
 
 int	ft_fd_out(char *str);
 int	ft_fd_in(char *str);

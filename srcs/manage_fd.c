@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/23 16:15:21 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:24:39 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	ft_fd_in(char *str)
 			while (str[i] == ' ')
 				i++;
 			size = ft_strlen_alnum(&str[i]);
-			//printf("name : %s\n", &str[i]);
 			file_name = malloc(sizeof(char) * size + 1);
 			if (!file_name)
 				return (-1);

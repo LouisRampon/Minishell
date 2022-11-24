@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/06 10:43:32 by ltrinchi          #+#    #+#              #
-#    Updated: 2022/06/09 15:59:42 by lorampon         ###   ########.fr        #
+#    Updated: 2022/11/23 17:52:23 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,6 @@ all: $(NAME)
 $(NAME): $(OBJS) includes/libft.h Makefile
 	ar rc $(NAME) $(OBJS)
 	ranlib $(NAME)
-	echo "##### libft created #####"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p $(OBJ_DIR)
@@ -89,11 +88,9 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 	$(RM) $(OBJS) $(OBJ_DIR)
-	echo "##### Removed libft object files #####"
 
 fclean: clean
 	$(RM) $(NAME)
-	echo "##### Removed libft.a #####"
 
 re: fclean all
 
