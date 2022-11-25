@@ -85,7 +85,7 @@ int	ft_fd_out(char *str)
 			//printf("%s\n", file_name);
 			if (fd > 2)
 				close(fd);
-			fd = open(file_name, O_RDWR | O_CREAT, S_IRWXU);
+			fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 			free(file_name);
 			j = 0;
 		}

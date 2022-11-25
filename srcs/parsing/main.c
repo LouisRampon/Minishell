@@ -12,18 +12,43 @@
 
 #include "../../includes/minishell.h"
 
+int return_value = 0;
+
+void ft_reset_sh(t_shell *sh)
+{
+	sh->is_piped = 0;
+	sh->saved_previous_fd = 0;
+	//free list command and one use allocation for previous command line
+}
+
+
+int ft_init_sh(t_shell *sh, char **envp)
+{
+	sh->arena.data = malloc(1000000);
+	sh->is_piped = 0;
+	sh->cpy_envp = envp;
+	sh->saved_previous_fd = 0;
+	sh->saved_pwd = NULL;
+	sh->dup_std_fd[0] = dup(0);
+	sh->dup_std_fd[1] = dup(1);
+	ft_create_env_list(sh, envp);
+	ft_update_saved_pwd(sh, ft_env_get("PWD", sh->env));
+	return (1);
+}
+
 int	main(int ac, char **argv, char **env)
 {
-	char	*buff;
-	t_command	*cmd;
-	size_t	i = 0;
-	int j = 0;
+	char		*buff;
+	t_shell		sh;
+//	size_t	i = 0;
+//	int j = 0;
 	
 	(void)ac;
 	(void)argv;
 	buff = malloc(sizeof(buff) * 2048);
 	if (!buff)
 		return (0);
+	ft_init_sh(&sh, env);
 	while (1)
 	{
 		signal(SIGINT, &ft_ctrl_c);
@@ -34,8 +59,11 @@ int	main(int ac, char **argv, char **env)
 			printf("exit\n");
 			exit(0);
 		}
-		cmd = ft_parsing(buff, env, cmd);
-		
+		sh.cmd = ft_parsing(buff, env, sh.cmd);
+		printf("fd_in = %d\n fd_out = %d\n", sh.cmd->fd_in, sh.cmd->fd_out);
+		ft_exec_loop(&sh);
+		ft_reset_sh(&sh);
+
 		// while (cmd->next)
 		// {
 		// 	printf("command %zu:\n", i);

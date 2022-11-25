@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exec_built_in.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jereverd <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 18:16:17 by jereverd          #+#    #+#             */
+/*   Updated: 2022/11/25 18:16:19 by jereverd         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void ft_exec_built_in(t_shell *sh)
@@ -15,5 +27,5 @@ void ft_exec_built_in(t_shell *sh)
 	else if (ft_strcmp(sh->cmd->cmd[0], "env") == 0)
 		ft_env(sh);
 	else if (ft_strcmp(sh->cmd->cmd[0], "exit") == 0)
-		ft_exit(sh->cmd->cmd);
+		ft_exit();
 }

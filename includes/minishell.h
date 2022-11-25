@@ -55,6 +55,7 @@ typedef struct s_shell
 {
 	bool		is_piped;
 	int 		pipe[2];
+	int 		dup_std_fd[2];
 	int 		saved_previous_fd;
 	char 		*saved_pwd;
 	pid_t 		pid;
@@ -73,7 +74,7 @@ void	*ft_alloc(size_t size, t_arena *arena);
 
 //test built_in
 void	ft_echo(char **av);
-void	ft_exit(char **av);
+void	ft_exit(void);
 void	ft_env(t_shell *sh);
 void	ft_export(t_shell *sh, char *cmd);
 void	ft_unset(t_shell *sh);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jereverd <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/25 18:15:16 by jereverd          #+#    #+#             */
+/*   Updated: 2022/11/25 18:15:17 by jereverd         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	ft_print_export(t_shell *sh)
@@ -50,14 +62,14 @@ void	ft_export(t_shell *sh, char *cmd)
 	}
 
 	ptr = sh->cmd;
-//	while(ptr)
-//	{
+	while(ptr)
+	{
 //		if (ft_check_valid_identifier(ptr->cmd) == 1)
 //		{
-//
+		ft_add_env(cmd, sh);
 //		}
-//		ptr = ptr->next;
-//	}
+		ptr = ptr->next;
+	}
 //}
 
 
