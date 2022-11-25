@@ -6,11 +6,11 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/23 15:30:56 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:14:08 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include"../../includes/minishell.h"
 
 char	*find_var_name(char *str, int i)
 {

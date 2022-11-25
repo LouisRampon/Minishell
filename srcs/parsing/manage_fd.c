@@ -6,11 +6,11 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/24 15:24:39 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:13:39 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_fd_in(char *str)
 {

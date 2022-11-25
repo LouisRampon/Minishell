@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/06 10:43:32 by ltrinchi          #+#    #+#              #
-#    Updated: 2022/11/23 17:52:23 by lorampon         ###   ########.fr        #
+#    Updated: 2022/11/25 14:52:47 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ SRCS =	ft_atoi.c \
 		ft_lstnew.c \
 		ft_lstadd_front.c \
 		ft_lstsize.c \
-		ft_lstlast.c \
 		ft_lstadd_back.c \
 		ft_lstdelone.c \
 		ft_lstclear.c \
@@ -61,7 +60,9 @@ SRCS =	ft_atoi.c \
 		ft_lstmap.c \
 		ft_itob.c \
 		ft_btoi.c \
-		ft_revstr.c 
+		ft_revstr.c \
+		ft_strcmp.c \
+		ft_strcpy.c
 
 
 OBJS_NAME = $(SRCS:.c=.o)
@@ -80,7 +81,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS) includes/libft.h Makefile
 	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p $(OBJ_DIR)
@@ -100,6 +100,5 @@ git: fclean
 	git commit
 
 .PHONY: all bonus clean fclean re
-
 .SILENT:
 

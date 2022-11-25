@@ -6,11 +6,11 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:29:21 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/24 15:24:27 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/25 12:43:49 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char *ft_clean_str(char *str)
 {

@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 15:46:14 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/03 15:46:15 by lorampon         ###   ########.fr       */
+/*   Created: 2022/11/25 14:17:52 by lorampon          #+#    #+#             */
+/*   Updated: 2022/11/25 14:18:28 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-void	ft_ctrl_c(int signal)
+int    ft_strcmp(char *s1, char *s2)
 {
-	(void)signal;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+   int    i;
+
+   i = 0;
+   while (s1[i] || s2[i])
+   {
+      if (s1[i] == s2[i])
+         i++;
+      else
+         return (s1[i] - s2[i]);
+   }
+   return (0);
 }

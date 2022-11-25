@@ -6,11 +6,11 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/24 15:25:21 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:14:08 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include"../../includes/minishell.h"
 
 char **ft_str_to_arg(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/24 14:17:49 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:14:40 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	main(int ac, char **argv, char **env)
 {
@@ -35,29 +35,30 @@ int	main(int ac, char **argv, char **env)
 			exit(0);
 		}
 		cmd = ft_parsing(buff, env, cmd);
-		while (cmd->next)
-		{
-			printf("command %zu:\n", i);
-			while(cmd->cmd[j])
-			{
-				printf("word[%d] = %s\n", j, cmd->cmd[j]);
-				j++;
-			}
-			j = 0;
-			printf("fd_in = %d\n", cmd->fd_in);
-			printf("fd_out = %d\n", cmd->fd_out);
-			i++;
-			cmd = cmd->next;
-		}
-		printf("command %zu:\n", i);
-		while(cmd->cmd[j])
-		{
-			printf("word[%d] = %s\n", j, cmd->cmd[j]);
-			j++;
-		}
-		j = 0;
-		printf("fd_in = %d\n", cmd->fd_in);
-		printf("fd_out = %d\n", cmd->fd_out);
+		
+		// while (cmd->next)
+		// {
+		// 	printf("command %zu:\n", i);
+		// 	while(cmd->cmd[j])
+		// 	{
+		// 		printf("word[%d] = %s\n", j, cmd->cmd[j]);
+		// 		j++;
+		// 	}
+		// 	j = 0;
+		// 	printf("fd_in = %d\n", cmd->fd_in);
+		// 	printf("fd_out = %d\n", cmd->fd_out);
+		// 	i++;
+		// 	cmd = cmd->next;
+		// }
+		// printf("command %zu:\n", i);
+		// while(cmd->cmd[j])
+		// {
+		// 	printf("word[%d] = %s\n", j, cmd->cmd[j]);
+		// 	j++;
+		// }
+		// j = 0;
+		// printf("fd_in = %d\n", cmd->fd_in);
+		// printf("fd_out = %d\n", cmd->fd_out);
 	}
 	return (0);	
 }

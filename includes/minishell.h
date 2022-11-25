@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/24 15:27:28 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:13:09 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,23 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <signal.h>
-#include<sys/types.h>
-#include<sys/stat.h>
-#include <fcntl.h> 
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h> 
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
+
+extern int return_value;
+
+typedef struct s_arena
+{
+	size_t	size;
+	size_t	cursor;
+	void	*data;
+}t_arena;
 
 typedef struct s_command
 {
@@ -33,9 +44,82 @@ typedef struct s_command
 	struct s_command	*next;
 }t_command;
 
-void	ft_ctrl_c(int signal);
-int 	rl_replace_line(const char *text, int clear_undo);
+typedef struct s_env
+{
+	char			*name;
+	char 			*value;
+	struct s_env	*next;
+}t_env;
 
+typedef struct s_shell
+{
+	bool		is_piped;
+	int 		pipe[2];
+	int 		saved_previous_fd;
+	char 		*saved_pwd;
+	pid_t 		pid;
+	t_command	*cmd;
+	t_arena		arena;
+	t_env		*env;
+	char 		**cpy_envp;
+}t_shell;
+
+// arena storage pool
+int		ft_init_arena(t_arena *arena, size_t size);
+void	ft_free_arena(t_arena *arena);
+void	ft_reset_arena(t_arena *arena);
+void 	*ft_arena_alloc(t_arena *arena, size_t size);
+void	*ft_alloc(size_t size, t_arena *arena);
+
+//test built_in
+void	ft_echo(char **av);
+void	ft_exit(char **av);
+void	ft_env(t_shell *sh);
+void	ft_export(t_shell *sh, char *cmd);
+void	ft_unset(t_shell *sh);
+void	ft_cd(t_shell *sh);
+void 	ft_pwd(t_shell *sh);
+
+void	ft_update_saved_pwd(t_shell *sh, char *str);
+
+//check
+int		is_built_in(t_command *cmd);
+int 	ft_check_cmd(t_shell *sh);
+int		ft_check_validity(t_shell *sh);
+
+//exec
+int		ft_exec_loop(t_shell *sh);
+void	ft_exec_built_in(t_shell *sh);
+int 	ft_fork(t_shell *sh);
+int		ft_pipe(t_shell *sh);
+
+//env
+t_env	*ft_new_env(char *envp);
+void	ft_create_env_list(t_shell *sh, char **envp);
+char	*ft_env_get(char *str, t_env *env);
+char	*ft_env_get_name(char *str, t_env *env);
+t_env	*ft_env_get_struct(char *str, t_env *env);
+char	*ft_make_env_name(char *str);
+char	*ft_make_env_value(char *str);
+void	ft_add_env(char *str, t_shell *sh);
+void	push_back_env(t_env *ptr, char *str);
+void	ft_modify_env_value(t_env *ptr, char *str);
+void	ft_last_list_elem(t_env **ptr);
+void	ft_del_env(char *str, t_shell *sh);
+void	ft_del_list_elem(t_env *ptr);
+void	ft_free_env_list(t_env *env, int size);
+int 	ft_env_lst_size(t_env *lst);
+char	**ft_env_list_to_tab(t_shell *sh);
+int		ft_check_valid_identifier(char **cmd);
+
+//utils
+void	ft_free_tab(char **tab);
+void	ft_perror(char *str);
+void	ft_perror_exit(char *str, int code);
+void	ft_ctrl_c(int signal);
+//int 	rl_replace_line(const char *text, int clear_undo);
+
+//Louis
 t_command	*ft_parsing(char *str, char **env, t_command *head);
 int		check_syntax(char *str);
 int		check_double_pipe(char *str);
