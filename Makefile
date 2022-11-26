@@ -56,7 +56,7 @@ PATH_TO_SRCS_PARSING = ./srcs/parsing/
 PATH_TO_SRCS_ENV = ./srcs/env/
 PATH_TO_SRCS_EXEC = ./srcs/exec/
 PATH_TO_SRCS_UTILS = ./srcs/utils/
-PATH_TO_OBJS = ./objs/
+PATH_TO_OBJS = ./.objs/
 PATH_TO_HEADER = ./includes/
 PATH_TO_LIB_DIR = ./libft/
 PATH_TO_SRCS_BUILT_IN = ./srcs/built_in/
@@ -104,7 +104,7 @@ all: rcs $(PATH_TO_OBJS) $(NAME)
 	printf "$(GREEN) $(NAME) is up to date$(WHITE)\n" 
 
 $(PATH_TO_OBJS):
-	mkdir -p ./objs/
+	mkdir -p ./.objs/
 
 # $(LIBFT_A): rsc
 	

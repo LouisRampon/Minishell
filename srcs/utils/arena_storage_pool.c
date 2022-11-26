@@ -34,7 +34,8 @@ void	ft_reset_arena(t_arena *arena)
 	arena->cursor = 0;
 }
 
-void	*ft_arena_realloc(t_arena *arena, size_t size) {
+void	ft_arena_realloc(t_arena *arena)
+{
 	void *tmp;
 
 	tmp = arena->data;
@@ -48,7 +49,7 @@ void 	*ft_arena_alloc(t_arena *arena, size_t size)
 	size_t temp;
 
 	if (arena->cursor + size > arena->size)
-		ft_arena_realloc(arena, size);
+		ft_arena_realloc(arena);
 	temp = arena->cursor;
 	arena->cursor += size;
 	return (arena->data + temp);
