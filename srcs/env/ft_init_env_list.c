@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-t_env	*ft_new_env(char *envp)
+t_env	*ft_new_env(char *str)
 {
 	t_env *env;
 	char **temp;
@@ -21,10 +21,14 @@ t_env	*ft_new_env(char *envp)
 	if (env == NULL)
 		return (NULL);
 	env->next = NULL;
-	temp = ft_split(envp, '=');
+	temp = ft_split(str, '=');
 	env->name = temp[0];
-	env->value = temp[1];
+	if (ft_check_equal(str, '=') && !temp[1])
+		env->value = ft_calloc(1,1);
+	else
+		env->value = temp[1];
 	return (env);
+	//todo free and check error
 }
 
 int	ft_env_lst_size(t_env *lst)

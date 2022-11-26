@@ -22,7 +22,8 @@ char	*ft_make_env_value(char *str)
 	if (temp)
 	{
 		free(temp[0]);
-		free(temp[2]);
+		if (temp[1] != 0)
+			free(temp[2]);
 		value = temp[1];
 		free(temp);
 	}
@@ -40,8 +41,9 @@ char	*ft_make_env_name(char *str)
 	temp = ft_split(str, '=');
 	if (temp)
 	{
+		if (temp[1] != 0)
+			free(temp[2]);
 		free(temp[1]);
-		free(temp[2]);
 		name = temp[0];
 		free(temp);
 	}

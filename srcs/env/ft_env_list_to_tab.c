@@ -15,31 +15,27 @@
 char	**ft_env_list_to_tab(t_shell *sh)
 {
 	int 	i;
-	int 	var_count;
-	int 	name_lenght;
-	int 	value_lenght;
 	char	**tab;
 	t_env 	*cursor;
 
 	cursor = sh->env;
-	var_count = ft_env_lst_size(sh->env);
-	tab = ft_calloc(var_count + 1, sizeof (*tab));
-	if (!tab)
-		return (NULL);
+	tab = ft_calloc(ft_env_lst_size(sh->env) + 1, sizeof(void *));
 	i = 0;
-	while (cursor)
+	while (cursor && tab)
 	{
-		name_lenght = ft_strlen(cursor->name);
-		value_lenght = ft_strlen(cursor->value);
-		tab[i] = malloc(sizeof (char) * (name_lenght + value_lenght + 2));
-		if(!tab[i])
+		if (cursor->value)
 		{
-			ft_free_tab(tab);
-			ft_perror_exit("Malloc failure", 1);
+			tab[i] = ft_calloc(ft_strlen(cursor->name) + ft_strlen(cursor->value) + 2, 1);
+			if (!tab[i])
+				ft_free_tab(tab);
+			ft_strcpy(tab[i], cursor->name);
+			tab[i][ft_strlen(cursor->name)] = '=';
+			ft_strcpy(&tab[i][ft_strlen(cursor->name) + 1], cursor->value);
 		}
-		ft_strcpy(tab[i], cursor->name);
-		tab[i][name_lenght] = '=';
-		ft_strcpy(&tab[i][name_lenght + 1], cursor->value);
+		else
+			tab[i] = ft_strdup(cursor->name);
+		if (!tab[i])
+			ft_free_tab(tab);
 		i++;
 		cursor = cursor->next;
 	}

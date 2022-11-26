@@ -42,7 +42,7 @@ int	main(int ac, char **argv, char **env)
 	t_shell		sh;
 //	size_t	i = 0;
 //	int j = 0;
-	
+
 	(void)ac;
 	(void)argv;
 	buff = malloc(sizeof(buff) * 2048);
@@ -60,7 +60,6 @@ int	main(int ac, char **argv, char **env)
 			exit(0);
 		}
 		sh.cmd = ft_parsing(buff, env, sh.cmd);
-		printf("fd_in = %d\n fd_out = %d\n", sh.cmd->fd_in, sh.cmd->fd_out);
 		ft_exec_loop(&sh);
 		ft_reset_sh(&sh);
 

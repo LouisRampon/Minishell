@@ -76,10 +76,12 @@ void	*ft_alloc(size_t size, t_arena *arena);
 void	ft_echo(char **av);
 void	ft_exit(void);
 void	ft_env(t_shell *sh);
-void	ft_export(t_shell *sh, char *cmd);
 void	ft_unset(t_shell *sh);
 void	ft_cd(t_shell *sh);
 void 	ft_pwd(t_shell *sh);
+
+void	ft_export(t_shell *sh, char *cmd);
+int		ft_check_equal(char *str, char equal);
 
 void	ft_update_saved_pwd(t_shell *sh, char *str);
 
@@ -104,14 +106,13 @@ char	*ft_make_env_name(char *str);
 char	*ft_make_env_value(char *str);
 void	ft_add_env(char *str, t_shell *sh);
 void	push_back_env(t_env *ptr, char *str);
-void	ft_modify_env_value(t_env *ptr, char *str);
+void	ft_modify_env_value(t_env *ptr, char *str, int is_equal);
 void	ft_last_list_elem(t_env **ptr);
 void	ft_del_env(char *str, t_shell *sh);
 void	ft_del_list_elem(t_env *ptr);
 void	ft_free_env_list(t_env *env, int size);
 int 	ft_env_lst_size(t_env *lst);
 char	**ft_env_list_to_tab(t_shell *sh);
-int		ft_check_valid_identifier(char **cmd);
 
 //utils
 void	ft_free_tab(char **tab);

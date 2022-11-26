@@ -20,10 +20,14 @@ void	ft_last_list_elem(t_env **ptr)
 	}
 }
 
-void	ft_modify_env_value(t_env *ptr, char *new_value)
+void	ft_modify_env_value(t_env *ptr, char *new_value, int is_equal)
 {
 	free(ptr->value);
-	ptr->value = new_value;
+	if (is_equal && !new_value)
+		ptr->value = ft_calloc(1, 1);
+	else
+		ptr->value = new_value;
+	//todo check error
 }
 
 void	push_back_env(t_env *ptr, char *str)
@@ -48,10 +52,11 @@ void	ft_add_env(char *str, t_shell *sh)
 	name = ft_make_env_name(str);
 	value = ft_make_env_value(str);
 	ptr = ft_env_get_struct(name, sh->env);
-	if (ptr)
-	{
-		ft_modify_env_value(ptr, value);
-		free(name);
-	} else
+	if (!ptr)
 		push_back_env(sh->env, str);
+	else
+	{
+		ft_modify_env_value(ptr, value, ft_check_equal(str, '='));
+		free(name);
+	}
 }
