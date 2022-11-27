@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/25 15:14:08 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/27 14:01:57 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 char	*find_var_name(char *str, int i)
 {
-	size_t k;
+	size_t size;
 	size_t j;
 	char *var_name;
 
 	j = 0;
-	k = ft_strlen_alnum(&str[i]);
-	var_name = malloc(sizeof(char) * ft_strlen_alnum(str) + 1);
+	size = ft_strlen_alnum(&str[i]);
+	printf("size = %zu\n", size);
+	var_name = malloc(sizeof(char) * size + 1);
 	if (!var_name)
 		return (0);
-	while (j < k)
+	while (str[i] && j < size)
 	{
 		var_name[j] = str[i];
 		j++;
 		i++;
 	}
+	var_name[j] = '\0';
 	return (var_name);
 }
 
@@ -68,50 +70,75 @@ char *ft_fill_final(char *str, char *var, int size, int i)
 	}
 	i++;
 	while (ft_isalnum(str[i]))
-	{
 		i++;
-	}
-	while (j < size)
+	while (str[i] && j < size)
 	{
 		final[j] = str[i];
 		i++;
 		j++;
 	}
+	final[j] = '\0';
+	return (final);
+}
+
+char	*replace_var_final(char *str, char **env, int i)
+{
+	char *var_name;
+	char *var_value;
+	char *final;
+	int size;
+	
+	size = 0;
+	var_name = find_var_name(str, i + 1);
+	printf("var_name = %s\n", var_name);
+	var_value = replace_var_help(var_name, env);
+	printf("var_value = %s\n", var_value);
+	if (var_value)
+	{
+		size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) + 1;
+		final = ft_fill_final(str, var_value, size, i);
+	}
+	else
+	{
+		size = ft_strlen(str) - ft_strlen(var_name) + 1;
+		final = ft_fill_final(str, 0, size, i);
+	}
+	free(var_name);
 	return (final);
 }
 
 char	*replace_var(char *str, char **env)
 {
 	int	i;
-	int size;
-	char *var_name;
-	char *var_value;
-	char *final;
+	char *temp;
 
-	i = 0;
-	size = 0;
+	i = 1;
+	if (str[0] == '$')
+	{
+			temp = replace_var_final(str, env, 0);
+			free(str);
+			str = temp;
+	}
+	if (str[0] == '\'')
+	{
+		i = ft_pass_quote(str, i);
+		printf("ici i = %d\n", i);
+	}
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i - 1] != '\'' && str[i + 1])
+		if (str[i] == '\'' && str[i - 1] != '\\')
 		{
-			var_name = find_var_name(str, i + 1);
-			var_value = replace_var_help(var_name, env);
-			if (var_value)
-			{
-				size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value);
-				final = ft_fill_final(str, var_value, size, i);
-			}
-			else
-			{
-				size = ft_strlen(str) - ft_strlen(var_name);
-				final = ft_fill_final(str, 0, size, i);
-			}
-			str = final;
-			i = -1;
-			var_value = 0;
-			free(var_name);
+			i = ft_pass_quote(str, i);
+			printf("ici i = %d\n", i);
+		}
+		if (str[i] == '$' && str[i - 1] != '\\' && str[i + 1])
+		{
+			temp = replace_var_final(str, env, i);
+			free(str);
+			str = temp;
+			i = 0;
 		}
 		i++;
 	}
-	return (final);
+	return (str);
 }

@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/06 10:43:32 by ltrinchi          #+#    #+#              #
-#    Updated: 2022/11/25 14:52:47 by lorampon         ###   ########.fr        #
+#    Updated: 2022/11/27 16:41:15 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ SRCS =	ft_atoi.c \
 		ft_tolower.c \
 		ft_toupper.c \
 		ft_strdup.c \
-		ft_split.c \
 		ft_memmove.c \
 		ft_strtrim.c \
 		ft_calloc.c \
@@ -62,7 +61,8 @@ SRCS =	ft_atoi.c \
 		ft_btoi.c \
 		ft_revstr.c \
 		ft_strcmp.c \
-		ft_strcpy.c
+		ft_strcpy.c \
+		ft_split.c
 
 
 OBJS_NAME = $(SRCS:.c=.o)

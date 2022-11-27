@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/25 15:13:09 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/27 16:41:25 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,20 @@ int		check_double_pipe(char *str);
 size_t	ft_strlen_to_c(char *str, char c);
 size_t	ft_strlen_alnum(char *str);
 size_t nb_pipe(char *str);
+int	ft_pass_quote(const char *str, int i);
 
 char *ft_clean_str(char *str);
 
 int	ft_fd_out(char *str);
 int	ft_fd_in(char *str);
+int	ft_fd_out_help(char *str, int fd, int i);
 
 char	*find_var_name(char *str, int i);
 char	*replace_var_help(char *var_name, char **env);
 char 	*ft_fill_final(char *str, char *var, int size, int i);
 char	*replace_var(char *str, char **env);
+char	*replace_var_final(char *str, char **env, int i);
+char	**ft_split_immune_quote(const char *str, char c);
 
 //strlen pour fd et pour variable env
 // < in abc > out > in | truc bidule | alal

@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:30:08 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/25 15:14:08 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/27 16:11:44 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ size_t nb_pipe(char *str)
 	pipe = 0;
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '\"')
+			ft_pass_quote(str, i);
 		if (str[i] == '|')
 			pipe++;
 		i++;
@@ -50,4 +52,21 @@ size_t	ft_strlen_alnum(char *str)
 		i++;
 	}
 	return (i);
+}
+
+int	ft_pass_quote(const char *str, int i)
+{
+	char c;
+	int	temp;
+	
+	temp = i;
+	c = str[i];
+	i++;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (temp);
 }

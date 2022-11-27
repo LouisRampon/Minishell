@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 12:56:56 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/25 14:22:31 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/27 16:41:07 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int			ft_memcmp(const void *ptr1, const void *ptr2, size_t size);
 void		*ft_memcpy(void	*dest, const void *src, size_t size);
 void		*ft_memmove(void *dest, const void *src, size_t size);
 void		*ft_memchr(const void *mem, int c, size_t size);
-char		**ft_split(const char *str, char c);
 char		*ft_strchr(const char *str, int c);
 char		*ft_strdup(const char *src);
 char		*ft_strjoin(char const *s1, char const *s2);
@@ -82,5 +81,6 @@ int			ft_putnbr(int nbr);
 int			ft_putnbr_unsigned(unsigned int nb);
 int   		ft_strcmp(char *s1, char *s2);
 char  		*ft_strcpy(char *dest, char *src);
+char		**ft_split(const char *str, char c);
 
 #endif
