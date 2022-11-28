@@ -55,7 +55,7 @@ int ft_check_valid_indentifier(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == '=')
+		if (ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == '=' || str[i] == 32)
 			count++;
 		i++;
 	}

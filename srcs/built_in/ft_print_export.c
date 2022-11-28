@@ -42,11 +42,11 @@ void	ft_sort_env_list(t_env *sorted)
 	}
 }
 
-t_env	*copy_elem(t_env *lst)
+t_env	*copy_elem(t_env *lst, t_arena *arena)
 {
 	t_env	*new;
 
-	new = malloc(sizeof(t_env));
+	new = ft_alloc(sizeof(t_env), arena);
 	if (!new)
 		return (0);
 	new->next = 0;
@@ -55,18 +55,18 @@ t_env	*copy_elem(t_env *lst)
 	return (new);
 }
 
-t_env	*ft_cpy_env_list(t_env *lst)
+t_env	*ft_cpy_env_list(t_env *lst, t_arena *arena)
 {
 	t_env	*sorted;
 	t_env	*ptr;
 
 	if (!lst->next)
 		return (lst);
-	sorted = copy_elem(lst);
+	sorted = copy_elem(lst, arena);
 	ptr = sorted;
 	while (lst->next)
 	{
-		ptr->next = copy_elem(lst->next);
+		ptr->next = copy_elem(lst->next, arena);
 		ptr = ptr->next;
 		lst = lst->next;
 	}
@@ -79,7 +79,7 @@ void	ft_print_export(t_shell *sh)
 	t_env	*cpy;
 	t_env	*cursor;
 
-	cpy = ft_cpy_env_list(sh->env);
+	cpy = ft_cpy_env_list(sh->env, &sh->arena);
 	// todo error
 	ft_sort_env_list(cpy);
 	cursor = cpy;

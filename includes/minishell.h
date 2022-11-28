@@ -71,10 +71,13 @@ void	ft_free_arena(t_arena *arena);
 void	ft_reset_arena(t_arena *arena);
 void 	*ft_arena_alloc(t_arena *arena, size_t size);
 void	*ft_alloc(size_t size, t_arena *arena);
+char	*ft_strjoin_arena(char const *s1, char const *s2, t_arena *arena);
+char	**ft_split_arena(const char *str, char c, t_arena *arena);
+char	*ft_strdup_arena(const char *src, t_arena *arena);
 
 //test built_in
 void	ft_echo(char **av);
-void	ft_exit(void);
+void	ft_exit(t_shell *sh);
 void	ft_env(t_shell *sh);
 void	ft_unset(t_shell *sh);
 void	ft_cd(t_shell *sh);
@@ -88,11 +91,6 @@ int 	ft_check_valid_indentifier(char *str);
 int	 	ft_only_equal(char *str);
 int 	ft_check_char(char *str, char c);
 void	ft_print_export(t_shell *sh);
-t_env	*ft_cpy_env_list(t_env *lst);
-t_env	*copy_elem(t_env *lst);
-void	ft_sort_env_list(t_env *sorted);
-void	swap_elem(t_env *elem1, t_env *elem2);
-int		ft_check_char(char *str, char c);
 
 
 

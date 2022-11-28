@@ -55,31 +55,27 @@ int	ft_check_validity(t_shell *sh)
 
 	i = -1;
 	path_line = ft_env_get("PATH", sh->env);
-	path_tab = ft_split(path_line, ':');
+	path_tab = ft_split_arena(path_line, ':', &sh->arena);
 	while (path_tab && path_tab[++i])
 	{
-		temp = ft_strjoin(path_tab[i], "/");
-		path = ft_strjoin(temp, sh->cmd->cmd[0]);
-		free(temp);
+		temp = ft_strjoin_arena(path_tab[i], "/", &sh->arena);
+		path = ft_strjoin_arena(temp, sh->cmd->cmd[0], &sh->arena);
 		if (access(path, X_OK | F_OK) == 0)
 		{
-			sh->cmd->path = ft_strdup(path);
-			free(path);
-			ft_free_tab(path_tab);
+			sh->cmd->path = ft_strdup_arena(path, &sh->arena);
 			return (1);
 		}
-		free(path);
 	}
-	ft_free_tab(path_tab);
+	ft_free_arena(&sh->arena);
 	return (0);
 }
 
-void	check_access(char *str)
+void	check_access(char *str, t_arena *arena)
 {
 	if (access(str, X_OK | F_OK) != 0)
 	{
 		perror("minishell: ");
-		//free arena pool
+		ft_free_arena(arena);
 		exit(errno);
 	}
 }
@@ -89,9 +85,12 @@ char	*ft_concat_pwd_path(t_shell *sh, char *str)
 	char	*temp;
 	if (str[1])
 	{
-		temp = ft_strjoin(sh->saved_pwd, str);
+		temp = ft_strjoin_arena(sh->saved_pwd, str, &sh->arena);
 		if (!temp)
+		{
+			ft_free_arena(&sh->arena);
 			ft_perror_exit("Malloc failure", 1);
+		}
 		return (temp);
 	}
 	return (NULL);
@@ -101,12 +100,12 @@ int ft_check_absolute_path(t_shell *sh)
 {
 	if (sh->cmd->cmd[0][0] == '.')
 	{
-		check_access(ft_concat_pwd_path(sh, sh->cmd->cmd[0]));
+		check_access(ft_concat_pwd_path(sh, sh->cmd->cmd[0]), &sh->arena);
 		return (1);
 	}
 	else if (sh->cmd->cmd[0][0] == '/')
 	{
-		check_access(sh->cmd->cmd[0]);
+		check_access(sh->cmd->cmd[0], &sh->arena);
 		return (1);
 	}
 	return (0);

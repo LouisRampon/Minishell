@@ -51,9 +51,14 @@ int ft_fork(t_shell *sh)
 			if (is_built_in(sh->cmd) == 1)
 			{
 				ft_exec_built_in(sh);
+				exit(0);
 			}
+
 			if (execve(sh->cmd->path, sh->cmd->cmd, ft_env_list_to_tab(sh)) == -1)
+			{
+				ft_free_arena(&sh->arena);
 				ft_perror_exit("minishell: exec failed", 1);
+			}
 		}
 		else
 			ft_perror_exit("minishell: command not found", 1);

@@ -27,6 +27,7 @@ t_env	*ft_new_env(char *str)
 		env->value = ft_calloc(1,1);
 	else
 		env->value = temp[1];
+	free(temp);
 	return (env);
 	//todo free and check error
 }
@@ -44,7 +45,6 @@ int	ft_env_lst_size(t_env *lst)
 	return (size);
 }
 
-//to fix
 void	ft_free_env_list(t_env *env, int size)
 {
 	t_env *tmp;

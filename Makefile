@@ -44,7 +44,10 @@ SRCS_EXEC_WITHOUT_PATH =	ft_check_cmd.c				\
 SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_perror_exit.c			\
 							arena_storage_pool.c		\
-							ft_alloc.c					
+							ft_alloc.c					\
+							ft_strjoin_arena.c			\
+							ft_split_arena.c			\
+							ft_strdup_arena.c			\
 
 OBJS_SRCS_PARSING_WITHOUT_PATH = $(SRCS_PARSING_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_ENV_WITHOUT_PATH = $(SRCS_ENV_WITHOUT_PATH:.c=.o)
@@ -86,7 +89,7 @@ HEADER =	$(addprefix $(PATH_TO_HEADER), $(HEADER_WITHOUT_PATH))
 
 	######### COMMANDS ###########
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror #-fsanitize=address -g3
 RM = rm -rf
 READLINE_LIB = -lreadline
 READLINE_HOMEBREW_LIB = -L ~/.brew/opt/readline/lib
@@ -132,7 +135,7 @@ $(OBJS_SRCS_BUILT_IN):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_BUILT_IN)%.c Makefile 
 	
 $(NAME): $(OBJS) $(LIBFT_A)
 	printf "\n"
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(READLINE_LIB) $(READLINE_HOMEBREW_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(READLINE_LIB) $(READLINE_HOMEBREW_LIB) -framework CoreFoundation -o $(NAME)
 
 rcs: 
 	make -C $(PATH_TO_LIB_DIR)

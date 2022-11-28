@@ -18,13 +18,14 @@ void ft_reset_sh(t_shell *sh)
 {
 	sh->is_piped = 0;
 	sh->saved_previous_fd = 0;
+	ft_free_arena(&sh->arena);
 	//free list command and one use allocation for previous command line
 }
 
 
 int ft_init_sh(t_shell *sh, char **envp)
 {
-	sh->arena.data = malloc(1000000);
+	sh->arena.data = malloc(10000);
 	sh->is_piped = 0;
 	sh->cpy_envp = envp;
 	sh->saved_previous_fd = 0;
@@ -49,6 +50,7 @@ int	main(int ac, char **argv, char **env)
 	ft_init_sh(&sh, env);
 	while (1)
 	{
+		ft_init_arena(&sh.arena, 1000);
 		signal(SIGINT, &ft_ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		buff = readline("minishell : ");
@@ -60,8 +62,6 @@ int	main(int ac, char **argv, char **env)
 		sh.cmd = ft_parsing(buff, env, sh.cmd);
 		ft_exec_loop(&sh);
 		ft_reset_sh(&sh);
-		
 	}
-	
-	return (0);	
+	return (0);
 }
