@@ -56,7 +56,7 @@ int ft_fork(t_shell *sh)
 				ft_perror_exit("minishell: exec failed", 1);
 		}
 		else
-			ft_perror_exit("minishell: commant not found", 1);
+			ft_perror_exit("minishell: command not found", 1);
 	}
 	else if (sh->pid > 0)
 	{

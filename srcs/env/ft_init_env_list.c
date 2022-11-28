@@ -23,7 +23,7 @@ t_env	*ft_new_env(char *str)
 	env->next = NULL;
 	temp = ft_split(str, '=');
 	env->name = temp[0];
-	if (ft_check_equal(str, '=') && !temp[1])
+	if (ft_check_char(str, '=') && !temp[1])
 		env->value = ft_calloc(1,1);
 	else
 		env->value = temp[1];

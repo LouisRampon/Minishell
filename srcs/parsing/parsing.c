@@ -69,26 +69,26 @@ t_command	*ft_parsing(char *str, char **env, t_command *head)
 	i = 0;
 	while (temp->next)
 	{
-		printf("command %zu:\n", i);
+		//printf("command %zu:\n", i);
 		while(temp->cmd[j])
 		{
-			printf("word[%zu] = %s\n", j, temp->cmd[j]);
+			//printf("word[%zu] = %s\n", j, temp->cmd[j]);
 			j++;
 		}
 		j = 0;
-		printf("fd_in = %d\n", temp->fd_in);
-		printf("fd_out = %d\n", temp->fd_out);
+		//printf("fd_in = %d\n", temp->fd_in);
+		//printf("fd_out = %d\n", temp->fd_out);
 		i++;
 		temp = temp->next;
 	}
-	printf("command %zu:\n", i);
+	//printf("command %zu:\n", i);
 	while(temp->cmd[j])
 	{
-		printf("word[%zu] = %s\n", j, temp->cmd[j]);
+		//printf("word[%zu] = %s\n", j, temp->cmd[j]);
 		j++;
 	}
 	j = 0;
-	printf("fd_in = %d\n", temp->fd_in);
-	printf("fd_out = %d\n", temp->fd_out);
+//	printf("fd_in = %d\n", temp->fd_in);
+	//printf("fd_out = %d\n", temp->fd_out);
 	return (head);
 }

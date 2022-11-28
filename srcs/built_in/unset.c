@@ -19,7 +19,8 @@ void	ft_unset(t_shell *sh)
 	i = 1;
 	while (sh->cmd->cmd[i])
 	{
-		ft_del_env(sh->cmd->cmd[i], sh);
+		if (ft_parse_export_arg(sh->cmd->cmd) == 1)
+			ft_del_env(sh->cmd->cmd[i], sh);
 		i++;
 	}
 }

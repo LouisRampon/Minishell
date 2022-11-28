@@ -56,7 +56,7 @@ void	ft_add_env(char *str, t_shell *sh)
 		push_back_env(sh->env, str);
 	else
 	{
-		ft_modify_env_value(ptr, value, ft_check_equal(str, '='));
+		ft_modify_env_value(ptr, value, ft_check_char(str, '='));
 		free(name);
 	}
 }

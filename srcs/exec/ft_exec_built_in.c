@@ -21,7 +21,7 @@ void ft_exec_built_in(t_shell *sh)
 	else if (ft_strcmp(sh->cmd->cmd[0], "cd") == 0)
 		ft_cd(sh);
 	else if (ft_strcmp(sh->cmd->cmd[0], "export") == 0)
-		ft_export(sh, sh->cmd->cmd[1]);
+		ft_export(sh);
 	else if (ft_strcmp(sh->cmd->cmd[0], "pwd") == 0)
 		ft_pwd(sh);
 	else if (ft_strcmp(sh->cmd->cmd[0], "env") == 0)

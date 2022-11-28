@@ -78,12 +78,23 @@ void	ft_exit(void);
 void	ft_env(t_shell *sh);
 void	ft_unset(t_shell *sh);
 void	ft_cd(t_shell *sh);
+//pwd
 void 	ft_pwd(t_shell *sh);
-
-void	ft_export(t_shell *sh, char *cmd);
-int		ft_check_equal(char *str, char equal);
-
 void	ft_update_saved_pwd(t_shell *sh, char *str);
+//export
+void	ft_export(t_shell *sh);
+int 	ft_parse_export_arg(char **tab);
+int 	ft_check_valid_indentifier(char *str);
+int	 	ft_only_equal(char *str);
+int 	ft_check_char(char *str, char c);
+void	ft_print_export(t_shell *sh);
+t_env	*ft_cpy_env_list(t_env *lst);
+t_env	*copy_elem(t_env *lst);
+void	ft_sort_env_list(t_env *sorted);
+void	swap_elem(t_env *elem1, t_env *elem2);
+int		ft_check_char(char *str, char c);
+
+
 
 //check
 int		is_built_in(t_command *cmd);

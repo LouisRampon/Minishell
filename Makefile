@@ -33,6 +33,7 @@ SRCS_BUILT_IN_WITHOUT_PATH =	cd.c					\
 								echo.c					\
 								env.c					\
 								export.c				\
+								ft_print_export.c		\
 								unset.c					\
 								pwd.c					
 				

@@ -66,7 +66,6 @@ int	ft_check_validity(t_shell *sh)
 			sh->cmd->path = ft_strdup(path);
 			free(path);
 			ft_free_tab(path_tab);
-			//printf("%s\n", sh->cmd->path);
 			return (1);
 		}
 		free(path);
