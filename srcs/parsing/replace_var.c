@@ -122,14 +122,14 @@ char	*replace_var(char *str, char **env)
 	if (str[0] == '\'')
 	{
 		i = ft_pass_quote(str, i);
-		printf("ici i = %d\n", i);
+//		printf("ici i = %d\n", i);
 	}
 	while (str[i])
 	{
 		if (str[i] == '\'' && str[i - 1] != '\\')
 		{
 			i = ft_pass_quote(str, i);
-			printf("ici i = %d\n", i);
+//			printf("ici i = %d\n", i);
 		}
 		if (str[i] == '$' && str[i - 1] != '\\' && str[i + 1])
 		{

@@ -59,21 +59,22 @@ int	ft_check_validity(t_shell *sh)
 	{
 		temp = ft_strjoin_arena(path_tab[i], "/", &sh->arena);
 		path = ft_strjoin_arena(temp, sh->cmd->cmd[0], &sh->arena);
+//		printf("path = %s\n", path);
 		if (access(path, X_OK | F_OK) == 0)
 		{
 			sh->cmd->path = ft_strdup_arena(path, &sh->arena);
 			return (1);
 		}
 	}
-	ft_free_arena(&sh->arena);
 	return (0);
 }
 
 void	check_access(char *str, t_arena *arena)
 {
+	printf("str = %s\n", str);
 	if (access(str, X_OK | F_OK) != 0)
 	{
-		perror("minishell: ");
+		perror("minishell");
 		ft_free_arena(arena);
 		exit(errno);
 	}
@@ -81,9 +82,11 @@ void	check_access(char *str, t_arena *arena)
 
 char	*ft_concat_pwd_path(t_shell *sh, char *str)
 {
-	char	*temp;
+
 	if (str[1])
 	{
+		char	*temp;
+
 		temp = ft_strjoin_arena(sh->saved_pwd, str, &sh->arena);
 		if (!temp)
 		{
@@ -99,6 +102,10 @@ int ft_check_absolute_path(t_shell *sh)
 {
 	if (sh->cmd->cmd[0][0] == '.')
 	{
+//		char *temp;
+//		temp = ft_strtrim(sh->cmd->cmdam[0], ".");
+//		sh->cmd->cmd[0] = temp;
+//		printf("temp = %s\n", temp);
 		check_access(ft_concat_pwd_path(sh, sh->cmd->cmd[0]), &sh->arena);
 		return (1);
 	}
@@ -114,7 +121,7 @@ int	ft_check_cmd(t_shell *sh)
 {
 	if (is_built_in(sh->cmd) == 1)
 		return (1);
-	if (ft_check_absolute_path(sh) == 1)
+	if (ft_check_absolute_path(sh) == 1 && ft_check_validity(sh) == 1)
 		return (1);
 	return (ft_check_validity(sh));
 }

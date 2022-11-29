@@ -44,9 +44,6 @@ int	main(int ac, char **argv, char **env)
 
 	(void)ac;
 	(void)argv;
-	// buff = malloc(sizeof(buff) * 2048);
-	// if (!buff)
-	// 	return (0);
 	ft_init_sh(&sh, env);
 	while (1)
 	{
@@ -68,5 +65,4 @@ int	main(int ac, char **argv, char **env)
 		}
 		free(buff);
 	}
-	return (0);
 }

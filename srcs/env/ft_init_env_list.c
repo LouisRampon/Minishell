@@ -54,6 +54,8 @@ void	ft_free_env_list(t_env *env, int size)
 	while (i < size)
 	{
 		tmp = env->next;
+		free(env->value);
+		free(env->name);
 		free(env);
 		env = NULL;
 		env = tmp;
