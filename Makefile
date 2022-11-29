@@ -48,6 +48,7 @@ SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_strjoin_arena.c			\
 							ft_split_arena.c			\
 							ft_strdup_arena.c			\
+							ft_substr_arena.c
 
 OBJS_SRCS_PARSING_WITHOUT_PATH = $(SRCS_PARSING_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_ENV_WITHOUT_PATH = $(SRCS_ENV_WITHOUT_PATH:.c=.o)
@@ -89,7 +90,7 @@ HEADER =	$(addprefix $(PATH_TO_HEADER), $(HEADER_WITHOUT_PATH))
 
 	######### COMMANDS ###########
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
 RM = rm -rf
 READLINE_LIB = -lreadline
 READLINE_HOMEBREW_LIB = -L ~/.brew/opt/readline/lib

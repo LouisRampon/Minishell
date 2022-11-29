@@ -74,6 +74,7 @@ void	*ft_alloc(size_t size, t_arena *arena);
 char	*ft_strjoin_arena(char const *s1, char const *s2, t_arena *arena);
 char	**ft_split_arena(const char *str, char c, t_arena *arena);
 char	*ft_strdup_arena(const char *src, t_arena *arena);
+char	*ft_substr_arena(char const *s, unsigned int start, size_t len, t_arena *arena);
 
 //test built_in
 void	ft_echo(char **av);
