@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/27 17:31:46 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:04:27 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ t_command	*ft_parsing(char *str, char **env, t_command *head)
 		return (0);
 	str = replace_var(str, env);
 	nb_cmd = nb_pipe(str) + 1;
-	arg = ft_split(str, '|');
+	arg = ft_split_quote(str, '|');
+	printf("arg [1] = %s\n", arg[1]);
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], i);
@@ -69,26 +70,26 @@ t_command	*ft_parsing(char *str, char **env, t_command *head)
 	i = 0;
 	while (temp->next)
 	{
-		//printf("command %zu:\n", i);
+		printf("command %zu:\n", i);
 		while(temp->cmd[j])
 		{
-			//printf("word[%zu] = %s\n", j, temp->cmd[j]);
+			printf("word[%zu] = %s\n", j, temp->cmd[j]);
 			j++;
 		}
 		j = 0;
-		//printf("fd_in = %d\n", temp->fd_in);
-		//printf("fd_out = %d\n", temp->fd_out);
+		printf("fd_in = %d\n", temp->fd_in);
+		printf("fd_out = %d\n", temp->fd_out);
 		i++;
 		temp = temp->next;
 	}
-	//printf("command %zu:\n", i);
+	printf("command %zu:\n", i);
 	while(temp->cmd[j])
 	{
-		//printf("word[%zu] = %s\n", j, temp->cmd[j]);
+		printf("word[%zu] = %s\n", j, temp->cmd[j]);
 		j++;
 	}
 	j = 0;
-//	printf("fd_in = %d\n", temp->fd_in);
-	//printf("fd_out = %d\n", temp->fd_out);
+	printf("fd_in = %d\n", temp->fd_in);
+	printf("fd_out = %d\n", temp->fd_out);
 	return (head);
 }
