@@ -25,5 +25,6 @@ void	ft_update_saved_pwd(t_shell *sh, char *str)
 
 void	ft_pwd(t_shell *sh)
 {
+	return_value = 0;
 	printf("%s\n", sh->saved_pwd);
 }

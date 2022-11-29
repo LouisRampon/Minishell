@@ -58,11 +58,11 @@ typedef struct s_shell
 	int 		dup_std_fd[2];
 	int 		saved_previous_fd;
 	char 		*saved_pwd;
+	char 		*home;
 	pid_t 		pid;
 	t_command	*cmd;
 	t_arena		arena;
 	t_env		*env;
-	char 		**cpy_envp;
 }t_shell;
 
 // arena storage pool
@@ -76,24 +76,17 @@ char	**ft_split_arena(const char *str, char c, t_arena *arena);
 char	*ft_strdup_arena(const char *src, t_arena *arena);
 char	*ft_substr_arena(char const *s, unsigned int start, size_t len, t_arena *arena);
 
-//test built_in
+//built_in
 void	ft_echo(char **av);
 void	ft_exit(t_shell *sh);
 void	ft_env(t_shell *sh);
 void	ft_unset(t_shell *sh);
 void	ft_cd(t_shell *sh);
-//pwd
 void 	ft_pwd(t_shell *sh);
-void	ft_update_saved_pwd(t_shell *sh, char *str);
-//export
 void	ft_export(t_shell *sh);
-int 	ft_parse_export_arg(char **tab);
-int 	ft_check_valid_indentifier(char *str);
-int	 	ft_only_equal(char *str);
-int 	ft_check_char(char *str, char c);
-void	ft_print_export(t_shell *sh);
 
-
+//built_in utils
+void	ft_update_saved_pwd(t_shell *sh, char *str);
 
 //check
 int		is_built_in(t_command *cmd);
@@ -124,10 +117,18 @@ void	ft_free_env_list(t_env *env, int size);
 int 	ft_env_lst_size(t_env *lst);
 char	**ft_env_list_to_tab(t_shell *sh);
 
+//env_utils
+int 	ft_parse_export_arg(char **tab);
+int 	ft_check_valid_indentifier(char *str);
+int	 	ft_only_equal(char *str);
+int 	ft_check_char(char *str, char c);
+void	ft_print_export(t_shell *sh);
+
 //utils
 void	ft_free_tab(char **tab);
 void	ft_perror(char *str);
 void	ft_perror_exit(char *str, int code);
+int 	ft_size_tab(char **tab);
 void	ft_ctrl_c(int signal);
 //int 	rl_replace_line(const char *text, int clear_undo);
 
@@ -138,18 +139,18 @@ int		check_double_pipe(char *str);
 
 size_t	ft_strlen_to_c(char *str, char c);
 size_t	ft_strlen_alnum(char *str);
-size_t nb_pipe(char *str);
-int	ft_pass_quote(const char *str, int i);
+size_t 	nb_pipe(char *str);
+int		ft_pass_quote(const char *str, int i);
 
-char *ft_clean_str(char *str, t_shell *shell);
+char 	*ft_clean_str(char *str, t_shell *shell);
 
-int	ft_fd_out(char *str);
-int	ft_fd_in(char *str);
-int	ft_fd_out_help(char *str, int fd, int i);
+int		ft_fd_out(char *str);
+int		ft_fd_in(char *str);
+int		ft_fd_out_help(char *str, int fd, int i);
 
 char	*find_var_name(char *str, int i, t_arena *arena);
 char	*replace_var_help(char *var_name, char **env);
-char *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena);
+char	 *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena);
 char	*replace_var(char *str, char **env, t_arena *arena);
 char	*replace_var_final(char *str, char **env, int i, t_arena *arena);
 char	**ft_split_immune_quote(const char *str, char c);
