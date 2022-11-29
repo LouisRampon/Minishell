@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 12:06:25 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:57:38 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	ft_ctrl_c(int signal);
 //int 	rl_replace_line(const char *text, int clear_undo);
 
 //Louis
-t_command	*ft_parsing(char *str, char **env, t_command *head);
+t_shell	ft_parsing(char *str, char **env, t_shell *shell);
 int		check_syntax(char *str);
 int		check_double_pipe(char *str);
 
@@ -141,7 +141,7 @@ size_t	ft_strlen_alnum(char *str);
 size_t nb_pipe(char *str);
 int	ft_pass_quote(const char *str, int i);
 
-char *ft_clean_str(char *str);
+char *ft_clean_str(char *str, t_shell *shell);
 
 int	ft_fd_out(char *str);
 int	ft_fd_in(char *str);
