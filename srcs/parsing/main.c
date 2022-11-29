@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/27 17:29:55 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:21:50 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	main(int ac, char **argv, char **env)
 
 	(void)ac;
 	(void)argv;
-	buff = malloc(sizeof(buff) * 2048);
-	if (!buff)
-		return (0);
+	// buff = malloc(sizeof(buff) * 2048);
+	// if (!buff)
+	// 	return (0);
 	ft_init_sh(&sh, env);
 	while (1)
 	{
@@ -59,9 +59,14 @@ int	main(int ac, char **argv, char **env)
 			printf("exit\n");
 			exit(0);
 		}
-		sh.cmd = ft_parsing(buff, env, sh.cmd);
-		ft_exec_loop(&sh);
-		ft_reset_sh(&sh);
+		if (ft_strlen(buff) > 0)
+		{
+			add_history(buff);
+			sh.cmd = ft_parsing(buff, env, sh.cmd);
+			ft_exec_loop(&sh);
+			ft_reset_sh(&sh);
+		}
+		free(buff);
 	}
 	return (0);
 }

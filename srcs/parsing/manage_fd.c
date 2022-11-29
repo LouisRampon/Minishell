@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 13:03:59 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:14:02 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,23 @@ int	ft_fd_in(char *str)
 	int	i;
 
 	i = 0;
-	fd = 1;
-	printf("start\n");
+	fd = 0;
 	while (str[i])
 	{
-		printf("i avant = %d	", i);
 		if (str[i] == '\'' || str[i] == '\"')
 			i = ft_pass_quote(str, i);
-		printf("i apres = %d\n", i);
-		// if (str[i] == '<')
-		// {
-		// 	i++;
-		// 	while(str[i] == ' ')
-		// 		i++;
-		// 	fd = ft_fd_out_help(str, fd, i);
-		// 	while (ft_isalnum(str[i]))
-		// 		i++;
-		// }
+		if (str[i] == '<')
+		{
+			i++;
+			while(str[i] == ' ')
+				i++;
+			fd = ft_fd_out_help(str, fd, i);
+			while (ft_isalnum(str[i]))
+				i++;
+		}
 		if (str[i])
 			i++;
 	}
-	printf("finish\n");
 	return (fd);
 }
 

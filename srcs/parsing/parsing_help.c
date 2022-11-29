@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:30:08 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/27 16:11:44 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:15:56 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t nb_pipe(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			ft_pass_quote(str, i);
+			i = ft_pass_quote(str, i);
 		if (str[i] == '|')
 			pipe++;
 		i++;
