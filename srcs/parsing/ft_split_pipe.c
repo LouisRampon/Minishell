@@ -26,7 +26,6 @@ size_t	ft_nb_string_quote(const char *str, char c)
 		i++;
 	while (str[i])
 	{
-		printf("ici = %c\n", str[i]);
 		if (str[i] == c && !quote)
 		{
 			while (str[i] && str[i] == c)
@@ -42,7 +41,6 @@ size_t	ft_nb_string_quote(const char *str, char c)
 		if (str[i])
 			i++;
 	}
-	printf("tot = %zu\n", tot);
 	return (tot + 1);
 }
 
@@ -67,9 +65,9 @@ size_t	ft_size_str_quote(const char *str, char c, size_t j)
 	return (i);
 }
 
-char	*ft_mallocsplit_quote(char **strs, size_t size, size_t i)
+char	*ft_mallocsplit_quote(char **strs, size_t size, size_t i, t_arena *arena)
 {
-	strs[i] = malloc(sizeof(**strs) * size);
+	strs[i] = ft_alloc(sizeof(**strs) * size, arena);
 	if (!strs[i])
 	{
 		while (i >= 0)
@@ -84,7 +82,7 @@ char	*ft_mallocsplit_quote(char **strs, size_t size, size_t i)
 		return (strs[i]);
 }
 
-char	**ft_split_quote(const char *str, char c)
+char	**ft_split_quote(const char *str, char c, t_arena *arena)
 {
 	char	**strs;
 	size_t		size_str;
@@ -96,7 +94,7 @@ char	**ft_split_quote(const char *str, char c)
 		return (0);
 	i = 0;
 	j = 0;
-	strs = malloc(sizeof(*strs) * (ft_nb_string_quote(str, c) + 1));
+	strs = ft_alloc(sizeof(*strs) * (ft_nb_string_quote(str, c) + 1), arena);
 	if (!strs)
 		return (0);
 	//printf("nb string = %zu", ft_nb_string_quote(str, c));
@@ -104,9 +102,8 @@ char	**ft_split_quote(const char *str, char c)
 	{
 		while (str[j] && str[j] == c)
 			j++;
-		size_str = ft_size_str_quote(str, c, j); 
-		printf("	size = %zu\n", size_str);
-		strs[i] = ft_mallocsplit_quote(strs, (size_str + 2), i);
+		size_str = ft_size_str_quote(str, c, j);
+		strs[i] = ft_mallocsplit_quote(strs, (size_str + 2), i, arena);
 		k = 0;
 		while (str[j] && k <=size_str)
 			strs[i][k++] = str[j++];

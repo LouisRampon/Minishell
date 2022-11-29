@@ -25,13 +25,13 @@ void ft_reset_sh(t_shell *sh)
 
 int ft_init_sh(t_shell *sh, char **envp)
 {
-	sh->arena.data = malloc(10000);
 	sh->is_piped = 0;
 	sh->cpy_envp = envp;
 	sh->saved_previous_fd = 0;
 	sh->saved_pwd = NULL;
 	sh->dup_std_fd[0] = dup(0);
 	sh->dup_std_fd[1] = dup(1);
+	sh->env = NULL;
 	ft_create_env_list(sh, envp);
 	ft_update_saved_pwd(sh, ft_env_get("PWD", sh->env));
 	return (1);

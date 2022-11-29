@@ -42,8 +42,9 @@ int ft_set_fd(t_shell *sh)
 
 int	ft_exec(t_shell *sh)
 {
-	if (ft_check_cmd(sh) == 1)
-	{
+	ft_check_cmd(sh);
+//	if ( == 1)
+//	{
 		char **tab;
 
 		tab = ft_env_list_to_tab(sh);
@@ -56,11 +57,18 @@ int	ft_exec(t_shell *sh)
 		if (execve(sh->cmd->path, sh->cmd->cmd, tab) == -1)
 		{
 			ft_free_tab(tab);
-			ft_perror_exit("minishell: exec failed", 1);
+			if (ft_strchr(sh->cmd->path, '/'))
+			{
+				ft_perror_exit("minishell: No such file or directory", 1);
+			}
+			else
+			{
+				ft_perror_exit("minishell: command not found", 1);
+			}
 		}
 		return (1);
-	}
-	return (0);
+//	}
+//	return (0);
 }
 
 int ft_fork(t_shell *sh)

@@ -12,21 +12,22 @@
 
 NAME = minishell
 
-SRCS_PARSING_WITHOUT_PATH =	main.c\
-						signal.c\
-						parsing.c \
-						check_synthax.c \
-						replace_var.c \
-						parsing_help.c \
-						clean_function.c\
-						manage_fd.c\
+SRCS_PARSING_WITHOUT_PATH =	main.c						\
+						signal.c						\
+						parsing.c 						\
+						check_synthax.c 				\
+						replace_var.c 					\
+						parsing_help.c					\
+						clean_function.c				\
+						manage_fd.c						\
 						ft_split_pipe.c
 						
 
-SRCS_ENV_WITHOUT_PATH = ft_add_env.c \
-						ft_del_env.c\
-						ft_env_get.c\
-						ft_env_list_to_tab.c \
+SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
+						ft_del_env.c					\
+						ft_env_get.c					\
+						ft_env_list_to_tab.c 			\
+						ft_env_utils.c					\
 						ft_init_env_list.c										
 									
 SRCS_BUILT_IN_WITHOUT_PATH =	cd.c					\

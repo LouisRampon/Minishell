@@ -97,8 +97,8 @@ void	ft_print_export(t_shell *sh);
 
 //check
 int		is_built_in(t_command *cmd);
-int 	ft_check_cmd(t_shell *sh);
-int		ft_check_validity(t_shell *sh);
+void	ft_check_cmd(t_shell *sh);
+void	ft_check_validity(t_shell *sh);
 
 //exec
 int		ft_exec_loop(t_shell *sh);
@@ -147,13 +147,13 @@ int	ft_fd_out(char *str);
 int	ft_fd_in(char *str);
 int	ft_fd_out_help(char *str, int fd, int i);
 
-char	*find_var_name(char *str, int i);
+char	*find_var_name(char *str, int i, t_arena *arena);
 char	*replace_var_help(char *var_name, char **env);
-char 	*ft_fill_final(char *str, char *var, int size, int i);
-char	*replace_var(char *str, char **env);
-char	*replace_var_final(char *str, char **env, int i);
+char *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena);
+char	*replace_var(char *str, char **env, t_arena *arena);
+char	*replace_var_final(char *str, char **env, int i, t_arena *arena);
 char	**ft_split_immune_quote(const char *str, char c);
-char	**ft_split_quote(const char *str, char c);
+char	**ft_split_quote(const char *str, char c, t_arena *arena);
 
 //strlen pour fd et pour variable env
 // < in abc > out > in | truc bidule | alal
