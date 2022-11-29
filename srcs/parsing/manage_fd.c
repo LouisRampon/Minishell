@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 13:24:44 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:02:48 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_fd_in(char *str)
 			i++;
 			while(str[i] == ' ')
 				i++;
-			fd = ft_fd_out_help(str, fd, i);
+			fd = ft_fd_out_help(str, fd, i, 0);
 			while (ft_isalnum(str[i]))
 				i++;
 		}
@@ -38,7 +38,20 @@ int	ft_fd_in(char *str)
 	return (fd);
 }
 
-int	ft_fd_out_help(char *str, int fd, int i)
+bool	ft_check_file(char *file_name, bool in_or_out)
+{
+	if(access(file_name, F_OK))
+		return (0);
+	if(in_or_out && !access(file_name, R_OK))
+		return (0);
+	if (!in_or_out && !access(file_name, W_OK))
+		return (0);
+	printf("minishell: %s: Permission denied\n" ,file_name);
+	return_value = P_DENIED;
+	return (1);
+}
+
+int	ft_fd_out_help(char *str, int fd, int i, bool in_or_out)
 {
 	int size;
 	char *file_name;
@@ -64,6 +77,8 @@ int	ft_fd_out_help(char *str, int fd, int i)
 	file_name[j] = '\0';
 	if (fd > 2)
 		close(fd);
+	if (ft_check_file(file_name, in_or_out))
+		return (return_value);
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	free(file_name);
 	return (fd);
@@ -85,7 +100,9 @@ int	ft_fd_out(char *str)
 			i++;
 			while(str[i] == ' ')
 				i++;
-			fd = ft_fd_out_help(str, fd, i);
+			fd = ft_fd_out_help(str, fd, i, 1);
+			if (fd == P_DENIED)
+				return(return_value);
 			while (ft_isalnum(str[i]))
 				i++;
 		}
