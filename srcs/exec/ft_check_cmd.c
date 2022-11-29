@@ -44,7 +44,7 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-int	ft_check_validity(t_shell *sh)
+void	ft_check_validity(t_shell *sh)
 {
 	char	*path;
 	char	*temp;
@@ -52,6 +52,11 @@ int	ft_check_validity(t_shell *sh)
 	char	**path_tab;
 	int		i;
 
+	if (ft_strchr(sh->cmd->cmd[0],'/'))
+	{
+		sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], &sh->arena);
+		return ;
+	}
 	i = -1;
 	path_line = ft_env_get("PATH", sh->env);
 	path_tab = ft_split_arena(path_line, ':', &sh->arena);
@@ -59,69 +64,18 @@ int	ft_check_validity(t_shell *sh)
 	{
 		temp = ft_strjoin_arena(path_tab[i], "/", &sh->arena);
 		path = ft_strjoin_arena(temp, sh->cmd->cmd[0], &sh->arena);
-//		printf("path = %s\n", path);
 		if (access(path, X_OK | F_OK) == 0)
 		{
 			sh->cmd->path = ft_strdup_arena(path, &sh->arena);
-			return (1);
+			return ;
 		}
 	}
-	return (0);
+	sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], &sh->arena);
 }
 
-void	check_access(char *str, t_arena *arena)
-{
-	printf("str = %s\n", str);
-	if (access(str, X_OK | F_OK) != 0)
-	{
-		perror("minishell");
-		ft_free_arena(arena);
-		exit(errno);
-	}
-}
-
-char	*ft_concat_pwd_path(t_shell *sh, char *str)
-{
-
-	if (str[1])
-	{
-		char	*temp;
-
-		temp = ft_strjoin_arena(sh->saved_pwd, str, &sh->arena);
-		if (!temp)
-		{
-			ft_free_arena(&sh->arena);
-			ft_perror_exit("Malloc failure", 1);
-		}
-		return (temp);
-	}
-	return (NULL);
-}
-
-int ft_check_absolute_path(t_shell *sh)
-{
-	if (sh->cmd->cmd[0][0] == '.')
-	{
-//		char *temp;
-//		temp = ft_strtrim(sh->cmd->cmdam[0], ".");
-//		sh->cmd->cmd[0] = temp;
-//		printf("temp = %s\n", temp);
-		check_access(ft_concat_pwd_path(sh, sh->cmd->cmd[0]), &sh->arena);
-		return (1);
-	}
-	else if (sh->cmd->cmd[0][0] == '/')
-	{
-		check_access(sh->cmd->cmd[0], &sh->arena);
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_check_cmd(t_shell *sh)
+void	ft_check_cmd(t_shell *sh)
 {
 	if (is_built_in(sh->cmd) == 1)
-		return (1);
-	if (ft_check_absolute_path(sh) == 1 && ft_check_validity(sh) == 1)
-		return (1);
-	return (ft_check_validity(sh));
+		return ;
+	ft_check_validity(sh);
 }

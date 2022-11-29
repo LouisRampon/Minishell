@@ -12,7 +12,7 @@
 
 #include"../../includes/minishell.h"
 
-char	*find_var_name(char *str, int i)
+char	*find_var_name(char *str, int i, t_arena *arena)
 {
 	size_t size;
 	size_t j;
@@ -21,7 +21,7 @@ char	*find_var_name(char *str, int i)
 	j = 0;
 	size = ft_strlen_alnum(&str[i]);
 	printf("size = %zu\n", size);
-	var_name = malloc(sizeof(char) * size + 1);
+	var_name = ft_alloc(sizeof(char) * (size + 1), arena);
 	if (!var_name)
 		return (0);
 	while (str[i] && j < size)
@@ -48,14 +48,14 @@ char	*replace_var_help(char *var_name, char **env)
 	return ("\0");
 }
 
-char *ft_fill_final(char *str, char *var, int size, int i)
+char *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena)
 {
 	int j;
 	int k;
 	char *final;
 
 	j = 0;
-	final = malloc(sizeof(final) * size + 1);
+	final = ft_alloc(sizeof(final) * (size + 1), arena);
 	while (j < i)
 	{
 		final[j] = str[j];
@@ -81,7 +81,7 @@ char *ft_fill_final(char *str, char *var, int size, int i)
 	return (final);
 }
 
-char	*replace_var_final(char *str, char **env, int i)
+char	*replace_var_final(char *str, char **env, int i, t_arena *arena)
 {
 	char *var_name;
 	char *var_value;
@@ -89,25 +89,24 @@ char	*replace_var_final(char *str, char **env, int i)
 	int size;
 	
 	size = 0;
-	var_name = find_var_name(str, i + 1);
+	var_name = find_var_name(str, i + 1, arena);
 	//printf("var_name = %s\n", var_name);
 	var_value = replace_var_help(var_name, env);
 	//printf("var_value = %s\n", var_value);
 	if (var_value)
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) + 1;
-		final = ft_fill_final(str, var_value, size, i);
+		final = ft_fill_final(str, var_value, size, i, arena);
 	}
 	else
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + 1;
-		final = ft_fill_final(str, 0, size, i);
+		final = ft_fill_final(str, 0, size, i, arena);
 	}
-	free(var_name);
 	return (final);
 }
 
-char	*replace_var(char *str, char **env)
+char	*replace_var(char *str, char **env, t_arena *arena)
 {
 	int	i;
 	char *temp;
@@ -115,8 +114,7 @@ char	*replace_var(char *str, char **env)
 	i = 1;
 	if (str[0] == '$')
 	{
-			temp = replace_var_final(str, env, 0);
-			free(str);
+			temp = replace_var_final(str, env, 0, arena);
 			str = temp;
 	}
 	if (str[0] == '\'')
@@ -131,7 +129,7 @@ char	*replace_var(char *str, char **env)
 		}
 		if (str[i] == '$' && str[i + 1])
 		{
-			temp = replace_var_final(str, env, i);
+			temp = replace_var_final(str, env, i, arena);
 			str = temp;
 			i = 0;
 		}

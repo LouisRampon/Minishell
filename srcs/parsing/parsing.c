@@ -29,7 +29,7 @@ char **ft_str_to_arg(char *str, t_shell *shell)
 {
 	char **temp;
 	
-	temp = ft_split_quote(str, ' ');
+	temp = ft_split_quote(str, ' ', &shell->arena);
 	return(ft_trim_quote(temp, shell));
 }
 
@@ -39,7 +39,7 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	t_command *cmd;
 	
 	(void)i;
-	cmd = malloc(sizeof(t_command));
+	cmd = ft_alloc(sizeof(t_command), &shell->arena);
 	cmd->fd_in = ft_fd_in(str);
 	cmd->fd_out = ft_fd_out(str);
 	if (return_value == P_DENIED)
@@ -65,9 +65,9 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	new = NULL;
 	if (check_syntax(str))
 		return (*shell);
-	str = replace_var(str, env);
+	str = replace_var(str, env, &shell->arena);
 	nb_cmd = nb_pipe(str) + 1;
-	arg = ft_split_quote(str, '|');
+	arg = ft_split_quote(str, '|', &shell->arena);
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], i, shell);

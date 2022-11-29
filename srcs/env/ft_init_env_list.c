@@ -72,6 +72,8 @@ void	ft_create_env_list(t_shell *sh, char **envp)
 	previous = NULL;
 	new = NULL;
 	i = 0;
+	if (!envp)
+		return ;
 	while (envp[i])
 	{
 		new = ft_new_env(envp[i]);

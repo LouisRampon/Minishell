@@ -53,10 +53,14 @@ void	ft_add_env(char *str, t_shell *sh)
 	value = ft_make_env_value(str);
 	ptr = ft_env_get_struct(name, sh->env);
 	if (!ptr)
+	{
 		push_back_env(sh->env, str);
+		free(value);
+	}
 	else
 	{
 		ft_modify_env_value(ptr, value, ft_check_char(str, '='));
-		free(name);
+//		free(name);
 	}
+	free(name);
 }

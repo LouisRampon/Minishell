@@ -15,6 +15,11 @@
 void	ft_update_saved_pwd(t_shell *sh, char *str)
 {
 	free(sh->saved_pwd);
+	if (!str)
+	{
+		sh->saved_pwd = NULL;
+		return ;
+	}
 	sh->saved_pwd = ft_strdup(str);
 }
 
