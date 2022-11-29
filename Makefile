@@ -49,6 +49,7 @@ SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_strjoin_arena.c			\
 							ft_split_arena.c			\
 							ft_strdup_arena.c			\
+							ft_substr_arena.c
 
 OBJS_SRCS_PARSING_WITHOUT_PATH = $(SRCS_PARSING_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_ENV_WITHOUT_PATH = $(SRCS_ENV_WITHOUT_PATH:.c=.o)

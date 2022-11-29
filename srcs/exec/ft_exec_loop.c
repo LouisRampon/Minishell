@@ -40,26 +40,36 @@ int ft_set_fd(t_shell *sh)
 	return (1);
 }
 
+int	ft_exec(t_shell *sh)
+{
+	if (ft_check_cmd(sh) == 1)
+	{
+		char **tab;
+
+		tab = ft_env_list_to_tab(sh);
+		ft_set_fd(sh);
+		if (is_built_in(sh->cmd) == 1)
+		{
+			ft_exec_built_in(sh);
+			exit(0);
+		}
+		if (execve(sh->cmd->path, sh->cmd->cmd, tab) == -1)
+		{
+			ft_free_tab(tab);
+			ft_perror_exit("minishell: exec failed", 1);
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int ft_fork(t_shell *sh)
 {
 	sh->pid = fork();
 	if (sh->pid == 0)
 	{
-		if (ft_check_cmd(sh) == 1)
-		{
-			ft_set_fd(sh);
-			if (is_built_in(sh->cmd) == 1)
-			{
-				ft_exec_built_in(sh);
-				exit(0);
-			}
-
-			if (execve(sh->cmd->path, sh->cmd->cmd, ft_env_list_to_tab(sh)) == -1)
-			{
-				ft_free_arena(&sh->arena);
-				ft_perror_exit("minishell: exec failed", 1);
-			}
-		}
+		if (ft_exec(sh) == 1)
+			;
 		else
 			ft_perror_exit("minishell: command not found", 1);
 	}

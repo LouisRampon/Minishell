@@ -28,8 +28,7 @@ int is_built_in(t_command *cmd)
 		return (1);
 	else if (ft_strcmp(cmd->cmd[0], "exit") == 0)
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 void	ft_free_tab(char **tab)
