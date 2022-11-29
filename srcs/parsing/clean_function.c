@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:29:21 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/27 15:37:54 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:57:21 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int ft_last_fd_in(char *str)
 	return (0);
 }
 
-char *ft_clean_str(char *str)
+char *ft_clean_str(char *str, t_shell *shell)
 {
 	int last_fd_in;
 	size_t len;
@@ -67,6 +67,6 @@ char *ft_clean_str(char *str)
 	last_fd_in = ft_last_fd_in(str);
 	last_fd_out = ft_last_fd_out(str);
 	len = last_fd_out - last_fd_in;
-	temp = ft_substr(str, last_fd_in, len);
+	temp = ft_substr_arena(str, last_fd_in, len, &shell->arena);
 	return (temp);
 }
