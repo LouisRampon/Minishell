@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 13:21:50 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:30:39 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ int	main(int ac, char **argv, char **env)
 
 	(void)ac;
 	(void)argv;
-	// buff = malloc(sizeof(buff) * 2048);
-	// if (!buff)
-	// 	return (0);
 	ft_init_sh(&sh, env);
 	while (1)
 	{

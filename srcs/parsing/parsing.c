@@ -6,20 +6,33 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 13:04:27 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:41:10 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../includes/minishell.h"
 
+char **ft_trim_quote(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		if (strs[i][0] == '\"' && strs[i][ft_strlen(strs[i]) - 1] == '\"')
+			strs[i] = ft_substr(strs[i], 1, ft_strlen(strs[i]) - 2);
+		i++;
+	}
+	return (strs);
+}
 char **ft_str_to_arg(char *str)
 {
-	char *temp;
-	size_t		len;
-
-	len = ft_strlen_to_c(str, '|');
-	temp = ft_substr(str, 0, len);
-	return(ft_split(temp, ' '));
+	char **temp;
+	
+	printf("str = %s\n", str);
+	temp = ft_split_quote(str, ' ');
+	return(ft_trim_quote(temp));
+	return(ft_split(str, ' '));
 }
 
 
@@ -55,7 +68,6 @@ t_command	*ft_parsing(char *str, char **env, t_command *head)
 	str = replace_var(str, env);
 	nb_cmd = nb_pipe(str) + 1;
 	arg = ft_split_quote(str, '|');
-	printf("arg [1] = %s\n", arg[1]);
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], i);

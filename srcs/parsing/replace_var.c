@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/27 14:01:57 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:56:47 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ char	*replace_var_final(char *str, char **env, int i)
 	
 	size = 0;
 	var_name = find_var_name(str, i + 1);
-	printf("var_name = %s\n", var_name);
+	//printf("var_name = %s\n", var_name);
 	var_value = replace_var_help(var_name, env);
-	printf("var_value = %s\n", var_value);
+	//printf("var_value = %s\n", var_value);
 	if (var_value)
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) + 1;
@@ -112,29 +112,16 @@ char	*replace_var(char *str, char **env)
 	int	i;
 	char *temp;
 
-	i = 1;
-	if (str[0] == '$')
-	{
-			temp = replace_var_final(str, env, 0);
-			free(str);
-			str = temp;
-	}
-	if (str[0] == '\'')
-	{
-		i = ft_pass_quote(str, i);
-		printf("ici i = %d\n", i);
-	}
+	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && str[i - 1] != '\\')
+		if (str[i] == '\'')
 		{
 			i = ft_pass_quote(str, i);
-			printf("ici i = %d\n", i);
 		}
-		if (str[i] == '$' && str[i - 1] != '\\' && str[i + 1])
+		if (str[i] == '$' && str[i + 1])
 		{
 			temp = replace_var_final(str, env, i);
-			free(str);
 			str = temp;
 			i = 0;
 		}
