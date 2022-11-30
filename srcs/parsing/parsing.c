@@ -59,7 +59,7 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	char	**arg;
 	size_t nb_cmd;
 	size_t	i;
-	size_t j = 0;
+//	size_t j = 0;
 	t_command *temp;
 	
 	i = 0;

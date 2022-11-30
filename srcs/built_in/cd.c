@@ -12,8 +12,27 @@
 
 #include "../../includes/minishell.h"
 
+//void ft_manage_pwd() {
+//	if (OLDPWD env_struct )
+//		OLDPWD = PWD;
+//	if (PWD env_struct )
+//		PWD = getcwd();
+//	sh->pwd = getcwd();
+//}
+//
+//void	ft_go_home(t_shell *sh)
+//{
+//	(void)sh;
+//	if (chdir(sh->home) == -1)
+//		;//error
+//}
+//
 void	ft_cd(t_shell *sh)
 {
-	chdir(sh->cmd->cmd[1]);
-	ft_update_saved_pwd(sh, sh->cmd->cmd[1]);
+	(void)sh;
+//	if (!sh->cmd->cmd[1] || sh->cmd->cmd[1][0] == '~')
+//	{
+//		ft_go_home(sh);
+//	}
+//	ft_manage_pwd()
 }

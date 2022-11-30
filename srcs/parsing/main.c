@@ -26,7 +26,6 @@ void ft_reset_sh(t_shell *sh)
 int ft_init_sh(t_shell *sh, char **envp)
 {
 	sh->is_piped = 0;
-	sh->cpy_envp = envp;
 	sh->saved_previous_fd = 0;
 	sh->saved_pwd = NULL;
 	sh->dup_std_fd[0] = dup(0);
@@ -34,6 +33,8 @@ int ft_init_sh(t_shell *sh, char **envp)
 	sh->env = NULL;
 	ft_create_env_list(sh, envp);
 	ft_update_saved_pwd(sh, ft_env_get("PWD", sh->env));
+//	sh->home = ft_strdup_arena(ft_env_get("HOME", sh->env), &sh->arena);
+//	printf("%s\n", sh->home);
 	return (1);
 }
 
