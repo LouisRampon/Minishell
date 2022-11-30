@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 13:56:47 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:08:44 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*find_var_name(char *str, int i, t_arena *arena)
 
 	j = 0;
 	size = ft_strlen_alnum(&str[i]);
-	printf("size = %zu\n", size);
+	//printf("size = %zu\n", size);
 	var_name = ft_alloc(sizeof(char) * (size + 1), arena);
 	if (!var_name)
 		return (0);

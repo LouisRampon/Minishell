@@ -58,5 +58,5 @@ void	ft_exit(t_shell *sh)
 	}
 	ft_free_env_list(sh->env, ft_env_lst_size(sh->env));
 	ft_free_arena(&sh->arena);
-	exit(ret);
+	exit((int)ret);
 }

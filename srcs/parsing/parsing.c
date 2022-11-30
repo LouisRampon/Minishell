@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 14:59:30 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:10:01 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	cmd = ft_alloc(sizeof(t_command), &shell->arena);
 	cmd->fd_in = ft_fd_in(str);
 	cmd->fd_out = ft_fd_out(str);
+	if (return_value == P_DENIED)
+		return (cmd);
 	str = ft_clean_str(str, shell);
 	cmd->cmd = ft_str_to_arg(str, shell);
 	cmd->next = NULL;
@@ -55,7 +57,9 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	char	**arg;
 	size_t nb_cmd;
 	size_t	i;
-
+//	size_t j = 0;
+	t_command *temp;
+	
 	i = 0;
 	previous = NULL;
 	new = NULL;
@@ -67,6 +71,8 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], i, shell);
+		if (return_value == P_DENIED)
+			return (*shell);
 		if (previous)
 			previous->next = new;
 		else
@@ -74,5 +80,30 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 		previous = new;
 		i++;
 	}
+	temp = shell->cmd;
+	// i = 0;
+	// while (temp->next)
+	// {
+	// 	printf("command %zu:\n", i);
+	// 	while(temp->cmd[j])
+	// 	{
+	// 		printf("word[%zu] = %s\n", j, temp->cmd[j]);
+	// 		j++;
+	// 	}
+	// 	j = 0;
+	// 	printf("fd_in = %d\n", temp->fd_in);
+	// 	printf("fd_out = %d\n", temp->fd_out);
+	// 	i++;
+	// 	temp = temp->next;
+	// }
+	// printf("command %zu:\n", i);
+	// while(temp->cmd[j])
+	// {
+	// 	printf("word[%zu] = %s\n", j, temp->cmd[j]);
+	// 	j++;
+	// }
+	// j = 0;
+	// printf("fd_in = %d\n", temp->fd_in);
+	// printf("fd_out = %d\n", temp->fd_out);
 	return (*shell);
 }

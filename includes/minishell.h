@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 14:57:38 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:01:15 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+
+# define P_DENIED -13
 
 extern int return_value;
 
@@ -144,9 +146,10 @@ int		ft_pass_quote(const char *str, int i);
 
 char 	*ft_clean_str(char *str, t_shell *shell);
 
+
 int		ft_fd_out(char *str);
 int		ft_fd_in(char *str);
-int		ft_fd_out_help(char *str, int fd, int i);
+int		ft_fd_out_help(char *str, int fd, int i, bool in_or_out);
 
 char	*find_var_name(char *str, int i, t_arena *arena);
 char	*replace_var_help(char *var_name, char **env);
