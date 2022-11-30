@@ -92,7 +92,7 @@ HEADER =	$(addprefix $(PATH_TO_HEADER), $(HEADER_WITHOUT_PATH))
 
 	######### COMMANDS ###########
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror #-fsanitize=address -g3
 RM = rm -rf
 READLINE_LIB = -lreadline
 READLINE_HOMEBREW_LIB = -L ~/.brew/opt/readline/lib

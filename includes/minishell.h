@@ -26,9 +26,9 @@
 # include <readline/history.h>
 # include <errno.h>
 
-# define P_DENIED -13
+# define MAX_PATH 4096
 
-extern int return_value;
+extern int g_return_value;
 
 typedef struct s_arena
 {
@@ -102,7 +102,7 @@ int 	ft_fork(t_shell *sh);
 int		ft_pipe(t_shell *sh);
 
 //env
-t_env	*ft_new_env(char *envp);
+t_env	*ft_new_env(char *str);
 void	ft_create_env_list(t_shell *sh, char **envp);
 char	*ft_env_get(char *str, t_env *env);
 char	*ft_env_get_name(char *str, t_env *env);

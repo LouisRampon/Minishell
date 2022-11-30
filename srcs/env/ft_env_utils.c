@@ -12,6 +12,21 @@
 
 #include "../../includes/minishell.h"
 
+int ft_check_char_index(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+
 int ft_check_char(char *str, char c)
 {
 	int	i;
@@ -55,7 +70,8 @@ int ft_check_valid_indentifier(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == '=' || str[i] == 32)
+		if (ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == '=' || \
+			str[i] == 32 || str[i] == '/')
 			count++;
 		i++;
 	}

@@ -47,7 +47,7 @@ bool	ft_check_file(char *file_name, bool in_or_out)
 	if (!in_or_out && !access(file_name, W_OK))
 		return (0);
 	printf("minishell: %s: Permission denied\n" ,file_name);
-	return_value = P_DENIED;
+//	return_value = P_DENIED;
 	return (1);
 }
 
@@ -56,7 +56,8 @@ int	ft_fd_out_help(char *str, int fd, int i, bool in_or_out)
 	int size;
 	char *file_name;
 	int	j;
-	
+
+	(void)in_or_out;
 	j = 0;
 	if (str[i] != '\'' && str[i] != '\"')
 		size = ft_strlen_alnum(&str[i]);
@@ -77,8 +78,8 @@ int	ft_fd_out_help(char *str, int fd, int i, bool in_or_out)
 	file_name[j] = '\0';
 	if (fd > 2)
 		close(fd);
-	if (ft_check_file(file_name, in_or_out))
-		return (return_value);
+//	if (ft_check_file(file_name, in_or_out))
+//		return (return_value);
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	free(file_name);
 	return (fd);
@@ -101,8 +102,8 @@ int	ft_fd_out(char *str)
 			while(str[i] == ' ')
 				i++;
 			fd = ft_fd_out_help(str, fd, i, 1);
-			if (fd == P_DENIED)
-				return(return_value);
+//			if (fd == P_DENIED)
+//				return(return_value);
 			while (ft_isalnum(str[i]))
 				i++;
 		}

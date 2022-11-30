@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int return_value = 0;
+int g_return_value = 0;
 
 void ft_reset_sh(t_shell *sh)
 {
@@ -21,7 +21,6 @@ void ft_reset_sh(t_shell *sh)
 	ft_free_arena(&sh->arena);
 	//free list command and one use allocation for previous command line
 }
-
 
 int ft_init_sh(t_shell *sh, char **envp)
 {
@@ -32,9 +31,11 @@ int ft_init_sh(t_shell *sh, char **envp)
 	sh->dup_std_fd[1] = dup(1);
 	sh->env = NULL;
 	ft_create_env_list(sh, envp);
-	ft_update_saved_pwd(sh, ft_env_get("PWD", sh->env));
-//	sh->home = ft_strdup_arena(ft_env_get("HOME", sh->env), &sh->arena);
-//	printf("%s\n", sh->home);
+//	ft_update_saved_pwd(sh, ft_env_get("PWD", sh->env));
+	sh->saved_pwd = malloc(MAX_PATH);
+	getcwd(sh->saved_pwd, MAX_PATH);
+	if (sh->env)
+		sh->home = ft_strdup(ft_env_get("HOME", sh->env));
 	return (1);
 }
 
@@ -48,7 +49,7 @@ int	main(int ac, char **argv, char **env)
 	ft_init_sh(&sh, env);
 	while (1)
 	{
-		ft_init_arena(&sh.arena, 1000);
+		ft_init_arena(&sh.arena, 10000);
 		signal(SIGINT, &ft_ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		buff = readline("minishell : ");
@@ -61,12 +62,9 @@ int	main(int ac, char **argv, char **env)
 		{
 			add_history(buff);
 			sh = ft_parsing(buff, env, &sh);
-			if (!(return_value == P_DENIED))
-			{
-				ft_exec_loop(&sh);
-				ft_reset_sh(&sh);
-			}
+			ft_exec_loop(&sh);
 		}
+		ft_reset_sh(&sh);
 		free(buff);
 	}
 }

@@ -42,8 +42,8 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	cmd = ft_alloc(sizeof(t_command), &shell->arena);
 	cmd->fd_in = ft_fd_in(str);
 	cmd->fd_out = ft_fd_out(str);
-	if (return_value == P_DENIED)
-		return (cmd);
+//	if (return_value == P_DENIED)
+//		return (cmd);
 	str = ft_clean_str(str, shell);
 	cmd->cmd = ft_str_to_arg(str, shell);
 	cmd->next = NULL;
@@ -71,8 +71,8 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], i, shell);
-		if (return_value == P_DENIED)
-			return (*shell);
+//		if (return_value == P_DENIED)
+//			return (*shell);
 		if (previous)
 			previous->next = new;
 		else
