@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 17:02:48 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:14:30 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_fd_in(char *str)
 
 	i = 0;
 	fd = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -91,6 +93,8 @@ int	ft_fd_out(char *str)
 
 	i = 0;
 	fd = 1;
+	if (!str)
+		return (1);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')

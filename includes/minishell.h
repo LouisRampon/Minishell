@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 17:01:15 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:53:14 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <errno.h>
 
 # define P_DENIED -13
+# define SYNTAX_ERROR -11
 
 extern int return_value;
 
@@ -157,6 +158,7 @@ char	*replace_var_final(char *str, char **env, int i, t_arena *arena);
 char	**ft_split_immune_quote(const char *str, char c);
 char	**ft_split_quote(const char *str, char c, t_arena *arena);
 
-//strlen pour fd et pour variable env
+// |
+// ""
 // < in abc > out > in | truc bidule | alal
 #endif
