@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 17:10:01 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:01:24 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	t_command *cmd;
 	
 	(void)i;
+	if (!str)
+		return (NULL);
 	cmd = ft_alloc(sizeof(t_command), &shell->arena);
 	cmd->fd_in = ft_fd_in(str);
 	cmd->fd_out = ft_fd_out(str);
@@ -57,8 +59,8 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	char	**arg;
 	size_t nb_cmd;
 	size_t	i;
-//	size_t j = 0;
-	t_command *temp;
+	// size_t j = 0;
+	// t_command *temp;
 	
 	i = 0;
 	previous = NULL;
@@ -80,7 +82,7 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 		previous = new;
 		i++;
 	}
-	temp = shell->cmd;
+	//temp = shell->cmd;
 	// i = 0;
 	// while (temp->next)
 	// {

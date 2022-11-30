@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:29:21 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 14:57:21 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:15:05 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char *ft_clean_str(char *str, t_shell *shell)
 	char *temp;
 	int	i;
 	
+	if (!str)
+		return (NULL);
 	last_fd_in = 0;
 	i = 0;
 	last_fd_in = ft_last_fd_in(str);
