@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_perror_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereverd <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:19:53 by jereverd          #+#    #+#             */
-/*   Updated: 2022/11/25 18:19:55 by jereverd         ###   ########lyon.fr   */
+/*   Updated: 2022/12/01 14:00:42 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_perror_exit(char *str, int code)
 {
-	printf("%s\n", str);
+	dprintf(2, "%s\n", str);
 	exit(code);
 }

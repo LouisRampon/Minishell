@@ -34,14 +34,21 @@ void	ft_reset_arena(t_arena *arena)
 	arena->cursor = 0;
 }
 
-void	ft_arena_realloc(t_arena *arena)
+void	ft_arena_realloc(t_arena *arena, size_t size)
 {
 	void *tmp;
+	size_t oldsize;
 
+	oldsize = arena->size;
 	tmp = arena->data;
-	arena->data = malloc(arena->size * 2);
-	ft_memcpy(arena->data, tmp, arena->size);
+	if (size + arena->size > arena->size * 2)
+		arena->size = size + arena->size * 2;
+	else
+		arena->size *= 2;
+	arena->data = malloc(arena->size);
+	ft_memcpy(arena->data, tmp, oldsize);
 	free(tmp);
+	//todo error
 }
 
 void 	*ft_arena_alloc(t_arena *arena, size_t size)
@@ -49,7 +56,7 @@ void 	*ft_arena_alloc(t_arena *arena, size_t size)
 	size_t temp;
 
 	if (arena->cursor + size > arena->size)
-		ft_arena_realloc(arena);
+		ft_arena_realloc(arena, size);
 	temp = arena->cursor;
 	arena->cursor += size;
 	return (arena->data + temp);

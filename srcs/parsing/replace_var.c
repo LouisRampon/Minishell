@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 15:10:20 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:38:08 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*replace_var_help(char *var_name, t_env *env)
 	temp = env;
 	while(temp->next)
 	{
-		if (!ft_strncmp(temp->name, var_name, ft_strlen(var_name)))
+		if (!ft_strncmp(temp->name, var_name, ft_strlen(var_name) + 1))
 		{
 			//printf("temp value =%s\n", temp->value);
 			return (temp->value);
@@ -133,7 +133,13 @@ char	*replace_var(char *str, t_shell *shell)
 			single_quote = !single_quote;
 		if (str[i] == '$' && !single_quote)
 		{
-			str = replace_var_final(str, shell, i);
+			if (!str[i + 1])
+				return (str);
+			if (str[i + 1] == '?')
+				str = ft_fill_final(str, ft_itoa(g_return_value), 
+					ft_strlen(ft_itoa(g_return_value)), i, &shell->arena);
+			else
+				str = replace_var_final(str, shell, i);
 			i = 0;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:11:29 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 13:06:38 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:39:56 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ int	check_pipe(char *str)
 	e = 0;
 	while (str[i])
 	{
-		if (str[i] == '|')
+		if (str[i] == '|' && d == 0)
 			d = 1;
+		else if (str[i] == '|' && d == 1)
+			d = 0;
 		else if (d == 1 && c == 0)
 			return (1);
 		else if (c == 0 && ft_isprint(str[i]))
@@ -99,7 +101,7 @@ int	check_syntax(char *str)
 		return (ft_error_msg(SYNTAX_ERROR));
 	if (check_quote(str))
 		return (ft_error_msg(SYNTAX_ERROR));
-	// if (check_pipe(str))
-	// 	return (ft_error_msg(SYNTAX_ERROR));
+	if (check_pipe(str))
+		return (ft_error_msg(SYNTAX_ERROR));
 	return (0);
 }

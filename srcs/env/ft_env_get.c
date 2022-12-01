@@ -15,20 +15,22 @@
 char	*ft_make_env_value(char *str)
 {
 	char *value;
-	char **temp;
+//	char **temp;
 
-	value = NULL;
-	temp = ft_split(str, '=');
-	if (temp)
-	{
-		free(temp[0]);
-		if (temp[1] != 0)
-			free(temp[2]);
-		value = temp[1];
-		free(temp);
-	}
-	else
-		ft_perror_exit("Malloc error", 1);
+	value = ft_strchr(str, '=');
+	if (value)
+		value = ft_strdup(++value);
+//	temp = ft_split(str, '=');
+//	if (temp)
+//	{
+//		free(temp[0]);
+//		if (temp[1] != 0)
+//			free(temp[2]);
+//		value = temp[1];
+//		free(temp);
+//	}
+//	else
+//		ft_perror_exit("Malloc error", 1);
 	return (value);
 }
 

@@ -6,69 +6,59 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:29:21 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 11:15:05 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:30:42 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_last_fd_out(char *str)
+int	ft_size_file_name(char *str, int i)
 {
-	int	i;
+	char c;
+	int	size;
 
-	i = 0;
-	while(str[i])
+	size = 0;
+	c = str[i];
+	i++;
+	while (str[i] && str[i] == ' ')
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-			i = ft_pass_quote(str, i);
-		if (str[i] == '>')
-			return (i);
+		i++;
+		size++;
+	}
+	while (str[i] && ft_isalnum(str[i]))
+	{
+		size++;
 		i++;
 	}
-	return (i);
+	return (size + 1);
 }
 
-int ft_last_fd_in(char *str)
+char *ft_clean_str(char *str)
 {
 	int	i;
-
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			i = ft_pass_quote(str, i);
-		if (str[i] == '<')
-		{
-			i++;
-			while (str[i] && str[i] == ' ')
-				i++;
-			if (str[i] == '\'' || str[i] == '\"')
-				i = ft_pass_quote(str, i) + 1;
-			else
-				while (str[i] && ft_isalnum(str[i]))
-					i++;
-			return (i);
-		}
-		i++;
-	}
-	return (0);
-}
-
-char *ft_clean_str(char *str, t_shell *shell)
-{
-	int last_fd_in;
-	size_t len;
-	int last_fd_out;
-	char *temp;
-	int	i;
+	int	j;
+	bool	single_quote;
+	bool double_quote;
 	
+	single_quote = 0;
+	double_quote = 0;
+	i = 0;
+	j = 0;
 	if (!str)
 		return (NULL);
-	last_fd_in = 0;
-	i = 0;
-	last_fd_in = ft_last_fd_in(str);
-	last_fd_out = ft_last_fd_out(str);
-	len = last_fd_out - last_fd_in;
-	temp = ft_substr_arena(str, last_fd_in, len, &shell->arena);
-	return (temp);
+	while (str[i + j])
+	{
+		if (str[i + j] == '"' && !single_quote)
+			double_quote = !double_quote;		
+		else if (str[i + j] == '\'' && !double_quote)
+			single_quote = !single_quote;
+		else if (str[i + j] == '>' || str[i + j] == '<')
+			j = ft_size_file_name(str, i + j) + j;
+		//printf("%d\n", j);
+		str[i] = str[i + j];
+		i++;
+	}
+	str[i] = '\0';
+	//printf("str = %s\n", str);
+	return (str);
 }

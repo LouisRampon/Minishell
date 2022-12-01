@@ -89,7 +89,7 @@ int ft_fork(t_shell *sh)
 			close(sh->pipe[1]);
 		if (!sh->cmd->next) {
 			waitpid(sh->pid, &sh->pid, 0);
-			return_value = WEXITSTATUS(sh->pid);
+			g_return_value = WEXITSTATUS(sh->pid);
 			while (waitpid(-1, &sh->pid, 0) != -1)
 				;
 		}

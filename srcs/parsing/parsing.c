@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 15:18:10 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:07:13 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char **ft_str_to_arg(char *str, t_shell *shell)
 	char **temp;
 	
 	temp = ft_split_cmd(str, ' ', &shell->arena);
+	//printf("temp = %s\n", temp[0]);
 	return(temp);
 }
 
@@ -43,10 +44,12 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 		return (NULL);
 	cmd = ft_alloc(sizeof(t_command), &shell->arena);
 	cmd->fd_in = ft_fd_in(str);
+	if (cmd->fd_in == -1)
+		return (NULL);
 	cmd->fd_out = ft_fd_out(str);
-	if (return_value == P_DENIED)
-		return (cmd);
-	str = ft_clean_str(str, shell);
+	if (cmd->fd_out == -1)
+		return (NULL);
+	str = ft_clean_str(str);
 	cmd->cmd = ft_str_to_arg(str, shell);
 	cmd->next = NULL;
 	return (cmd);
@@ -72,9 +75,8 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 	arg = ft_split_quote(str, '|', &shell->arena);
 	while (i < nb_cmd)
 	{
+		//printf("ici\n");
 		new = ft_fill_cmd(arg[i], i, shell);
-		if (return_value == P_DENIED)
-			return (*shell);
 		if (previous)
 			previous->next = new;
 		else
@@ -82,6 +84,8 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 		previous = new;
 		i++;
 	}
+	// if (shell->cmd)
+	// {
 	// temp = shell->cmd;
 	// i = 0;
 	// while (temp->next)
@@ -107,5 +111,6 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 	// j = 0;
 	// printf("fd_in = %d\n", temp->fd_in);
 	// printf("fd_out = %d\n", temp->fd_out);
+	// }
 	return (*shell);
 }

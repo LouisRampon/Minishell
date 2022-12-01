@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 10:32:16 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 14:51:26 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:26:58 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 char *remoce_char(char *str, size_t pos)
 {
-	size_t len;
-
-	len = ft_strlen(str);
-	while (pos < len)
+	while (str[pos + 1])
 	{
 		str[pos] = str[pos + 1];
 		pos++;
 	}
+	str[pos] = '\0';
 	return (str);
 }
 
@@ -36,27 +34,27 @@ size_t	ft_nb_string_cmd(const char *str, char c)
 	single_quote = 0;
 	double_quote = 0;
 	i = 0;
-	tot = 0;
+	tot = 1;
 	while (str[i] && str[i] == c)
 		i++;
 	while (str[i])
 	{
 		if (str[i] == '"' && !single_quote)
 			double_quote = !double_quote;		
-		if (str[i] == '\'' && !double_quote)
+		else if (str[i] == '\'' && !double_quote)
 			single_quote = !single_quote;
 		if (str[i] == c && !single_quote && !double_quote)
 		{
 			while (str[i] && str[i] == c)
 				i++;
 			if (!str[i])
-				return (tot + 1);
+				return (tot);
 			tot++;
 		}
-		if (str[i])
+		else
 			i++;
 	}
-	return (tot + 1);
+	return (tot);
 }
 
 size_t	ft_size_str_cmd(char *str, char c, size_t j)
@@ -75,17 +73,18 @@ size_t	ft_size_str_cmd(char *str, char c, size_t j)
 			str = remoce_char(str, j);
 			double_quote = !double_quote;
 		}	
-		if (str[j] == '\'' && !double_quote)
+		else if (str[j] == '\'' && !double_quote)
 		{
 			str = remoce_char(str, j);
 			single_quote = !single_quote;
 		}
-		if (str[j] == c && !single_quote && !double_quote)
-			return (i - 1);
-		i++;
+		else if (str[j] == c && !single_quote && !double_quote)
+			return (i);
+		else
+			i++;
 		j++;
 	}
-	return (i);
+	return (i + 1);
 }
 
 char	*ft_mallocsplit_cmd(char **strs, size_t size, size_t i, t_arena *arena)
@@ -101,6 +100,7 @@ char	**ft_split_cmd(char *str, char c, t_arena *arena)
 {
 	char	**strs;
 	size_t		size_str;
+	size_t	nb_string;
 	size_t	i;
 	size_t	j;
 	size_t	k;
@@ -109,22 +109,26 @@ char	**ft_split_cmd(char *str, char c, t_arena *arena)
 		return (0);
 	i = 0;
 	j = 0;
-	strs = ft_alloc(sizeof(*strs) * (ft_nb_string_cmd(str, c) + 1), arena);
+	nb_string = ft_nb_string_cmd(str, c);
+	strs = ft_alloc(sizeof(*strs) * (nb_string + 1), arena);
 	if (!strs)
 		return (0);
-	//printf("nb string = %zu", ft_nb_string_quote(str, c));
-	while (i < ft_nb_string_cmd(str, c))
+	while (i < nb_string)
 	{
+		//printf("nb string = %zu\n", nb_string);
 		while (str[j] && str[j] == c)
 			j++;
 		size_str = ft_size_str_cmd(str, c, j);
+		//printf("size str = %zu", size_str);
 		strs[i] = ft_mallocsplit_cmd(strs, (size_str + 2), i, arena);
 		k = 0;
-		while (str[j] && k <=size_str)
+		while (str[j] && k < size_str)
 			strs[i][k++] = str[j++];
 		strs[i++][k] = '\0';
+		//printf("	str = %s\n", strs[i - 1]);
 		j++;
 	}
 	strs[i] = 0;
+	//printf("strs = %s\n", strs[0]);
 	return (strs);
 }

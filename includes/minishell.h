@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 15:35:47 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:22:01 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@
 # include <readline/history.h>
 # include <errno.h>
 
-# define P_DENIED -13
+
+# define MAX_PATH 4096
+
 # define SYNTAX_ERROR -11
 
-extern int return_value;
+
+extern int g_return_value;
 
 typedef struct s_arena
 {
@@ -103,7 +106,7 @@ int 	ft_fork(t_shell *sh);
 int		ft_pipe(t_shell *sh);
 
 //env
-t_env	*ft_new_env(char *envp);
+t_env	*ft_new_env(char *str);
 void	ft_create_env_list(t_shell *sh, char **envp);
 char	*ft_env_get(char *str, t_env *env);
 char	*ft_env_get_name(char *str, t_env *env);
@@ -145,7 +148,7 @@ size_t	ft_strlen_alnum(char *str);
 size_t 	nb_pipe(char *str);
 int		ft_pass_quote(const char *str, int i);
 
-char 	*ft_clean_str(char *str, t_shell *shell);
+char 	*ft_clean_str(char *str);
 
 
 int		ft_fd_out(char *str);
@@ -160,10 +163,8 @@ char	*replace_var_final(char *str, t_shell *shell, int i);
 char	**ft_split_immune_quote(const char *str, char c);
 char	**ft_split_quote(const char *str, char c, t_arena *arena);
 char	**ft_split_cmd(char *str, char c, t_arena *arena);
+int	ft_error_msg(int error);
 
-// redirection melanger
 // cmd bloquant + signaux bloquant
-//^c a enlever
-//droit ficher creer
 // < in abc > out > in | truc bidule | alal
 #endif

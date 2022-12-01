@@ -23,8 +23,6 @@ long int	ft_atoi(const char *str)
 	j = 1;
 	while ((str[i] > 8 && str[i] < 14) || str[i] == ' ')
 		i++;
-	if (!ft_isdigit(str[i]) && !(str[i] == '-') && !(str[i] == '-'))
-		return (0);
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
