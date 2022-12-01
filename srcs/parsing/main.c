@@ -61,7 +61,7 @@ int	main(int ac, char **argv, char **env)
 		if (ft_strlen(buff) > 0)
 		{
 			add_history(buff);
-			sh = ft_parsing(buff, &sh);
+			sh = ft_parsing(buff,  &sh);
 			ft_exec_loop(&sh);
 		}
 		ft_reset_sh(&sh);

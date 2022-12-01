@@ -144,9 +144,6 @@ void	ft_sig_ignit(int signal);
 //############## PARSING #######################
 
 //Parsing
-t_shell	ft_parsing(char *str, char **env, t_shell *shell);
-
-//Louis
 t_shell	ft_parsing(char *str, t_shell *shell);
 int		check_syntax(char *str);
 int		check_double_pipe(char *str);

@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-SRCS_PARSING_WITHOUT_PATH =
+SRCS_PARSING_WITHOUT_PATH = mainc.c							\
 							parsing.c 						\
 							check_synthax.c 				\
 							replace_var.c 					\
@@ -22,7 +22,6 @@ SRCS_PARSING_WITHOUT_PATH =
 							ft_split_pipe.c
 
 SRCS_PARSING_WITHOUT_PATH =	main.c						\
-						signal.c						\
 						parsing.c 						\
 						check_synthax.c 				\
 						replace_var.c 					\
