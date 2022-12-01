@@ -19,7 +19,6 @@ void ft_reset_sh(t_shell *sh)
 	sh->is_piped = 0;
 	sh->saved_previous_fd = 0;
 	ft_free_arena(&sh->arena);
-	//free list command and one use allocation for previous command line
 }
 
 int ft_init_sh(t_shell *sh, char **envp)
@@ -31,7 +30,6 @@ int ft_init_sh(t_shell *sh, char **envp)
 	sh->dup_std_fd[1] = dup(1);
 	sh->env = NULL;
 	ft_create_env_list(sh, envp);
-//	ft_update_saved_pwd(sh, ft_env_get("PWD", sh->env));
 	sh->saved_pwd = malloc(MAX_PATH);
 	getcwd(sh->saved_pwd, MAX_PATH);
 	if (sh->env)
@@ -47,11 +45,12 @@ int	main(int ac, char **argv, char **env)
 	(void)ac;
 	(void)argv;
 	ft_init_sh(&sh, env);
+	tcgetattr(0, &sh.old);
 	while (1)
 	{
-		ft_init_arena(&sh.arena, 10000);
-		signal(SIGINT, &ft_ctrl_c);
-		signal(SIGQUIT, SIG_IGN);
+		ft_init_arena(&sh.arena, 1000);
+		signal(SIGINT, &ft_sig_ignit);
+		ft_set_term(&sh);
 		buff = readline("minishell : ");
 		if (!buff)
 		{

@@ -79,6 +79,8 @@ void	ft_print_export(t_shell *sh)
 	t_env	*cpy;
 	t_env	*cursor;
 
+	if (!sh->env)
+		return ;
 	cpy = ft_cpy_env_list(sh->env, &sh->arena);
 	// todo error
 	ft_sort_env_list(cpy);
