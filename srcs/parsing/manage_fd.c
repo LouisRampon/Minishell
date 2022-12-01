@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 11:14:30 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:23:32 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ int	ft_fd_out_help(char *str, int fd, int i, bool in_or_out)
 		close(fd);
 	if (ft_check_file(file_name, in_or_out))
 		return (return_value);
-	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+	if (in_or_out)
+		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	else
+		fd = open(file_name, O_RDONLY | O_CREAT, S_IRWXU);
 	free(file_name);
 	return (fd);
 }

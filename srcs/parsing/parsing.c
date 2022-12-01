@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 12:01:24 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:18:10 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char **ft_str_to_arg(char *str, t_shell *shell)
 {
 	char **temp;
 	
-	temp = ft_split_quote(str, ' ', &shell->arena);
-	return(ft_trim_quote(temp, shell));
+	temp = ft_split_cmd(str, ' ', &shell->arena);
+	return(temp);
 }
 
 
@@ -52,7 +52,7 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	return (cmd);
 }
 
-t_shell	ft_parsing(char *str, char **env, t_shell *shell)
+t_shell	ft_parsing(char *str, t_shell *shell)
 {
 	t_command *previous;
 	t_command *new;
@@ -67,7 +67,7 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 	new = NULL;
 	if (check_syntax(str))
 		return (*shell);
-	str = replace_var(str, env, &shell->arena);
+	str = replace_var(str, shell);
 	nb_cmd = nb_pipe(str) + 1;
 	arg = ft_split_quote(str, '|', &shell->arena);
 	while (i < nb_cmd)
@@ -82,7 +82,7 @@ t_shell	ft_parsing(char *str, char **env, t_shell *shell)
 		previous = new;
 		i++;
 	}
-	//temp = shell->cmd;
+	// temp = shell->cmd;
 	// i = 0;
 	// while (temp->next)
 	// {

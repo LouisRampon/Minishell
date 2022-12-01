@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:11:29 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 11:59:48 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:06:38 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	check_pipe(char *str)
 			return (0);
 		i++;
 	}
-	if (c == 1 && e == 1)
+	if ((c == 1 && e == 1 ) || d == 0)
 		return (0);
 	return (1);
 }
@@ -99,7 +99,7 @@ int	check_syntax(char *str)
 		return (ft_error_msg(SYNTAX_ERROR));
 	if (check_quote(str))
 		return (ft_error_msg(SYNTAX_ERROR));
-	if (check_pipe(str))
-		return (ft_error_msg(SYNTAX_ERROR));
+	// if (check_pipe(str))
+	// 	return (ft_error_msg(SYNTAX_ERROR));
 	return (0);
 }
