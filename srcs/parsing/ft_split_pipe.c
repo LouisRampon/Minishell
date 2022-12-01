@@ -6,9 +6,10 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 10:32:16 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 14:44:49 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:54:30 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include"../../includes/minishell.h"
 #include <stdio.h>
@@ -68,17 +69,17 @@ size_t	ft_size_str_quote(const char *str, char c, size_t j)
 char	*ft_mallocsplit_quote(char **strs, size_t size, size_t i, t_arena *arena)
 {
 	strs[i] = ft_alloc(sizeof(**strs) * size, arena);
-	if (!strs[i])
-	{
-		while (i >= 0)
-		{
-			free(strs[i]);
-			i--;
-		}
-		free(strs);
-		return (0);
-	}
-	else
+	// if (!strs[i])
+	// {
+	// 	while (i >= 0)
+	// 	{
+	// 		free(strs[i]);
+	// 		i--;
+	// 	}
+	// 	free(strs);
+	// 	return (0);
+	// }
+
 		return (strs[i]);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 11:53:14 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:22:01 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,9 @@ void	ft_sig_ignit(int signal);
 
 //Parsing
 t_shell	ft_parsing(char *str, char **env, t_shell *shell);
+
+//Louis
+t_shell	ft_parsing(char *str, t_shell *shell);
 int		check_syntax(char *str);
 int		check_double_pipe(char *str);
 
@@ -153,7 +156,7 @@ size_t	ft_strlen_alnum(char *str);
 size_t 	nb_pipe(char *str);
 int		ft_pass_quote(const char *str, int i);
 
-char 	*ft_clean_str(char *str, t_shell *shell);
+char 	*ft_clean_str(char *str);
 
 
 int		ft_fd_out(char *str);
@@ -161,11 +164,17 @@ int		ft_fd_in(char *str);
 int		ft_fd_out_help(char *str, int fd, int i, bool in_or_out);
 
 char	*find_var_name(char *str, int i, t_arena *arena);
-char	*replace_var_help(char *var_name, char **env);
+char	*replace_var_help(char *var_name, t_env *env);
 char	 *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena);
-char	*replace_var(char *str, char **env, t_arena *arena);
-char	*replace_var_final(char *str, char **env, int i, t_arena *arena);
+char	*replace_var(char *str, t_shell *shell);
+char	*replace_var_final(char *str, t_shell *shell, int i);
 char	**ft_split_immune_quote(const char *str, char c);
 char	**ft_split_quote(const char *str, char c, t_arena *arena);
+char	**ft_split_cmd(char *str, char c, t_arena *arena);
+int	ft_error_msg(int error);
+
+
+// cmd bloquant + signaux bloquant
+// < in abc > out > in | truc bidule | alal
 
 #endif

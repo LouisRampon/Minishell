@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 17:08:44 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:38:08 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,26 @@ char	*find_var_name(char *str, int i, t_arena *arena)
 	return (var_name);
 }
 
-char	*replace_var_help(char *var_name, char **env)
+char	*replace_var_help(char *var_name, t_env *env)
 {
 	int	i;
+	t_env *temp;
 
 	i = 0;
-	while(env[i])
+	temp = env;
+	while(temp->next)
 	{
-		if (!ft_strncmp(env[i], var_name, ft_strlen(var_name)))
-			return (&env[i][ft_strlen(var_name) + 1]);
-		i++;
+		if (!ft_strncmp(temp->name, var_name, ft_strlen(var_name) + 1))
+		{
+			//printf("temp value =%s\n", temp->value);
+			return (temp->value);
+		}
+		temp = temp->next;
+	}
+	if (!ft_strncmp(temp->name, var_name, ft_strlen(var_name)))
+	{
+	//	printf("temp value =%s\n", temp->value);
+		return (temp->value);
 	}
 	return ("\0");
 }
@@ -56,7 +66,7 @@ char *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena)
 
 	j = 0;
 	final = ft_alloc(sizeof(final) * (size + 1), arena);
-	while (j < i)
+	while (str[j] != '$')
 	{
 		final[j] = str[j];
 		j++;
@@ -81,7 +91,7 @@ char *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena)
 	return (final);
 }
 
-char	*replace_var_final(char *str, char **env, int i, t_arena *arena)
+char	*replace_var_final(char *str, t_shell *shell, int i)
 {
 	char *var_name;
 	char *var_value;
@@ -89,51 +99,51 @@ char	*replace_var_final(char *str, char **env, int i, t_arena *arena)
 	int size;
 	
 	size = 0;
-	var_name = find_var_name(str, i + 1, arena);
+	var_name = find_var_name(str, i + 1, &shell->arena);
 	//printf("var_name = %s\n", var_name);
-	var_value = replace_var_help(var_name, env);
+	var_value = replace_var_help(var_name, shell->env);
 	//printf("var_value = %s\n", var_value);
 	if (var_value)
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) + 1;
-		final = ft_fill_final(str, var_value, size, i, arena);
+		final = ft_fill_final(str, var_value, size, i, &shell->arena);
 	}
 	else
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + 1;
-		final = ft_fill_final(str, 0, size, i, arena);
+		final = ft_fill_final(str, NULL, size, i, &shell->arena);
 	}
 	return (final);
 }
 
-char	*replace_var(char *str, char **env, t_arena *arena)
+char	*replace_var(char *str, t_shell *shell)
 {
 	int	i;
-	char *temp;
+	bool single_quote;
+	bool double_quote;
 
-	i = 1;
-	if (str[0] == '$')
+	i = 0;
+	single_quote = 0;
+	double_quote = 0;
+	while(str[i])
 	{
-			temp = replace_var_final(str, env, 0, arena);
-			str = temp;
-	}
-	if (str[0] == '\'')
-	{
-		i = ft_pass_quote(str, i);
-	}
-	while (str[i])
-	{
-		if (str[i] == '\'')
+		if (str[i] == '"' && !single_quote)
+			double_quote = !double_quote;
+		else if (str[i] == '\'' && !double_quote)
+			single_quote = !single_quote;
+		if (str[i] == '$' && !single_quote)
 		{
-			i = ft_pass_quote(str, i);
-		}
-		if (str[i] == '$' && str[i + 1])
-		{
-			temp = replace_var_final(str, env, i, arena);
-			str = temp;
+			if (!str[i + 1])
+				return (str);
+			if (str[i + 1] == '?')
+				str = ft_fill_final(str, ft_itoa(g_return_value), 
+					ft_strlen(ft_itoa(g_return_value)), i, &shell->arena);
+			else
+				str = replace_var_final(str, shell, i);
 			i = 0;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (str);
 }

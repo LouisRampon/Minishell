@@ -6,13 +6,11 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 11:47:12 by lorampon          #+#    #+#              #
-#    Updated: 2022/11/30 11:13:27 by lorampon         ###   ########.fr        #
+#    Updated: 2022/12/01 14:30:02 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-
-SRCS_MAIN_WITHOUT_PATH = main.c	\
 
 SRCS_PARSING_WITHOUT_PATH =
 							parsing.c 						\
@@ -22,6 +20,17 @@ SRCS_PARSING_WITHOUT_PATH =
 							clean_function.c				\
 							manage_fd.c						\
 							ft_split_pipe.c
+
+SRCS_PARSING_WITHOUT_PATH =	main.c						\
+						signal.c						\
+						parsing.c 						\
+						check_synthax.c 				\
+						replace_var.c 					\
+						parsing_help.c					\
+						clean_function.c				\
+						manage_fd.c						\
+						ft_split_pipe.c					\
+						ft_split_cmd.c
 
 SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
 						ft_del_env.c					\
@@ -93,7 +102,7 @@ HEADER =	$(addprefix $(PATH_TO_HEADER), $(HEADER_WITHOUT_PATH))
 
 	######### COMMANDS ###########
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
 RM = rm -rf
 READLINE_LIB = -lreadline
 READLINE_HOMEBREW_LIB = -L ~/.brew/opt/readline/lib

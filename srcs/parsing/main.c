@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/29 16:38:05 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 13:55:24 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	main(int ac, char **argv, char **env)
 		ft_init_arena(&sh.arena, 1000);
 		signal(SIGINT, &ft_sig_ignit);
 		ft_set_term(&sh);
-		buff = readline("minishell : ");
+		ft_init_arena(&sh.arena, 10000);
+		buff = readline("minishell: ");
 		if (!buff)
 		{
 			printf("exit\n");
@@ -60,7 +61,7 @@ int	main(int ac, char **argv, char **env)
 		if (ft_strlen(buff) > 0)
 		{
 			add_history(buff);
-			sh = ft_parsing(buff, env, &sh);
+			sh = ft_parsing(buff, &sh);
 			ft_exec_loop(&sh);
 		}
 		ft_reset_sh(&sh);
