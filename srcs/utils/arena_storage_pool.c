@@ -29,11 +29,6 @@ void	ft_free_arena(t_arena *arena)
 	arena->cursor = 0;
 }
 
-void	ft_reset_arena(t_arena *arena)
-{
-	arena->cursor = 0;
-}
-
 void	ft_arena_realloc(t_arena *arena, size_t size)
 {
 	void *tmp;

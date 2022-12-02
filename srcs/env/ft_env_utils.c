@@ -23,7 +23,7 @@ int ft_check_char_index(char *str, char c)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 
@@ -59,39 +59,46 @@ int ft_only_equal(char *str)
 	return (0);
 }
 
-int ft_check_valid_indentifier(char *str)
+int ft_check_valid_indentifier(char *str, int flag)
 {
 	int		i;
-	size_t	count;
 
 	i = 0;
-	count = 0;
 	if (ft_only_equal(str) == 1 || ft_isdigit(str[i]) == 1)
+		return (0);
+	if (ft_check_char(str, '=') == 1 && flag == 2)
 		return (0);
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == '=' || \
-			str[i] == 32 || str[i] == '/')
-			count++;
+		if (str[i] == '=')
+			return (1);
+		if (!(ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == ' '))
+			return (0);
 		i++;
 	}
-	if (count == ft_strlen(str))
-		return (1);
-	return (0);
+	return (1);
 }
 
-int ft_parse_export_arg(char **tab)
+int ft_parse_export_arg(char *str, t_arena *arena, int code)
 {
 	int 	i;
+	int		index;
+	char	*temp;
 
-	i = 1;
-	while (tab[i])
+	i = 0;
+	while (str[i])
 	{
-		if (ft_check_valid_indentifier(tab[i]) == 1)
-			return (1);
+		index = ft_check_char_index(str, '=');
+		if (index != -1)
+		{
+			temp = ft_substr_arena(str, 0, index, arena);
+			if (temp && code == 1)
+				 return(ft_check_valid_indentifier(temp, code));
+		}
 		else
-			printf("bad identifier\n");
+			return(ft_check_valid_indentifier(str, code));
 		i++;
+
 	}
 	return (0);
 }

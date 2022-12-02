@@ -52,7 +52,7 @@ void	ft_manage_pwd(t_shell *sh)
 		ft_update_env(sh, 1);
 	ptr2 = ft_env_get_struct("PWD", sh->env);
 	if (ptr2)
-		getcwd(ptr2->value, 4096);
+		ptr2->value = getcwd(NULL, 4096);
 	else
 		ft_update_env(sh, 2);
 	getcwd(sh->saved_pwd, 4096);

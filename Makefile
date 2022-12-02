@@ -12,8 +12,16 @@
 
 NAME = minishell
 
+SRCS_PARSING_WITHOUT_PATH = mainc.c							\
+							parsing.c 						\
+							check_synthax.c 				\
+							replace_var.c 					\
+							parsing_help.c					\
+							clean_function.c				\
+							manage_fd.c						\
+							ft_split_pipe.c
+
 SRCS_PARSING_WITHOUT_PATH =	main.c						\
-						signal.c						\
 						parsing.c 						\
 						check_synthax.c 				\
 						replace_var.c 					\
@@ -22,14 +30,13 @@ SRCS_PARSING_WITHOUT_PATH =	main.c						\
 						manage_fd.c						\
 						ft_split_pipe.c					\
 						ft_split_cmd.c
-						
 
 SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
 						ft_del_env.c					\
 						ft_env_get.c					\
 						ft_env_list_to_tab.c 			\
 						ft_env_utils.c					\
-						ft_init_env_list.c										
+						ft_init_env_list.c
 									
 SRCS_BUILT_IN_WITHOUT_PATH =	cd.c					\
 								exit.c					\
@@ -38,7 +45,7 @@ SRCS_BUILT_IN_WITHOUT_PATH =	cd.c					\
 								export.c				\
 								ft_print_export.c		\
 								unset.c					\
-								pwd.c					
+								pwd.c
 				
 SRCS_EXEC_WITHOUT_PATH =	ft_check_cmd.c				\
 							ft_exec_built_in.c			\
@@ -51,7 +58,8 @@ SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_strjoin_arena.c			\
 							ft_split_arena.c			\
 							ft_strdup_arena.c			\
-							ft_substr_arena.c
+							ft_substr_arena.c			\
+							ft_signal.c
 
 OBJS_SRCS_PARSING_WITHOUT_PATH = $(SRCS_PARSING_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_ENV_WITHOUT_PATH = $(SRCS_ENV_WITHOUT_PATH:.c=.o)

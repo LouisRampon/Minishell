@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include"../../includes/minishell.h"
-#include <stdio.h>
 
 char *remoce_char(char *str, size_t pos)
 {

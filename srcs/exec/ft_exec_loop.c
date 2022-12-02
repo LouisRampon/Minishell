@@ -42,58 +42,60 @@ int ft_set_fd(t_shell *sh)
 
 int	ft_exec(t_shell *sh)
 {
-	ft_check_cmd(sh);
-//	if ( == 1)
-//	{
-		char **tab;
+	char **tab;
 
-		tab = ft_env_list_to_tab(sh);
-		ft_set_fd(sh);
-		if (is_built_in(sh->cmd) == 1)
-		{
-			ft_exec_built_in(sh);
-			exit(0);
-		}
-		if (execve(sh->cmd->path, sh->cmd->cmd, tab) == -1)
-		{
-			ft_free_tab(tab);
-			if (ft_strchr(sh->cmd->path, '/'))
-			{
-				ft_perror_exit("minishell: No such file or directory", 1);
-			}
-			else
-			{
-				ft_perror_exit("minishell: command not found", 1);
-			}
-		}
-		return (1);
-//	}
-//	return (0);
+	tab = ft_env_list_to_tab(sh);
+	ft_check_cmd(sh);
+	ft_set_fd(sh);
+	if (is_built_in(sh->cmd) == 1)
+	{
+		ft_exec_built_in(sh);
+		exit(0);
+	}
+	if (execve(sh->cmd->path, sh->cmd->cmd, tab) == -1)
+	{
+		ft_free_tab(tab);
+		if (ft_strchr(sh->cmd->path, '/'))
+			ft_perror_exit("minishell: No such file or directory", 1);
+		else
+			ft_perror_exit("minishell: command not found", 1);
+	}
+	return (1);
+}
+
+void	ft_wait_child(t_shell *sh)
+{
+	int	sig;
+
+	if (sh->pipe[0] != 0)
+		close(sh->pipe[0]);
+	if (sh->pipe[1] != 1)
+		close(sh->pipe[1]);
+	if (!sh->cmd->next)
+	{
+		waitpid(sh->pid, &sh->pid, 0);
+		g_return_value = WEXITSTATUS(sh->pid);
+		sig = ft_signal_handle(sh->pid);
+		while (waitpid(-1, &sh->pid, 0) != -1)
+			if (!sig)
+				sig = ft_signal_handle(sh->pid);
+	}
 }
 
 int ft_fork(t_shell *sh)
 {
+	ft_unset_term(sh);
+	signal(SIGINT, &ft_signal_reset);
+	signal(SIGQUIT, &ft_signal_reset);
 	sh->pid = fork();
 	if (sh->pid == 0)
-	{
-		if (ft_exec(sh) == 1)
-			;
-		else
-			ft_perror_exit("minishell: command not found", 1);
-	}
+		ft_exec(sh);
 	else if (sh->pid > 0)
 	{
-		if (sh->pipe[0] != 0)
-			close(sh->pipe[0]);
-		if (sh->pipe[1] != 1)
-			close(sh->pipe[1]);
-		if (!sh->cmd->next) {
-			waitpid(sh->pid, &sh->pid, 0);
-			g_return_value = WEXITSTATUS(sh->pid);
-			while (waitpid(-1, &sh->pid, 0) != -1)
-				;
-		}
+		ft_wait_child(sh);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	return (1);
 	// todo else error
 }
@@ -115,7 +117,8 @@ int	ft_pipe(t_shell *sh)
 	return (1);
 }
 
-void ft_fd_reset(t_shell *sh) {
+void ft_fd_reset(t_shell *sh)
+{
 	ft_dup2_close(sh->dup_std_fd[0], 0);
 	sh->dup_std_fd[0] = dup(0);
 	ft_dup2_close(sh->dup_std_fd[1], 1);
