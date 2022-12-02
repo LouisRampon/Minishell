@@ -6,31 +6,25 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:29:21 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/01 15:30:42 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:01:13 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_size_file_name(char *str, int i)
+int	ft_size_file_name(char *str)
 {
-	char c;
-	int	size;
+	int i;
+	//int size;
 
-	size = 0;
-	c = str[i];
+	i = 0;
+	//printf("str = %s\n", str);
 	i++;
 	while (str[i] && str[i] == ' ')
-	{
 		i++;
-		size++;
-	}
 	while (str[i] && ft_isalnum(str[i]))
-	{
-		size++;
 		i++;
-	}
-	return (size + 1);
+	return (i);
 }
 
 char *ft_clean_str(char *str)
@@ -52,11 +46,16 @@ char *ft_clean_str(char *str)
 			double_quote = !double_quote;		
 		else if (str[i + j] == '\'' && !double_quote)
 			single_quote = !single_quote;
-		else if (str[i + j] == '>' || str[i + j] == '<')
-			j = ft_size_file_name(str, i + j) + j;
-		//printf("%d\n", j);
+		else if ((str[i + j] == '>' && str[i + j + 1] == '>' )&& !double_quote && !single_quote)
+			j = ft_size_file_name(&str[i + j + 1]) + j + 1;
+		else if ((str[i + j] == '<' && str[i + j + 1] == '<') && !double_quote && !single_quote)
+			j = ft_size_file_name(&str[i + j + 1]) + j + 1;
+		else if ((str[i + j] == '>' || str[i + j] == '<') && !double_quote && !single_quote)
+			j = ft_size_file_name(&str[i + j]) + j;
+		//printf("str = %s   %d\n",str,  i + j);
 		str[i] = str[i + j];
-		i++;
+		if(!(str[i] == '>' || str[i] == '<') || double_quote || single_quote)
+			i++;
 	}
 	str[i] = '\0';
 	//printf("str = %s\n", str);

@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/01 16:08:51 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:08:47 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ char 	*ft_clean_str(char *str);
 
 int		ft_fd_out(char *str);
 int		ft_fd_in(char *str);
-int		ft_fd_out_help(char *str, int fd, int i, bool in_or_out);
+int		ft_fd_out_help(char *str, int fd, int i, int param);
 
 char	*find_var_name(char *str, int i, t_arena *arena);
 char	*replace_var_help(char *var_name, t_env *env);
@@ -168,6 +168,7 @@ char	*replace_var_final(char *str, t_shell *shell, int i);
 char	**ft_split_quote(const char *str, char c, t_arena *arena);
 char	**ft_split_cmd(char *str, char c, t_arena *arena);
 int		ft_error_msg(int error);
+int		ft_heredoc(char *delimiter);
 
 
 // cmd bloquant + signaux bloquant
