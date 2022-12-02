@@ -12,26 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-t_env	*ft_new_env_bis(char *str, t_env *ptr)
-{
-	t_env *env;
-	char **temp;
-
-	env = malloc(sizeof(t_env));
-	if (env == NULL)
-		return (NULL);
-	env->next = ptr;
-	temp = ft_split(str, '=');
-	env->name = temp[0];
-	if (ft_check_char(str, '=') && !temp[1])
-		env->value = ft_calloc(1,1);
-	else
-		env->value = temp[1];
-	free(temp);
-	return (env);
-	//todo free and check error
-}
-
 void	ft_create_first_elem(t_shell *sh, char *envp)
 {
 	t_env	*new;
