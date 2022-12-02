@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/01 15:22:01 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:08:51 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,9 @@ char	*replace_var_help(char *var_name, t_env *env);
 char	 *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena);
 char	*replace_var(char *str, t_shell *shell);
 char	*replace_var_final(char *str, t_shell *shell, int i);
-char	**ft_split_immune_quote(const char *str, char c);
 char	**ft_split_quote(const char *str, char c, t_arena *arena);
 char	**ft_split_cmd(char *str, char c, t_arena *arena);
-int	ft_error_msg(int error);
+int		ft_error_msg(int error);
 
 // cmd bloquant + signaux bloquant
 // < in abc > out > in | truc bidule | alal
