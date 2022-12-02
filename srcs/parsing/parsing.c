@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/01 16:07:13 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:00:37 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	cmd->fd_out = ft_fd_out(str);
 	if (cmd->fd_out == -1)
 		return (NULL);
+	//printf("str = %s\n", str);
 	str = ft_clean_str(str);
+	//printf("str = %s\n", str);
+	str = replace_var(str, shell);
 	cmd->cmd = ft_str_to_arg(str, shell);
 	cmd->next = NULL;
 	return (cmd);
@@ -70,7 +73,7 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 	new = NULL;
 	if (check_syntax(str))
 		return (*shell);
-	str = replace_var(str, shell);
+	//str = replace_var(str, shell);
 	nb_cmd = nb_pipe(str) + 1;
 	arg = ft_split_quote(str, '|', &shell->arena);
 	while (i < nb_cmd)

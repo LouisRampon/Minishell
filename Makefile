@@ -6,20 +6,11 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 11:47:12 by lorampon          #+#    #+#              #
-#    Updated: 2022/12/01 14:30:02 by lorampon         ###   ########.fr        #
+#    Updated: 2022/12/02 15:10:20 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-
-SRCS_PARSING_WITHOUT_PATH = mainc.c							\
-							parsing.c 						\
-							check_synthax.c 				\
-							replace_var.c 					\
-							parsing_help.c					\
-							clean_function.c				\
-							manage_fd.c						\
-							ft_split_pipe.c
 
 SRCS_PARSING_WITHOUT_PATH =	main.c						\
 						parsing.c 						\
@@ -29,7 +20,8 @@ SRCS_PARSING_WITHOUT_PATH =	main.c						\
 						clean_function.c				\
 						manage_fd.c						\
 						ft_split_pipe.c					\
-						ft_split_cmd.c
+						ft_split_cmd.c					\
+						heredoc.c
 
 SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
 						ft_del_env.c					\
@@ -59,7 +51,7 @@ SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_split_arena.c			\
 							ft_strdup_arena.c			\
 							ft_substr_arena.c			\
-							ft_signal.c
+							ft_signal.c					
 
 OBJS_SRCS_PARSING_WITHOUT_PATH = $(SRCS_PARSING_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_ENV_WITHOUT_PATH = $(SRCS_ENV_WITHOUT_PATH:.c=.o)
