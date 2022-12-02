@@ -51,7 +51,6 @@ int	main(int ac, char **argv, char **env)
 		ft_init_arena(&sh.arena, 1000);
 		signal(SIGINT, &ft_sig_ignit);
 		ft_set_term(&sh);
-		ft_init_arena(&sh.arena, 10000);
 		buff = readline("minishell: ");
 		if (!buff)
 		{

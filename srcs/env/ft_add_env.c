@@ -30,15 +30,6 @@ void	ft_modify_env_value(t_env *ptr, char *new_value, int is_equal)
 	//todo check error
 }
 
-//void	first_elem(t_env *ptr, char *str)
-//{
-//	t_env	*new;
-//
-//	new = NULL;
-//	new = ft_new_env(str);
-//	ptr->next = new;
-//}
-
 void	push_back_env(t_env *ptr, char *str)
 {
 	t_env *cursor;

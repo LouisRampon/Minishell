@@ -49,7 +49,6 @@ void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena)
 	}
 }
 
-
 void	ft_export(t_shell *sh)
 {
 	t_command	*ptr;
