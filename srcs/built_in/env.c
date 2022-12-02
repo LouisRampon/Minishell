@@ -16,7 +16,6 @@ void	ft_env(t_shell *sh)
 {
 	t_env	*ptr;
 
-	//protect env
 	if (sh->env)
 	{
 		ptr = sh->env;
