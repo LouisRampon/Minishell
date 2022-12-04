@@ -64,7 +64,9 @@ void	ft_manage_pwd(t_shell *sh)
 		ft_update_env(sh, 1);
 	ptr2 = ft_env_get_struct("PWD", sh->env);
 	if (ptr2)
-		 getcwd(ptr2->value, 4096);
+	{
+		ptr2->value = getcwd(0, 4096); //to fix leaks
+	}
 	else
 		ft_update_env(sh, 2);
 	getcwd(sh->saved_pwd, 4096);
@@ -72,6 +74,11 @@ void	ft_manage_pwd(t_shell *sh)
 
 void	ft_cd(t_shell *sh)
 {
+	if (sh->cmd->cmd[2])
+	{
+		printf ("minishell: cd: too many argunents\n");
+		return ;
+	}
 	if (!sh->cmd->cmd[1] || sh->cmd->cmd[1][0] == '~')
 	{
 		if (chdir(sh->home) == -1)

@@ -61,7 +61,7 @@ int	main(int ac, char **argv, char **env)
 		{
 			add_history(buff);
 			sh = ft_parsing(buff,  &sh);
-			ft_exec_loop(&sh);
+			//ft_exec_loop(&sh);
 		}
 		ft_reset_sh(&sh);
 		free(buff);

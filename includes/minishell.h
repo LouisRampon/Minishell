@@ -136,7 +136,7 @@ void	ft_free_tab(char **tab);
 void	ft_perror(char *str);
 void	ft_perror_exit(char *str, int code);
 void 	rl_replace_line (const char *text, int clear_undo);
-int	 	ft_only_equal(char *str);
+int	 	ft_only_char(char *str, char c);
 int 	ft_check_char_index(char *str, char c);
 int 	ft_check_char(char *str, char c);
 void	ft_set_term(t_shell *shell);

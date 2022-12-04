@@ -12,20 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-//t_env	*ft_new_env(char *name, char *value)
-//{
-//	t_env *env;
-//
-//	env = malloc(sizeof(t_env));
-//	if (env == NULL)
-//		return (NULL);
-//	env->next = NULL;
-//	env->name = ft_strdup(name);
-//	env->value = ft_strdup(value);
-//	return (env);
-//	//todo free and check error
-//}
-
 t_env	*ft_new_env(char *str)
 {
 	t_env *env;

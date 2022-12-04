@@ -23,6 +23,8 @@ void	ft_unset(t_shell *sh)
 	{
 		if (ft_parse_export_arg(sh->cmd->cmd[i], &sh->arena, 2) == 1)
 			ft_del_env(sh->cmd->cmd[i], sh);
+		else
+			printf("bad identifier\n");
 		i++;
 	}
 }

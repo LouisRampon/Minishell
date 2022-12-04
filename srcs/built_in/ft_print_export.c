@@ -82,18 +82,16 @@ void	ft_print_export(t_shell *sh)
 	if (!sh->env)
 		return ;
 	cpy = ft_cpy_env_list(sh->env, &sh->arena);
-	// todo error
+	if (!cpy)
+		return ;
 	ft_sort_env_list(cpy);
 	cursor = cpy;
-	if (cpy)
+	while (cursor)
 	{
-		while (cursor)
-		{
-			if (cursor->value)
-				printf("declare -x %s=\"%s\"\n", cursor->name, cursor->value);
-			else
-				printf("declare -x %s\n", cursor->name);
-			cursor = cursor->next;
-		}
+		if (cursor->value)
+			printf("declare -x %s=\"%s\"\n", cursor->name, cursor->value);
+		else
+			printf("declare -x %s\n", cursor->name);
+		cursor = cursor->next;
 	}
 }

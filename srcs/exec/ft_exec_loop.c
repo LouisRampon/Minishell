@@ -133,6 +133,8 @@ int ft_exec_loop(t_shell *sh)
 
 	while (sh->cmd)
 	{
+		if (ft_only_char(sh->cmd->cmd[0], ' '))
+			return (-1); //peut etre s'en occuper au parsing
 		ft_pipe(sh);
 		if (sh->is_piped == 0 && is_built_in(sh->cmd) == 1)
 		{
