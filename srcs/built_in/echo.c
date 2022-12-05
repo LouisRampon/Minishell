@@ -38,6 +38,7 @@ void	ft_echo(char **av)
 	int	i;
 	int	new_line;
 
+	g_return_value = 0;
 	new_line = 1;
 	i = check_param(av, &new_line);
 	while (av[i])

@@ -71,7 +71,7 @@ int	ft_check_valid_indentifier(char *str, int flag)
 	{
 		if (str[i] == '=')
 			return (1);
-		if (!(ft_isalnum(str[i]) == 1 || str[i] == '_' || str[i] == ' '))
+		if (!(ft_isalnum(str[i]) == 1 || str[i] == '_'))
 			return (0);
 		i++;
 	}

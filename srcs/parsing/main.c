@@ -18,7 +18,7 @@ void ft_reset_sh(t_shell *sh)
 {
 	sh->is_piped = 0;
 	sh->saved_previous_fd = 0;
-	ft_free_arena(&sh->arena);
+	ft_free_arena(sh->arena);
 }
 
 int ft_init_sh(t_shell *sh, char **envp)
@@ -48,7 +48,7 @@ int	main(int ac, char **argv, char **env)
 	tcgetattr(0, &sh.old);
 	while (1)
 	{
-		ft_init_arena(&sh.arena, 1000);
+		ft_init_arena(&sh, ARENA_SIZE);
 		signal(SIGINT, &ft_sig_ignit);
 		ft_set_term(&sh);
 		buff = readline("minishell: ");
@@ -61,7 +61,7 @@ int	main(int ac, char **argv, char **env)
 		{
 			add_history(buff);
 			sh = ft_parsing(buff,  &sh);
-			//ft_exec_loop(&sh);
+			ft_exec_loop(&sh);
 		}
 		ft_reset_sh(&sh);
 		free(buff);

@@ -38,7 +38,7 @@ char	*ft_make_env_name(char *str)
 		free(temp);
 	}
 	else
-		ft_perror_exit("Malloc error", 1);
+		printf("Malloc error");
 	return (name);
 }
 

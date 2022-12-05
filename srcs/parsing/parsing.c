@@ -20,7 +20,7 @@ char **ft_trim_quote(char **strs, t_shell *shell)
 	while (strs[i])
 	{
 		if (strs[i][0] == '\"' && strs[i][ft_strlen(strs[i]) - 1] == '\"')
-			strs[i] = ft_substr_arena(strs[i], 1, ft_strlen(strs[i]) - 2, &shell->arena);
+			strs[i] = ft_substr_arena(strs[i], 1, ft_strlen(strs[i]) - 2, shell->arena);
 		i++;
 	}
 	return (strs);
@@ -29,7 +29,7 @@ char **ft_str_to_arg(char *str, t_shell *shell)
 {
 	char **temp;
 	
-	temp = ft_split_cmd(str, ' ', &shell->arena);
+	temp = ft_split_cmd(str, ' ', shell->arena);
 	//printf("temp = %s\n", temp[0]);
 	return(temp);
 }
@@ -42,7 +42,7 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	(void)i;
 	if (!str)
 		return (NULL);
-	cmd = ft_alloc(sizeof(t_command), &shell->arena);
+	cmd = ft_alloc(sizeof(t_command), shell->arena);
 	cmd->fd_in = ft_fd_in(str);
 	if (cmd->fd_in == -1)
 		return (NULL);
@@ -75,7 +75,7 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 		return (*shell);
 	//str = replace_var(str, shell);
 	nb_cmd = nb_pipe(str) + 1;
-	arg = ft_split_quote(str, '|', &shell->arena);
+	arg = ft_split_quote(str, '|', shell->arena);
 	while (i < nb_cmd)
 	{
 		//printf("ici\n");
