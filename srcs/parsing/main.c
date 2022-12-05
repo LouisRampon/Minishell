@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/01 13:55:24 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:38:19 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int ac, char **argv, char **env)
 		{
 			add_history(buff);
 			sh = ft_parsing(buff,  &sh);
-			ft_exec_loop(&sh);
+			//ft_exec_loop(&sh);
 		}
 		ft_reset_sh(&sh);
 		free(buff);

@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/02 15:08:47 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:38:45 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,6 @@ int		ft_heredoc(char *delimiter);
 
 // cmd bloquant + signaux bloquant
 // < in abc > out > in | truc bidule | alal
-
+//signaux heredoc
+// ctrl d dans heredoc pas un siganl buff vide
 #endif
