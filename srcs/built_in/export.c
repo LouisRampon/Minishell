@@ -54,6 +54,7 @@ void	ft_export(t_shell *sh)
 	t_command	*ptr;
 	int 		i;
 
+	g_return_value = 0;
 	if (!sh->cmd->cmd[1])
 	{
 		ft_print_export(sh);
@@ -62,16 +63,15 @@ void	ft_export(t_shell *sh)
 	ptr = sh->cmd;
 	if (!sh->env)
 	{
-		ft_inset_first_elem(sh, ptr->cmd, &sh->arena);
+		ft_inset_first_elem(sh, ptr->cmd, sh->arena);
 		return ;
 	}
-	i = 1;
-	while(ptr->cmd[i])
+	i = 0;
+	while(ptr->cmd[++i])
 	{
-		if (ft_parse_export_arg(ptr->cmd[i], &sh->arena, 1) == 1)
+		if (ft_parse_export_arg(ptr->cmd[i], sh->arena, 1) == 1)
 			ft_add_env(ptr->cmd[i], sh);
 		else
-			printf("bad identifier\n");
-		i++;
+			ft_perror("export: ", ptr->cmd[i], "not a valid identifier", 1);
 	}
 }
