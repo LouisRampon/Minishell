@@ -107,12 +107,14 @@ void	ft_check_validity(t_shell *sh);
 //set_env
 t_env	*ft_new_env(char *str);
 void	ft_create_env_list(t_shell *sh, char **envp);
+void	ft_create_first_elem(t_shell *sh, char *envp);
 char	*ft_make_env_name(char *str);
 char	*ft_make_env_value(char *str);
 void	ft_add_env(char *str, t_shell *sh);
 void	push_back_env(t_env *ptr, char *str);
 void	ft_modify_env_value(t_env *ptr, char *str, int is_equal);
 void	ft_last_list_elem(t_env **ptr);
+void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena);
 //env_search
 char	*ft_env_get(char *str, t_env *env);
 char	*ft_env_get_name(char *str, t_env *env);
@@ -126,6 +128,7 @@ char	**ft_env_list_to_tab(t_shell *sh);
 int 	ft_parse_export_arg(char *str, t_arena *arena, int flag);
 int 	ft_check_valid_indentifier(char *str, int flag);
 
+
 void	ft_print_export(t_shell *sh);
 
 //utils
@@ -133,7 +136,8 @@ void	ft_free_tab(char **tab);
 void	ft_perror(char *str);
 void	ft_perror_exit(char *str, int code);
 void 	rl_replace_line (const char *text, int clear_undo);
-int	 	ft_only_equal(char *str);
+int	 	ft_only_char(char *str, char c);
+int 	ft_check_char_index(char *str, char c);
 int 	ft_check_char(char *str, char c);
 void	ft_set_term(t_shell *shell);
 void	ft_unset_term(t_shell *shell);

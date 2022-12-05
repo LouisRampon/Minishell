@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int ft_check_char_index(char *str, char c)
+int	ft_check_char_index(char *str, char c)
 {
 	int	i;
 
@@ -26,8 +26,7 @@ int ft_check_char_index(char *str, char c)
 	return (-1);
 }
 
-
-int ft_check_char(char *str, char c)
+int	ft_check_char(char *str, char c)
 {
 	int	i;
 
@@ -41,7 +40,7 @@ int ft_check_char(char *str, char c)
 	return (0);
 }
 
-int ft_only_equal(char *str)
+int	ft_only_char(char *str, char c)
 {
 	int		i;
 	size_t	count;
@@ -50,7 +49,7 @@ int ft_only_equal(char *str)
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '=')
+		if (str[i] == c)
 			count++;
 		i++;
 	}
@@ -59,12 +58,12 @@ int ft_only_equal(char *str)
 	return (0);
 }
 
-int ft_check_valid_indentifier(char *str, int flag)
+int	ft_check_valid_indentifier(char *str, int flag)
 {
 	int		i;
 
 	i = 0;
-	if (ft_only_equal(str) == 1 || ft_isdigit(str[i]) == 1)
+	if (ft_only_char(str, '=') == 1 || ft_isdigit(str[i]) == 1)
 		return (0);
 	if (ft_check_char(str, '=') == 1 && flag == 2)
 		return (0);
@@ -85,20 +84,18 @@ int ft_parse_export_arg(char *str, t_arena *arena, int code)
 	int		index;
 	char	*temp;
 
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		index = ft_check_char_index(str, '=');
 		if (index != -1)
 		{
 			temp = ft_substr_arena(str, 0, index, arena);
 			if (temp && code == 1)
-				 return(ft_check_valid_indentifier(temp, code));
+				 return (ft_check_valid_indentifier(temp, code));
 		}
 		else
-			return(ft_check_valid_indentifier(str, code));
-		i++;
-
+			return (ft_check_valid_indentifier(str, code));
 	}
 	return (0);
 }

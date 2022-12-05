@@ -88,12 +88,15 @@ int ft_fork(t_shell *sh)
 	signal(SIGINT, &ft_signal_reset);
 	signal(SIGQUIT, &ft_signal_reset);
 	sh->pid = fork();
+	if (sh->pid == -1)
+	{
+		perror("minishell: fork");
+		exit(1);
+	}
 	if (sh->pid == 0)
 		ft_exec(sh);
 	else if (sh->pid > 0)
-	{
 		ft_wait_child(sh);
-	}
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	return (1);
@@ -127,8 +130,11 @@ void ft_fd_reset(t_shell *sh)
 
 int ft_exec_loop(t_shell *sh)
 {
+
 	while (sh->cmd)
 	{
+		if (ft_only_char(sh->cmd->cmd[0], ' '))
+			return (-1); //peut etre s'en occuper au parsing
 		ft_pipe(sh);
 		if (sh->is_piped == 0 && is_built_in(sh->cmd) == 1)
 		{
@@ -138,6 +144,10 @@ int ft_exec_loop(t_shell *sh)
 		}
 		else
 			ft_fork(sh);
+		if (sh->cmd->fd_in != 0)
+			close(sh->cmd->fd_in);
+		if (sh->cmd->fd_out != 1)
+			close(sh->cmd->fd_out);
 		sh->cmd = sh->cmd->next;
 	}
 	return (0);

@@ -40,7 +40,6 @@ void	ft_exit(t_shell *sh)
 	if (sh->cmd->cmd[0] && sh->cmd->cmd[1])
 	{
 		ret = ft_atoi(sh->cmd->cmd[1]);
-		printf("ret = %ld\n", ret);
 		if (!ft_only_digits(sh->cmd->cmd[1]))
 		{
 			printf("exit\n");
