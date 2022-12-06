@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 17:02:58 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:50:57 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int ft_init_sh(t_shell *sh, char **envp)
 	sh->dup_std_fd[0] = dup(0);
 	sh->dup_std_fd[1] = dup(1);
 	sh->env = NULL;
+	sh->param = 0;
 	ft_create_env_list(sh, envp);
 	sh->saved_pwd = malloc(MAX_PATH);
 	getcwd(sh->saved_pwd, MAX_PATH);

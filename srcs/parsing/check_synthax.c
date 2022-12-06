@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:11:29 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 13:43:48 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:54:10 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ int	check_pipe(char *str)
 	t_quote quote;
 
 	i = 0;
-	quote._double = 0;
+	quote._single = 0;
 	quote._double = 0;
 	while (str[i])
 	{
 		quote = is_in_quote(quote, str[i]);
-		if (str[i] == '|' && !quote._double && quote._single)
+		if (str[i] == '|' && !quote._double && !quote._single)
 		{
 			if (check_before_pipe(str, i) || check_after_pipe(str , i))
 				return (1);
@@ -118,6 +118,8 @@ int	check_syntax(char *str)
 	if (check_quote(str))
 		return (ft_error_msg(SYNTAX_ERROR));
 	if (check_pipe(str))
+	{
 	 	return (ft_error_msg(SYNTAX_ERROR));
+	}
 	return (0);
 }
