@@ -73,7 +73,6 @@ int	ft_fork(t_shell *sh)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	return (1);
-	// todo else error
 }
 
 int	ft_pipe(t_shell *sh)

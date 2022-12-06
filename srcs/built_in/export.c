@@ -36,6 +36,8 @@ void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena)
 	i = 1;
 	if (cmd[i] && ft_parse_export_arg(cmd[i], arena, 1) == 1)
 		ft_create_first_elem(sh, cmd[i]);
+	else
+		ft_perror("export: ", cmd[i], "not a valid identifier", 1);
 	if (cmd[i + 1])
 	{
 		while (cmd[i])
@@ -43,7 +45,7 @@ void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena)
 			if (ft_parse_export_arg(cmd[i], arena, 1) == 1)
 				ft_add_env(cmd[i], sh);
 			else
-				printf("bad identifier\n");
+				ft_perror("export: ", cmd[i], "not a valid identifier", 1);
 			i++;
 		}
 	}

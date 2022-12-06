@@ -24,10 +24,12 @@ void	ft_modify_env_value(t_env *ptr, char *new_value, int is_equal)
 {
 	free(ptr->value);
 	if (is_equal && !new_value)
+	{
 		ptr->value = ft_calloc(1, 1);
-	else
-		ptr->value = new_value;
-	//todo check error
+		if (!ptr->value)
+			return ;
+	}
+	 ptr->value = new_value;
 }
 
 void	push_back_env(t_env *ptr, char *str)
@@ -39,7 +41,11 @@ void	push_back_env(t_env *ptr, char *str)
 	new = NULL;
 	ft_last_list_elem(&cursor);
 	new = ft_new_env(str);
-	//arena pool + ft_perror_exit
+	if (!new)
+	{
+		ft_putstr_fd("Failed to add a node to env list\n", 2);
+		return ;
+	}
 	cursor->next = new;
 }
 

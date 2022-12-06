@@ -63,10 +63,14 @@ t_env	*ft_cpy_env_list(t_env *lst, t_arena *arena)
 	if (!lst->next)
 		return (lst);
 	sorted = copy_elem(lst, arena);
+	if (!sorted)
+		return (NULL);
 	ptr = sorted;
 	while (lst->next)
 	{
 		ptr->next = copy_elem(lst->next, arena);
+		if (!ptr->next)
+			return (NULL);
 		ptr = ptr->next;
 		lst = lst->next;
 	}
@@ -83,7 +87,10 @@ void	ft_print_export(t_shell *sh)
 		return ;
 	cpy = ft_cpy_env_list(sh->env, sh->arena);
 	if (!cpy)
+	{
+		ft_putstr_fd("copy of env list failed\n", 2);
 		return ;
+	}
 	ft_sort_env_list(cpy);
 	cursor = cpy;
 	while (cursor)

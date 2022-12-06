@@ -22,6 +22,8 @@ t_env	*ft_new_env(char *str)
 		return (NULL);
 	env->next = NULL;
 	temp = ft_split(str, '=');
+	if (!temp)
+		return (NULL);
 	env->name = temp[0];
 	if (ft_check_char(str, '=') && !temp[1])
 		env->value = ft_calloc(1, 1);
@@ -29,7 +31,6 @@ t_env	*ft_new_env(char *str)
 		env->value = temp[1];
 	free(temp);
 	return (env);
-	//todo free and check error
 }
 
 int	ft_env_lst_size(t_env *lst)
@@ -80,7 +81,7 @@ void	ft_create_env_list(t_shell *sh, char **envp)
 		if (!new)
 		{
 			ft_free_env_list(sh->env, ft_env_lst_size(sh->env));
-			ft_putstr_fd("malloc failure", 2);
+			ft_putstr_fd("malloc failure\n", 2);
 		}
 		if (previous)
 			previous->next = new;
