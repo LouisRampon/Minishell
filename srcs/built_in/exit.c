@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <limits.h>
 
 int	ft_only_digits(char *str)
 {
@@ -42,10 +43,13 @@ void	ft_exit(t_shell *sh)
 		ret = ft_atoi(sh->cmd->cmd[1]);
 		if (!ft_only_digits(sh->cmd->cmd[1]))
 		{
-			printf("exit\n");
-			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-			g_return_value = 255;
-			ret = 255;
+			if (ret == -1 && ft_strlen(sh->cmd->cmd[1]) > 2)
+			{
+				printf("exit\n");
+				ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+				g_return_value = 255;
+				ret = 255;
+			}
 		}
 		else if (sh->cmd->cmd[2])
 		{
@@ -56,6 +60,6 @@ void	ft_exit(t_shell *sh)
 		}
 	}
 	ft_free_env_list(sh->env, ft_env_lst_size(sh->env));
-	ft_free_arena(&sh->arena);
+	ft_free_arena(sh->arena);
 	exit((unsigned char)ret);
 }

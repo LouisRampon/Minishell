@@ -25,5 +25,6 @@ void	ft_env(t_shell *sh)
 				printf("%s=%s\n", ptr->name, ptr->value);
 			ptr = ptr->next;
 		}
+		g_return_value = 0;
 	}
 }

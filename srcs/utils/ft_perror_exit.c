@@ -12,8 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_perror_exit(char *str, int code)
+void	ft_perror_exit(char *cmd, char *input, char *status, int r_value)
 {
-	dprintf(2, "%s\n", str);
-	exit(code);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(input, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(status, 2);
+	ft_putstr_fd("\n", 2);
+	exit(g_return_value = r_value);
 }

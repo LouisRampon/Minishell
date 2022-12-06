@@ -54,23 +54,23 @@ void	ft_check_validity(t_shell *sh)
 
 	if (ft_strchr(sh->cmd->cmd[0],'/'))
 	{
-		sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], &sh->arena);
+		sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], sh->arena);
 		return ;
 	}
 	i = -1;
 	path_line = ft_env_get("PATH", sh->env);
-	path_tab = ft_split_arena(path_line, ':', &sh->arena);
+	path_tab = ft_split_arena(path_line, ':', sh->arena);
 	while (path_tab && path_tab[++i])
 	{
-		temp = ft_strjoin_arena(path_tab[i], "/", &sh->arena);
-		path = ft_strjoin_arena(temp, sh->cmd->cmd[0], &sh->arena);
+		temp = ft_strjoin_arena(path_tab[i], "/", sh->arena);
+		path = ft_strjoin_arena(temp, sh->cmd->cmd[0], sh->arena);
 		if (access(path, X_OK | F_OK) == 0)
 		{
-			sh->cmd->path = ft_strdup_arena(path, &sh->arena);
+			sh->cmd->path = ft_strdup_arena(path, sh->arena);
 			return ;
 		}
 	}
-	sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], &sh->arena);
+	sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], sh->arena);
 }
 
 void	ft_check_cmd(t_shell *sh)

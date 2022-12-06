@@ -12,46 +12,72 @@
 
 #include "../../includes/minishell.h"
 
-int 	ft_init_arena(t_arena *arena, size_t size)
+void	ft_init_arena(t_shell *sh, size_t size)
 {
-	arena->cursor = 0;
-	arena->size = size;
-	arena->data = malloc(arena->size);
-	if (!arena->data)
-		return (-1);
-	return (0);
+	sh->arena = malloc(sizeof(t_arena));
+	if (sh->arena) {
+		sh->arena->cursor = 0;
+		sh->arena->size = size;
+		sh->arena->data = malloc(sh->arena->size);
+		sh->arena->next = 0;
+	}
+	if (!sh->arena || !sh->arena->data)
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	ft_free_arena(t_arena *arena)
 {
-	free(arena->data);
-	arena->size = 0;
-	arena->cursor = 0;
+	t_arena *current;
+	t_arena *next;
+
+	current = arena;
+	while (current)
+	{
+		next = current->next;
+		free(current->data);
+		free(current);
+		current = next;
+	}
 }
 
-void	ft_arena_realloc(t_arena *arena, size_t size)
+static int	ft_arena_realloc(t_arena *arena, size_t size)
 {
-	void *tmp;
-	size_t oldsize;
+	size_t new_size;
+	t_arena *new_node;
 
-	oldsize = arena->size;
-	tmp = arena->data;
 	if (size + arena->size > arena->size * 2)
-		arena->size = size + arena->size * 2;
+		new_size = size + arena->size * 2;
 	else
-		arena->size *= 2;
-	arena->data = malloc(arena->size);
-	ft_memcpy(arena->data, tmp, oldsize);
-	free(tmp);
-	//todo error
+		new_size = arena->size * 2;
+	new_node = malloc(sizeof(t_arena));
+	if (new_node) {
+		new_node->data = malloc(new_size);
+	}
+	if (new_node && new_node->data)
+	{
+		arena->next = new_node;
+		new_node->size = new_size;
+		new_node->cursor = 0;
+		new_node->next = NULL;
+		return (1);
+	}
+	else
+		return (0);//todo error
 }
 
 void 	*ft_arena_alloc(t_arena *arena, size_t size)
 {
 	size_t temp;
 
+	while (arena->next && arena->cursor + size > arena->size) {
+		arena = arena->next;
+	}
 	if (arena->cursor + size > arena->size)
-		ft_arena_realloc(arena, size);
+		if (ft_arena_realloc(arena, size))
+			arena = arena->next;
 	temp = arena->cursor;
 	arena->cursor += size;
 	return (arena->data + temp);

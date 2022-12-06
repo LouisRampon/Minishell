@@ -56,9 +56,11 @@ int	ft_exec(t_shell *sh)
 	{
 		ft_free_tab(tab);
 		if (ft_strchr(sh->cmd->path, '/'))
-			ft_perror_exit("minishell: No such file or directory", 1);
+			ft_perror_exit(ft_strchr(sh->cmd->path, '/'), "",\
+			"No such file or directory", 127);
 		else
-			ft_perror_exit("minishell: command not found", 1);
+			ft_perror_exit(sh->cmd->cmd[0], "", \
+			"command not found", 127);
 	}
 	return (1);
 }
@@ -133,8 +135,8 @@ int ft_exec_loop(t_shell *sh)
 
 	while (sh->cmd)
 	{
-		if (ft_only_char(sh->cmd->cmd[0], ' '))
-			return (-1); //peut etre s'en occuper au parsing
+//		if (ft_only_char(sh->cmd->cmd[0], ' '))
+//			return (-1); //peut etre s'en occuper au parsing
 		ft_pipe(sh);
 		if (sh->is_piped == 0 && is_built_in(sh->cmd) == 1)
 		{

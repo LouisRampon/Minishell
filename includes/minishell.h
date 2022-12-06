@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 17:10:13 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:33:13 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define MAX_PATH 4096
 # define SYNTAX_ERROR -11
-
+# define ARENA_SIZE 1000
 extern int g_return_value;
 
 typedef struct s_quote
@@ -44,7 +44,7 @@ typedef struct s_arena
 	size_t	size;
 	size_t	cursor;
 	void	*data;
-	void	*next;
+	struct s_arena	*next;
 }t_arena;
 
 typedef struct s_command
@@ -73,7 +73,7 @@ typedef struct s_shell
 	char 			*home;
 	pid_t 			pid;
 	t_command		*cmd;
-	t_arena			arena;
+	t_arena			*arena;
 	t_env			*env;
 	struct termios	old;
 	struct termios	new;
@@ -82,7 +82,7 @@ typedef struct s_shell
 //############## EXEC #######################
 
 // arena storage pool
-int		ft_init_arena(t_arena *arena, size_t size);
+void	ft_init_arena(t_shell *shell, size_t size);
 void	ft_free_arena(t_arena *arena);
 void 	*ft_arena_alloc(t_arena *arena, size_t size);
 void	*ft_alloc(size_t size, t_arena *arena);
@@ -140,8 +140,8 @@ void	ft_print_export(t_shell *sh);
 
 //utils
 void	ft_free_tab(char **tab);
-void	ft_perror(char *str);
-void	ft_perror_exit(char *str, int code);
+void	ft_perror(char *cmd, char *input, char *status, int r_value);
+void	ft_perror_exit(char *cmd, char *input, char *status, int r_value);
 void 	rl_replace_line (const char *text, int clear_undo);
 int	 	ft_only_char(char *str, char c);
 int 	ft_check_char_index(char *str, char c);

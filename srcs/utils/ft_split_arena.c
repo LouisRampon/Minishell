@@ -49,17 +49,17 @@ static size_t	ft_size_str(const char *str, char c, size_t j)
 static char	*ft_mallocsplit(char **strs, size_t size, size_t i, t_arena *arena)
 {
 	strs[i] = ft_alloc(sizeof(**strs) * size, arena);
-	if (!strs[i])
-	{
-		while (i >= 0)
-		{
-			free(strs[i]);
-			i--;
-		}
-		free(strs);
-		return (0);
-	}
-	else
+	// if (!strs[i])
+	// {
+	// 	while (i >= 0)
+	// 	{
+	// 		free(strs[i]);
+	// 		i--;
+	// 	}
+	// 	free(strs);
+	// 	return (0);
+	// }
+	// else
 		return (strs[i]);
 }
 

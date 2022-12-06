@@ -81,7 +81,7 @@ void	ft_print_export(t_shell *sh)
 
 	if (!sh->env)
 		return ;
-	cpy = ft_cpy_env_list(sh->env, &sh->arena);
+	cpy = ft_cpy_env_list(sh->env, sh->arena);
 	if (!cpy)
 		return ;
 	ft_sort_env_list(cpy);

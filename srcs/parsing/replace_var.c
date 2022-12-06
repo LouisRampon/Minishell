@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 16:33:02 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:36:43 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,19 @@ char	*replace_var_final(char *str, t_shell *shell, int i)
 	int		size;
 
 	size = 0;
-	var_name = find_var_name(str, i + 1, &shell->arena);
+	var_name = find_var_name(str, i + 1, shell->arena);
 	if (!var_name)
 		return (str);
 	var_value = replace_var_help(var_name, shell->env);
 	if (var_value)
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) + 1;
-		final = ft_fill_final(str, var_value, size, &shell->arena);
+		final = ft_fill_final(str, var_value, size, shell->arena);
 	}
 	else
 	{
 		size = ft_strlen(str) - ft_strlen(var_name) + 1;
-		final = ft_fill_final(str, NULL, size, &shell->arena);
+		final = ft_fill_final(str, NULL, size, shell->arena);
 	}
 	return (final);
 }
@@ -122,7 +122,7 @@ char	*replace_var(char *str, t_shell *shell)
 				return (str);
 			if (str[i + 1] == '?')
 				str = ft_fill_final(str, ft_itoa(g_return_value),
-						ft_strlen(ft_itoa(g_return_value)), &shell->arena);
+						ft_strlen(ft_itoa(g_return_value)), shell->arena);
 			else
 				str = replace_var_final(str, shell, i);
 			i++;
