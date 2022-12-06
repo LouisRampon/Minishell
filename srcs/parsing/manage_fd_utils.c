@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:54:03 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 15:58:32 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:15:26 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	ft_def_param_out(char *str)
 		return (1);
 }
 
-int	ft_open_file(char *file_name, int param)
+int	ft_open_file(char *file_name, t_shell *shell)
 {
 	int	fd;
 
-	if (param == 3)
-		fd = ft_heredoc(file_name);
-	else if (param == 2)
+	if (shell->param == 3)
+		fd = ft_heredoc(file_name, shell);
+	else if (shell->param == 2)
 		fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (param == 1)
+	else if (shell->param == 1)
 		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(file_name, O_RDONLY | O_CREAT, S_IRWXU);

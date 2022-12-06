@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 12:33:13 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:17:50 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_shell
 	bool			is_piped;
 	int 			pipe[2];
 	int 			dup_std_fd[2];
+	int				param;
 	int 			saved_previous_fd;
 	char 			*saved_pwd;
 	char 			*home;
@@ -171,13 +172,13 @@ char *remoce_char(char *str, size_t pos);
 
 char 	*ft_clean_str(char *str);
 
-int		ft_fd_out(char *str);
-int		ft_fd_in(char *str);
-int		ft_fd_help(char *str, int fd, int i, int param);
+int		ft_fd_out(char *str, t_shell *shell);
+int		ft_fd_in(char *str, t_shell *shell);
+int		ft_fd_help(char *str, int fd, int i, t_shell *shell);
 
 int	ft_def_param_in(char *str);
 int	ft_def_param_out(char *str);
-int	ft_open_file(char *file_name, int param);
+int	ft_open_file(char *file_name, t_shell *shell);
 bool	ft_check_file(char *file_name, int is_out);
 
 
@@ -190,7 +191,7 @@ char	*replace_var_final(char *str, t_shell *shell, int i);
 char	**ft_split_quote(char *str, char c, t_arena *arena);
 char	**ft_split_cmd(char *str, char c, t_arena *arena);
 int		ft_error_msg(int error);
-int		ft_heredoc(char *delimiter);
+int		ft_heredoc(char *delimiter, t_shell *shell);
 
 
 // cmd bloquant + signaux bloquant

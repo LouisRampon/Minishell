@@ -6,13 +6,13 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 15:56:53 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:17:36 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_fd_in(char *str)
+int	ft_fd_in(char *str, t_shell *shell)
 {
 	int		fd;
 	int		i;
@@ -29,7 +29,8 @@ int	ft_fd_in(char *str)
 		quote = is_in_quote(quote, str[i]);
 		if (str[i] == '<' && !quote._single && !quote._double)
 		{
-			fd = ft_fd_help(str, fd, i, ft_def_param_in(&str[i]));
+			shell->param = ft_def_param_in(&str[i]);
+			fd = ft_fd_help(str, fd, i, shell);
 			if (fd == -1)
 				return (-1);
 		}
@@ -38,14 +39,14 @@ int	ft_fd_in(char *str)
 	return (fd);
 }
 
-int	ft_fd_help(char *str, int fd, int i, int param)
+int	ft_fd_help(char *str, int fd, int i, t_shell *shell)
 {
 	int		size;
 	char	*file_name;
 	int		j;
 
 	j = 0;
-	if (param > 1)
+	if (shell->param > 1)
 		i += 2;
 	else
 		i++;
@@ -60,12 +61,12 @@ int	ft_fd_help(char *str, int fd, int i, int param)
 	file_name = ft_substr(str, i, size);
 	if (fd > 2)
 		close(fd);
-	if (ft_check_file(file_name, param))
+	if (ft_check_file(file_name, shell->param))
 		return (-1);
-	return (ft_open_file(file_name, param));
+	return (ft_open_file(file_name, shell));
 }
 
-int	ft_fd_out(char *str)
+int	ft_fd_out(char *str, t_shell *shell)
 {
 	int		fd;
 	int		i;
@@ -82,7 +83,8 @@ int	ft_fd_out(char *str)
 		quote = is_in_quote(quote, str[i]);
 		if (str[i] == '>' && !quote._single && !quote._double)
 		{
-			fd = ft_fd_help(str, fd, i, ft_def_param_out(&str[i]));
+			shell->param = ft_def_param_out(&str[i]);
+			fd = ft_fd_help(str, fd, i, shell);
 			if (fd == -1)
 				return (-1);
 		}
