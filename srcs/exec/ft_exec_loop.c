@@ -12,37 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_close_perror(int fd)
-{
-	if (close(fd) == -1)
-		perror("close");
-}
-
-void	ft_dup2_close(int fd1, int fd2)
-{
-	if (dup2(fd1, fd2) == -1)
-		perror("dup2");
-	ft_close_perror(fd1);
-}
-
-int ft_set_fd(t_shell *sh)
-{
-	if (sh->pipe[0] != 0)
-		ft_dup2_close(sh->pipe[0], 0);
-	if (sh->pipe[1] != 1)
-		ft_dup2_close(sh->pipe[1], 1);
-	if (sh->cmd->fd_in)
-		ft_dup2_close(sh->cmd->fd_in, 0);
-	if (sh->cmd->fd_out != 1)
-		ft_dup2_close(sh->cmd->fd_out, 1);
-	if (sh->saved_previous_fd)
-		close(sh->saved_previous_fd);
-	return (1);
-}
-
 int	ft_exec(t_shell *sh)
 {
-	char **tab;
+	char	**tab;
 
 	tab = ft_env_list_to_tab(sh);
 	ft_check_cmd(sh);
@@ -58,7 +30,8 @@ int	ft_exec(t_shell *sh)
 		if (!ft_strchr(sh->cmd->cmd[0], '/') || !sh->cmd->cmd[0])
 			ft_perror_exit(sh->cmd->cmd[0], "", "command not found", 127);
 		else
-			ft_perror_exit(sh->cmd->cmd[0], "", "No such file or directory", 126);
+			ft_perror_exit(sh->cmd->cmd[0], "", \
+			"No such file or directory", 126);
 	}
 	return (1);
 }
@@ -82,7 +55,7 @@ void	ft_wait_child(t_shell *sh)
 	}
 }
 
-int ft_fork(t_shell *sh)
+int	ft_fork(t_shell *sh)
 {
 	ft_unset_term(sh);
 	signal(SIGINT, &ft_signal_reset);
@@ -105,7 +78,7 @@ int ft_fork(t_shell *sh)
 
 int	ft_pipe(t_shell *sh)
 {
-	int temp;
+	int	temp;
 
 	temp = sh->saved_previous_fd;
 	if (sh->cmd->next)
@@ -120,15 +93,7 @@ int	ft_pipe(t_shell *sh)
 	return (1);
 }
 
-void ft_fd_reset(t_shell *sh)
-{
-	ft_dup2_close(sh->dup_std_fd[0], 0);
-	sh->dup_std_fd[0] = dup(0);
-	ft_dup2_close(sh->dup_std_fd[1], 1);
-	sh->dup_std_fd[1] = dup(1);
-}
-
-int ft_exec_loop(t_shell *sh)
+int	ft_exec_loop(t_shell *sh)
 {
 	while (sh->cmd)
 	{

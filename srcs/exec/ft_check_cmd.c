@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int is_built_in(t_command *cmd)
+int	is_built_in(t_command *cmd)
 {
 	if (ft_strcmp(cmd->cmd[0], "echo") == 0)
 		return (1);
@@ -33,7 +33,7 @@ int is_built_in(t_command *cmd)
 
 void	ft_free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])
@@ -52,7 +52,7 @@ void	ft_check_validity(t_shell *sh)
 	char	**path_tab;
 	int		i;
 
-	if (ft_strchr(sh->cmd->cmd[0],'/'))
+	if (ft_strchr(sh->cmd->cmd[0], '/'))
 	{
 		sh->cmd->path = ft_strdup_arena(sh->cmd->cmd[0], sh->arena);
 		return ;

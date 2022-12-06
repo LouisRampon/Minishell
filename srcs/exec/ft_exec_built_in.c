@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void ft_exec_built_in(t_shell *sh)
+void	ft_exec_built_in(t_shell *sh)
 {
 	if (ft_strcmp(sh->cmd->cmd[0], "echo") == 0)
 		ft_echo(sh->cmd->cmd);

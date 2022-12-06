@@ -15,7 +15,8 @@
 void	ft_init_arena(t_shell *sh, size_t size)
 {
 	sh->arena = malloc(sizeof(t_arena));
-	if (sh->arena) {
+	if (sh->arena)
+	{
 		sh->arena->cursor = 0;
 		sh->arena->size = size;
 		sh->arena->data = malloc(sh->arena->size);
@@ -30,8 +31,8 @@ void	ft_init_arena(t_shell *sh, size_t size)
 
 void	ft_free_arena(t_arena *arena)
 {
-	t_arena *current;
-	t_arena *next;
+	t_arena	*current;
+	t_arena	*next;
 
 	current = arena;
 	while (current)
@@ -45,17 +46,16 @@ void	ft_free_arena(t_arena *arena)
 
 static int	ft_arena_realloc(t_arena *arena, size_t size)
 {
-	size_t new_size;
-	t_arena *new_node;
+	size_t	new_size;
+	t_arena	*new_node;
 
 	if (size + arena->size > arena->size * 2)
 		new_size = size + arena->size * 2;
 	else
 		new_size = arena->size * 2;
 	new_node = malloc(sizeof(t_arena));
-	if (new_node) {
+	if (new_node)
 		new_node->data = malloc(new_size);
-	}
 	if (new_node && new_node->data)
 	{
 		arena->next = new_node;
@@ -68,13 +68,12 @@ static int	ft_arena_realloc(t_arena *arena, size_t size)
 		return (0);//todo error
 }
 
-void 	*ft_arena_alloc(t_arena *arena, size_t size)
+void	*ft_arena_alloc(t_arena *arena, size_t size)
 {
-	size_t temp;
+	size_t	temp;
 
-	while (arena->next && arena->cursor + size > arena->size) {
+	while (arena->next && arena->cursor + size > arena->size)
 		arena = arena->next;
-	}
 	if (arena->cursor + size > arena->size)
 		if (ft_arena_realloc(arena, size))
 			arena = arena->next;

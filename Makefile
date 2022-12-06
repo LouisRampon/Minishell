@@ -43,7 +43,8 @@ SRCS_BUILT_IN_WITHOUT_PATH =	cd.c					\
 				
 SRCS_EXEC_WITHOUT_PATH =	ft_check_cmd.c				\
 							ft_exec_built_in.c			\
-							ft_exec_loop.c				
+							ft_exec_loop.c				\
+							ft_fd.c
 							
 SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_perror_exit.c			\
@@ -95,7 +96,7 @@ HEADER =	$(addprefix $(PATH_TO_HEADER), $(HEADER_WITHOUT_PATH))
 
 	######### COMMANDS ###########
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror #-fsanitize=address -g3
 RM = rm -rf
 READLINE_LIB = -lreadline
 READLINE_HOMEBREW_LIB = -L ~/.brew/opt/readline/lib

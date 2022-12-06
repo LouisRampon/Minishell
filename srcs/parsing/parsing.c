@@ -49,8 +49,8 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 	char	**arg;
 	size_t nb_cmd;
 	size_t	i;
-	size_t j = 0;
-	t_command *temp;
+//	size_t j = 0;
+//	t_command *temp;
 	
 	i = 0;
 	previous = NULL;
@@ -69,33 +69,33 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 		previous = new;
 		i++;
 	}
-	if (shell->cmd)
-	{
-	temp = shell->cmd;
-	i = 0;
-	while (temp->next)
-	{
-		printf("command %zu:\n", i);
-		while(temp->cmd[j])
-		{
-			printf("word[%zu] = %s\n", j, temp->cmd[j]);
-			j++;
-		}
-		j = 0;
-		printf("fd_in = %d\n", temp->fd_in);
-		printf("fd_out = %d\n", temp->fd_out);
-		i++;
-		temp = temp->next;
-	}
-	printf("command %zu:\n", i);
-	while(temp->cmd[j])
-	{
-		printf("word[%zu] = %s\n", j, temp->cmd[j]);
-		j++;
-	}
-	j = 0;
-	printf("fd_in = %d\n", temp->fd_in);
-	printf("fd_out = %d\n", temp->fd_out);
-	}
+//	if (shell->cmd)
+//	{
+//	temp = shell->cmd;
+//	i = 0;
+//	while (temp->next)
+//	{
+//		printf("command %zu:\n", i);
+//		while(temp->cmd[j])
+//		{
+//			printf("word[%zu] = %s\n", j, temp->cmd[j]);
+//			j++;
+//		}
+//		j = 0;
+//		printf("fd_in = %d\n", temp->fd_in);
+//		printf("fd_out = %d\n", temp->fd_out);
+//		i++;
+//		temp = temp->next;
+//	}
+//	printf("command %zu:\n", i);
+//	while(temp->cmd[j])
+//	{
+//		printf("word[%zu] = %s\n", j, temp->cmd[j]);
+//		j++;
+//	}
+//	j = 0;
+//	printf("fd_in = %d\n", temp->fd_in);
+//	printf("fd_out = %d\n", temp->fd_out);
+//	}
 	return (*shell);
 }

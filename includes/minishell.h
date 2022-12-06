@@ -106,6 +106,8 @@ int		ft_exec_loop(t_shell *sh);
 void	ft_exec_built_in(t_shell *sh);
 int 	ft_fork(t_shell *sh);
 int		ft_pipe(t_shell *sh);
+void 	ft_fd_reset(t_shell *sh);
+int		ft_set_fd(t_shell *sh);
 
 //exec_utils
 int		is_built_in(t_command *cmd);

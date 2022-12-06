@@ -78,9 +78,9 @@ int	ft_check_valid_indentifier(char *str, int flag)
 	return (1);
 }
 
-int ft_parse_export_arg(char *str, t_arena *arena, int code)
+int	ft_parse_export_arg(char *str, t_arena *arena, int code)
 {
-	int 	i;
+	int		i;
 	int		index;
 	char	*temp;
 
@@ -92,7 +92,7 @@ int ft_parse_export_arg(char *str, t_arena *arena, int code)
 		{
 			temp = ft_substr_arena(str, 0, index, arena);
 			if (temp && code == 1)
-				 return (ft_check_valid_indentifier(temp, code));
+				return (ft_check_valid_indentifier(temp, code));
 		}
 		else
 			return (ft_check_valid_indentifier(str, code));
