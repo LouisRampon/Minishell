@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:28:26 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 13:17:36 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:52:39 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_fd_in(char *str, t_shell *shell)
 			fd = ft_fd_help(str, fd, i, shell);
 			if (fd == -1)
 				return (-1);
+			if (str[i + 1] == '<')
+				i++;
 		}
 		i++;
 	}
@@ -87,6 +89,8 @@ int	ft_fd_out(char *str, t_shell *shell)
 			fd = ft_fd_help(str, fd, i, shell);
 			if (fd == -1)
 				return (-1);
+			if (str[i + 1] == '>')
+				i++;
 		}
 		i++;
 	}

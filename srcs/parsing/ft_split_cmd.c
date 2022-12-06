@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 10:32:16 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 14:58:16 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:09:00 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ size_t	ft_nb_string_cmd(char *str, char c)
 	return (tot);
 }
 
+
 size_t	ft_size_str_cmd(char *str, char c, size_t j)
 {
 	size_t	i;
@@ -48,7 +49,6 @@ size_t	ft_size_str_cmd(char *str, char c, size_t j)
 	i = 0;
 	quote._single = 0;
 	quote._double = 0;
-	j = ft_skip_space(str, j);
 	while (str[j])
 	{
 		if (str[j] == '"' && !quote._single)
@@ -81,7 +81,6 @@ int	ft_split_cmd_help(char *str, char c, t_arena *arena, char **strs)
 	j = 0;
 	while (str[j] && str[j] == c)
 		j++;
-	j = ft_skip_space(str, j);
 	size_str = ft_size_str_cmd(str, c, j);
 	temp = ft_substr_arena(str, j, size_str, arena);
 	if (!temp)
@@ -89,9 +88,11 @@ int	ft_split_cmd_help(char *str, char c, t_arena *arena, char **strs)
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
-	j++;
+	while (ft_isalnum(str[j]))
+		j++;
+	j = ft_skip_space(str, j);
 	*strs = temp;
-	return (size_str + 1);
+	return (j);
 }
 
 char	**ft_split_cmd(char *str, char c, t_arena *arena)

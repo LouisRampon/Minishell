@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 10:32:16 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 16:27:42 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:09:56 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ size_t	ft_nb_string_pipe(char *str, char c)
 		{
 			while (str[i] && str[i] == c)
 				i++;
-			if (!str[i])
-				return (tot);
 			tot++;
 		}
 		else
@@ -48,7 +46,6 @@ size_t	ft_size_str_pipe(char *str, char c, size_t j)
 	i = 0;
 	quote._single = 0;
 	quote._double = 0;
-	j = ft_skip_space(str, j);
 	while (str[j])
 	{
 		if (str[j] == '"' && !quote._single)
@@ -70,9 +67,6 @@ int	ft_split_pipe_help(char *str, char c, t_arena *arena, char **strs)
 	char	*temp;
 
 	j = 0;
-	while (str[j] && str[j] == c)
-		j++;
-	j = ft_skip_space(str, j);
 	size_str = ft_size_str_pipe(str, c, j);
 	temp = ft_substr_arena(str, j, size_str, arena);
 	if (!temp)
@@ -80,7 +74,6 @@ int	ft_split_pipe_help(char *str, char c, t_arena *arena, char **strs)
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
-	j++;
 	*strs = temp;
 	return (size_str + 1);
 }

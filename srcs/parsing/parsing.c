@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 13:18:12 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:53:21 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ char **ft_str_to_arg(char *str, t_shell *shell)
 }
 
 
-t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
+t_command *ft_fill_cmd(char *str, t_shell *shell)
 {
 	t_command *cmd;
 	
-	(void)i;
 	if (!str)
 		return (NULL);
 	cmd = ft_alloc(sizeof(t_command), shell->arena);
+	if (!cmd)
+		return (NULL);
 	cmd->fd_in = ft_fd_in(str, shell);
 	if (cmd->fd_in == -1)
 		return (NULL);
@@ -38,6 +39,8 @@ t_command *ft_fill_cmd(char *str, size_t i, t_shell *shell)
 	str = ft_clean_str(str);
 	str = replace_var(str, shell);
 	cmd->cmd = ft_str_to_arg(str, shell);
+	if (!cmd->cmd)
+		return (NULL);
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -49,19 +52,22 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 	char	**arg;
 	size_t nb_cmd;
 	size_t	i;
-//	size_t j = 0;
-//	t_command *temp;
-	
+
 	i = 0;
 	previous = NULL;
 	new = NULL;
 	if (check_syntax(str))
+	{
+		//printf("ici\n");
 		return (*shell);
+	}
 	nb_cmd = nb_pipe(str) + 1;
 	arg = ft_split_quote(str, '|', shell->arena);
 	while (i < nb_cmd)
 	{
-		new = ft_fill_cmd(arg[i], i, shell);
+		new = ft_fill_cmd(arg[i], shell);
+		if (!new)
+			return (*shell);
 		if (previous)
 			previous->next = new;
 		else
@@ -69,33 +75,5 @@ t_shell	ft_parsing(char *str, t_shell *shell)
 		previous = new;
 		i++;
 	}
-//	if (shell->cmd)
-//	{
-//	temp = shell->cmd;
-//	i = 0;
-//	while (temp->next)
-//	{
-//		printf("command %zu:\n", i);
-//		while(temp->cmd[j])
-//		{
-//			printf("word[%zu] = %s\n", j, temp->cmd[j]);
-//			j++;
-//		}
-//		j = 0;
-//		printf("fd_in = %d\n", temp->fd_in);
-//		printf("fd_out = %d\n", temp->fd_out);
-//		i++;
-//		temp = temp->next;
-//	}
-//	printf("command %zu:\n", i);
-//	while(temp->cmd[j])
-//	{
-//		printf("word[%zu] = %s\n", j, temp->cmd[j]);
-//		j++;
-//	}
-//	j = 0;
-//	printf("fd_in = %d\n", temp->fd_in);
-//	printf("fd_out = %d\n", temp->fd_out);
-//	}
 	return (*shell);
 }
