@@ -55,6 +55,7 @@ int	main(int ac, char **argv, char **env)
 		if (!buff)
 		{
 			printf("exit\n");
+			ft_unset_term(&sh);
 			exit(0);
 		}
 		if (ft_strlen(buff) > 0)

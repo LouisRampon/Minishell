@@ -57,4 +57,5 @@ void	ft_sig_ignit(int nothing)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_return_value = 1;
 }

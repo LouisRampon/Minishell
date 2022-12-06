@@ -46,7 +46,7 @@ char	*remoce_char(char *str, size_t pos)
 t_quote	is_in_quote(t_quote quote, char c)
 {
 	if (c == '"' && !quote._single)
-		quote._double = !quote._single;
+		quote._double = !quote._double;
 	else if (c == '\'' && !quote._double)
 		quote._single = !quote._single;
 	return (quote);

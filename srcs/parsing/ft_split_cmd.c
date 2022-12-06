@@ -88,7 +88,7 @@ int	ft_split_cmd_help(char *str, char c, t_arena *arena, char **strs)
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
-	while (ft_isalnum(str[j]))
+	while (str[j] && str[j] != ' ')
 		j++;
 	j = ft_skip_space(str, j);
 	*strs = temp;
