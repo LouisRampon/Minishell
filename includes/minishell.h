@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/02 15:08:47 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:17:50 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@
 # define SYNTAX_ERROR -11
 # define ARENA_SIZE 1000
 extern int g_return_value;
+
+typedef struct s_quote
+{
+	bool _double;
+	bool _single;
+}t_quote;
 
 typedef struct s_arena
 {
@@ -62,6 +68,7 @@ typedef struct s_shell
 	bool			is_piped;
 	int 			pipe[2];
 	int 			dup_std_fd[2];
+	int				param;
 	int 			saved_previous_fd;
 	char 			*saved_pwd;
 	char 			*home;
@@ -158,25 +165,37 @@ size_t	ft_strlen_alnum(char *str);
 size_t 	nb_pipe(char *str);
 int		ft_pass_quote(const char *str, int i);
 
+int ft_is_white_space(char c);
+int	ft_skip_space(char *str, int i);
+t_quote is_in_quote(t_quote quote, char c);
+char *remoce_char(char *str, size_t pos);
+
 char 	*ft_clean_str(char *str);
 
+int		ft_fd_out(char *str, t_shell *shell);
+int		ft_fd_in(char *str, t_shell *shell);
+int		ft_fd_help(char *str, int fd, int i, t_shell *shell);
 
-int		ft_fd_out(char *str);
-int		ft_fd_in(char *str);
-int		ft_fd_out_help(char *str, int fd, int i, int param);
+int	ft_def_param_in(char *str);
+int	ft_def_param_out(char *str);
+int	ft_open_file(char *file_name, t_shell *shell);
+bool	ft_check_file(char *file_name, int is_out);
+
 
 char	*find_var_name(char *str, int i, t_arena *arena);
 char	*replace_var_help(char *var_name, t_env *env);
-char	 *ft_fill_final(char *str, char *var, int size, int i, t_arena *arena);
+char	 *ft_fill_final(char *str, char *var, int size, t_arena *arena);
 char	*replace_var(char *str, t_shell *shell);
 char	*replace_var_final(char *str, t_shell *shell, int i);
-char	**ft_split_quote(const char *str, char c, t_arena *arena);
+
+char	**ft_split_quote(char *str, char c, t_arena *arena);
 char	**ft_split_cmd(char *str, char c, t_arena *arena);
 int		ft_error_msg(int error);
-int		ft_heredoc(char *delimiter);
+int		ft_heredoc(char *delimiter, t_shell *shell);
 
 
 // cmd bloquant + signaux bloquant
 // < in abc > out > in | truc bidule | alal
-
+//signaux heredoc
+// ctrl d dans heredoc pas un siganl buff vide
 #endif

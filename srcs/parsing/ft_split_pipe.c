@@ -6,111 +6,105 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 10:32:16 by lorampon          #+#    #+#             */
-/*   Updated: 2022/11/30 14:54:30 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:27:42 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include"../../includes/minishell.h"
-#include <stdio.h>
 
-size_t	ft_nb_string_quote(const char *str, char c)
+size_t	ft_nb_string_pipe(char *str, char c)
 {
 	size_t	i;
 	size_t	tot;
-	size_t	quote;
+	t_quote	quote;
 
 	i = 0;
-	tot = 0;
-	quote = 0;
-	while (str[i] && str[i] == c)
-		i++;
+	tot = 1;
+	i = ft_skip_space(str, i);
+	quote._single = 0;
+	quote._double = 0;
 	while (str[i])
 	{
-		if (str[i] == c && !quote)
+		quote = is_in_quote(quote, str[i]);
+		if (str[i] == c && !quote._double && !quote._single)
 		{
 			while (str[i] && str[i] == c)
 				i++;
 			if (!str[i])
-				return (tot + 1);
+				return (tot);
 			tot++;
 		}
-		else if (str[i] == '\"' && !quote)
-			quote = 1;
-		else if (str[i] == '\"' && quote == 1)
-			quote = 0;
-		if (str[i])
+		else
 			i++;
 	}
-	return (tot + 1);
+	return (tot);
 }
 
-size_t	ft_size_str_quote(const char *str, char c, size_t j)
+size_t	ft_size_str_pipe(char *str, char c, size_t j)
 {
 	size_t	i;
-	size_t quote;
+	t_quote	quote;
 
 	i = 0;
-	quote = 0;
+	quote._single = 0;
+	quote._double = 0;
+	j = ft_skip_space(str, j);
 	while (str[j])
 	{
-		if (str[j] == c && !quote)
-			return (i - 1);
-		else if (str[j] == '\"' && !quote)
-			quote = 1;
-		else if (str[j] == '\"' && quote == 1)
-			quote = 0;
+		if (str[j] == '"' && !quote._single)
+			quote._double = !quote._double;
+		else if (str[j] == '\'' && !quote._double)
+			quote._single = !quote._single;
+		else if (str[j] == c && !quote._single && !quote._double)
+			return (i);
 		i++;
 		j++;
 	}
-	return (i);
+	return (i + 1);
 }
 
-char	*ft_mallocsplit_quote(char **strs, size_t size, size_t i, t_arena *arena)
+int	ft_split_pipe_help(char *str, char c, t_arena *arena, char **strs)
 {
-	strs[i] = ft_alloc(sizeof(**strs) * size, arena);
-	// if (!strs[i])
-	// {
-	// 	while (i >= 0)
-	// 	{
-	// 		free(strs[i]);
-	// 		i--;
-	// 	}
-	// 	free(strs);
-	// 	return (0);
-	// }
+	size_t	j;
+	size_t	size_str;
+	char	*temp;
 
-		return (strs[i]);
+	j = 0;
+	while (str[j] && str[j] == c)
+		j++;
+	j = ft_skip_space(str, j);
+	size_str = ft_size_str_pipe(str, c, j);
+	temp = ft_substr_arena(str, j, size_str, arena);
+	if (!temp)
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
+	j++;
+	*strs = temp;
+	return (size_str + 1);
 }
 
-char	**ft_split_quote(const char *str, char c, t_arena *arena)
+char	**ft_split_quote(char *str, char c, t_arena *arena)
 {
 	char	**strs;
-	size_t		size_str;
+	size_t	nb_string;
 	size_t	i;
 	size_t	j;
-	size_t	k;
 
 	if (!str)
 		return (0);
 	i = 0;
-	j = 0;
-	strs = ft_alloc(sizeof(*strs) * (ft_nb_string_quote(str, c) + 1), arena);
+	nb_string = ft_nb_string_pipe(str, c);
+	strs = ft_alloc(sizeof(*strs) * (nb_string + 1), arena);
 	if (!strs)
-		return (0);
-	//printf("nb string = %zu", ft_nb_string_quote(str, c));
-	while (i < ft_nb_string_quote(str, c))
+		return (NULL);
+	j = 0;
+	while (i < nb_string)
 	{
-		while (str[j] && str[j] == c)
-			j++;
-		size_str = ft_size_str_quote(str, c, j);
-		strs[i] = ft_mallocsplit_quote(strs, (size_str + 2), i, arena);
-		k = 0;
-		while (str[j] && k <=size_str)
-			strs[i][k++] = str[j++];
-		strs[i++][k] = '\0';
-		j++;
+		j += ft_split_pipe_help(str + j, c, arena, strs + i);
+		i++;
 	}
-	strs[i] = 0;
+	strs[i] = NULL;
 	return (strs);
 }
