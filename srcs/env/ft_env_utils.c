@@ -69,7 +69,7 @@ int	ft_check_valid_indentifier(char *str, int flag)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '=')
+		if (str[i] == '=' || (str[i] == '+' && !str[i + 1]))
 			return (1);
 		if (!(ft_isalnum(str[i]) == 1 || str[i] == '_'))
 			return (0);

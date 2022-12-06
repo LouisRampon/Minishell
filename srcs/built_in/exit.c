@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <limits.h>
 
 int	ft_only_digits(char *str)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	count = 0;
 	i = 0;
@@ -35,7 +34,7 @@ int	ft_only_digits(char *str)
 
 void	ft_exit(t_shell *sh)
 {
-	long  int	ret;
+	long int	ret;
 
 	ret = g_return_value;
 	if (sh->cmd->cmd[0] && sh->cmd->cmd[1])
@@ -43,18 +42,15 @@ void	ft_exit(t_shell *sh)
 		ret = ft_atoi(sh->cmd->cmd[1]);
 		if (!ft_only_digits(sh->cmd->cmd[1]))
 		{
-			if (ret == -1 && ft_strlen(sh->cmd->cmd[1]) > 2)
-			{
-				printf("exit\n");
-				ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-				g_return_value = 255;
-				ret = 255;
-			}
+			printf("exit\n");
+			ft_perror("exit: ", sh->cmd->cmd[1], \
+			"numeric argument required", 255);
+			ret = 255;
 		}
 		else if (sh->cmd->cmd[2])
 		{
 			printf("exit\n");
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			ft_perror("exit: ", sh->cmd->cmd[1], "too many arguments", 1);
 			g_return_value = 1;
 			return ;
 		}

@@ -14,7 +14,7 @@
 
 char	*ft_make_env_value(char *str)
 {
-	char *value;
+	char	*value;
 
 	value = ft_strchr(str, '=');
 	if (value)
@@ -24,8 +24,8 @@ char	*ft_make_env_value(char *str)
 
 char	*ft_make_env_name(char *str)
 {
-	char *name;
-	char **temp;
+	char	*name;
+	char	**temp;
 
 	name = NULL;
 	temp = ft_split(str, '=');
@@ -38,7 +38,7 @@ char	*ft_make_env_name(char *str)
 		free(temp);
 	}
 	else
-		printf("Malloc error");
+		ft_putstr_fd("Malloc error", 2);
 	return (name);
 }
 

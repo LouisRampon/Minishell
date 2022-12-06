@@ -55,12 +55,10 @@ int	ft_exec(t_shell *sh)
 	if (execve(sh->cmd->path, sh->cmd->cmd, tab) == -1)
 	{
 		ft_free_tab(tab);
-		if (ft_strchr(sh->cmd->path, '/'))
-			ft_perror_exit(ft_strchr(sh->cmd->path, '/'), "",\
-			"No such file or directory", 127);
+		if (!ft_strchr(sh->cmd->cmd[0], '/') || !sh->cmd->cmd[0])
+			ft_perror_exit(sh->cmd->cmd[0], "", "command not found", 127);
 		else
-			ft_perror_exit(sh->cmd->cmd[0], "", \
-			"command not found", 127);
+			ft_perror_exit(sh->cmd->cmd[0], "", "No such file or directory", 126);
 	}
 	return (1);
 }
@@ -132,11 +130,8 @@ void ft_fd_reset(t_shell *sh)
 
 int ft_exec_loop(t_shell *sh)
 {
-
 	while (sh->cmd)
 	{
-//		if (ft_only_char(sh->cmd->cmd[0], ' '))
-//			return (-1); //peut etre s'en occuper au parsing
 		ft_pipe(sh);
 		if (sh->is_piped == 0 && is_built_in(sh->cmd) == 1)
 		{

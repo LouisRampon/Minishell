@@ -33,6 +33,7 @@ int	check_param(char **av, int *new_line)
 	}
 	return (i);
 }
+
 void	ft_echo(char **av)
 {
 	int	i;

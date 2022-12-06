@@ -31,7 +31,7 @@ void	ft_create_first_elem(t_shell *sh, char *envp)
 
 void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (cmd[i] && ft_parse_export_arg(cmd[i], arena, 1) == 1)
@@ -52,13 +52,13 @@ void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena)
 void	ft_export(t_shell *sh)
 {
 	t_command	*ptr;
-	int 		i;
+	int			i;
 
 	g_return_value = 0;
 	if (!sh->cmd->cmd[1])
 	{
 		ft_print_export(sh);
-		return;
+		return ;
 	}
 	ptr = sh->cmd;
 	if (!sh->env)
@@ -67,7 +67,7 @@ void	ft_export(t_shell *sh)
 		return ;
 	}
 	i = 0;
-	while(ptr->cmd[++i])
+	while (ptr->cmd[++i])
 	{
 		if (ft_parse_export_arg(ptr->cmd[i], sh->arena, 1) == 1)
 			ft_add_env(ptr->cmd[i], sh);

@@ -22,7 +22,7 @@ void	ft_del_list_elem(t_env *ptr)
 void	ft_del_env(char *str, t_shell *sh)
 {
 	t_env	*ptr;
-	t_env 	*ptr_prev;
+	t_env	*ptr_prev;
 	char	*name;
 
 	name = ft_env_get_name(str, sh->env);

@@ -14,7 +14,7 @@
 
 void	ft_unset(t_shell *sh)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!sh->env)
