@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:11:29 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/02 13:26:56 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:01:05 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	check_double_pipe(char *str)
 	return (0);
 }
 
-int check_quote(char *str)
+int	check_quote(char *str)
 {
 	int	i;
-	int quote;
+	int	quote;
 
 	i = 0;
 	quote = 0;
@@ -54,17 +54,16 @@ int check_quote(char *str)
 	return (quote);
 }
 
-
-
 int	ft_error_msg(int error)
 {
 	if (error == SYNTAX_ERROR)
 	{
 		printf("minishell: syntax error\n");
-		return(SYNTAX_ERROR);
+		return (SYNTAX_ERROR);
 	}
 	return (0);
 }
+
 int	check_syntax(char *str)
 {
 	if (check_double_pipe(str))

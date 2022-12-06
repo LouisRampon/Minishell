@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 11:47:12 by lorampon          #+#    #+#              #
-#    Updated: 2022/12/02 15:10:20 by lorampon         ###   ########.fr        #
+#    Updated: 2022/12/05 15:55:54 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ SRCS_PARSING_WITHOUT_PATH =	main.c						\
 						manage_fd.c						\
 						ft_split_pipe.c					\
 						ft_split_cmd.c					\
-						heredoc.c
+						heredoc.c						\
+						parsing_utils.c					\
+						manage_fd_utils.c
 
 SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
 						ft_del_env.c					\
