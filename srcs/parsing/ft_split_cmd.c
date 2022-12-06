@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 10:32:16 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 15:15:58 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:09:00 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ size_t	ft_nb_string_cmd(char *str, char c)
 	}
 	return (tot);
 }
+
 
 size_t	ft_size_str_cmd(char *str, char c, size_t j)
 {

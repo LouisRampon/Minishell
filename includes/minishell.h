@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:30:06 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 13:17:50 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:14:06 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 
 # define MAX_PATH 4096
-# define SYNTAX_ERROR -11
+# define SYNTAX_ERROR 258
 # define ARENA_SIZE 1000
 extern int g_return_value;
 
