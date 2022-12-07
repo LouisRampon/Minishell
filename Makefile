@@ -6,7 +6,7 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 11:47:12 by lorampon          #+#    #+#              #
-#    Updated: 2022/12/06 15:53:00 by lorampon         ###   ########.fr        #
+#    Updated: 2022/12/07 12:53:15 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS_PARSING_WITHOUT_PATH =	main.c						\
 						ft_split_cmd.c					\
 						heredoc.c						\
 						parsing_utils.c					\
-						manage_fd_utils.c
+						manage_fd_utils.c				\
+						check_syntax_help.c
 
 SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
 						ft_del_env.c					\
@@ -96,7 +97,7 @@ HEADER =	$(addprefix $(PATH_TO_HEADER), $(HEADER_WITHOUT_PATH))
 
 	######### COMMANDS ###########
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror #-fsanitize=address -g3
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=address -g3
 RM = rm -rf
 READLINE_LIB = -lreadline
 READLINE_HOMEBREW_LIB = -L ~/.brew/opt/readline/lib

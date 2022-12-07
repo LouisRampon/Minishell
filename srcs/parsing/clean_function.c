@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:29:21 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/05 15:38:38 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:49:19 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*ft_clean_str(char *str)
 		quote = is_in_quote(quote, str[i + j]);
 		j = ft_clean_str_help(str, i + j, quote) + j;
 		str[i] = str[i + j];
-		if (!(str[i] == '>' || str[i] == '<') || !quote._double || !quote._single)
+		if (!(str[i] == '>' || str[i] == '<')
+			|| !quote._double || !quote._single)
 			i++;
 	}
 	str[i] = '\0';
