@@ -127,31 +127,32 @@ all: rcs $(PATH_TO_OBJS) $(NAME)
 $(PATH_TO_OBJS):
 	mkdir -p ./.objs/
 
-$(OBJS_SRCS_MAIN):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_MAIN)%.c Makefile $(HEADER)
+$(OBJS_SRCS_MAIN):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_MAIN)%.c Makefile $(HEADER) $(LIBFT_A)
 	printf "\033[2K\r$(YELLOW) Compiling:$(WHITE) $<"
 	$(CC) $(CFLAGS) $(READLINE_HOMEBREW_INCLUDE) -c $< -o $@
 
-$(OBJS_SRCS_PARSING):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_PARSING)%.c Makefile $(HEADER) 
+$(OBJS_SRCS_PARSING):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_PARSING)%.c Makefile $(HEADER) $(LIBFT_A)
 	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJS_SRCS_ENV):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_ENV)%.c Makefile $(HEADER) 
+$(OBJS_SRCS_ENV):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_ENV)%.c Makefile $(HEADER) $(LIBFT_A)
 	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
 	$(CC) $(CFLAGS) -c $< -o $@
 	
 
-$(OBJS_SRCS_EXEC):$(PATH_TO_OBJS)%.o : $(PATH_TO_SRCS_EXEC)%.c Makefile $(HEADER) 
+$(OBJS_SRCS_EXEC):$(PATH_TO_OBJS)%.o : $(PATH_TO_SRCS_EXEC)%.c Makefile $(HEADER) $(LIBFT_A)
+	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-$(OBJS_SRCS_UTILS):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_UTILS)%.c Makefile $(HEADER)
+$(OBJS_SRCS_UTILS):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_UTILS)%.c Makefile $(HEADER) $(LIBFT_A)
 	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJS_SRCS_BUILT_IN):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_BUILT_IN)%.c Makefile $(HEADER)
+$(OBJS_SRCS_BUILT_IN):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_BUILT_IN)%.c Makefile $(HEADER) $(LIBFT_A)
 	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-$(NAME): $(OBJS) $(LIBFT_A)
+$(NAME): $(OBJS)
 	printf "\n"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(READLINE_LIB) $(READLINE_HOMEBREW_LIB) -framework CoreFoundation -o $(NAME)
 
