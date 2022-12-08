@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/07 16:23:10 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:36:07 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,10 @@ t_command	*ft_fill_list(char **arg, t_shell *shell, size_t nb_cmd)
 	i = 0;
 	previous = NULL;
 	new = NULL;
+	head = NULL;
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], shell);
-		if (!new)
-			return (head);
 		if (previous)
 			previous->next = new;
 		else

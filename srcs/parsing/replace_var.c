@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/07 16:14:30 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:01:43 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*replace_var_help(char *var_name, t_env *env)
 	t_env	*temp;
 
 	temp = env;
+	if (!var_name[0])
+		return ("\0");
 	while (temp->next)
 	{
 		if (!ft_strncmp(temp->name, var_name, ft_strlen(var_name) + 1))
