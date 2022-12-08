@@ -65,8 +65,7 @@ void	ft_manage_pwd(t_shell *sh)
 	ptr2 = ft_env_get_struct("PWD", sh->env);
 	if (ptr2)
 	{
-		if (ptr2->value)
-			free(ptr2->value);
+		free(ptr2->value);
 		ptr2->value = getcwd(0, 4096);
 	}
 	else
