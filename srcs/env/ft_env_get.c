@@ -25,7 +25,7 @@ char	*ft_make_env_value(char *str)
 char	*ft_make_env_name(char *str)
 {
 	char	*name;
-	int 	index;
+	int		index;
 
 	name = NULL;
 	index = ft_check_char_index(str, '=');

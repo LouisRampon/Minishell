@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 15:54:03 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 17:53:43 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:14:52 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,19 @@ bool	ft_check_file(char *file_name, int is_out)
 {
 	if (!is_out && access(file_name, F_OK))
 	{
-		perror("minishell:");
-		g_return_value = EXIT_FAILURE;
+		ft_perror(NULL, file_name, "No such file or directory", EXIT_FAILURE);
 		return (1);
 	}
 	else if (!is_out && access(file_name, R_OK))
 	{
-		perror("minishell:");
-		g_return_value = EXIT_FAILURE;
+		ft_perror(NULL, file_name, "No such file or directory", EXIT_FAILURE);
 		return (1);
 	}
 	else if (is_out && access(file_name, F_OK))
 		return (0);
 	else if (is_out && access(file_name, W_OK))
 	{
-		perror("minishell:");
-		g_return_value = EXIT_FAILURE;
+		ft_perror(NULL, file_name, "No such file or directory", EXIT_FAILURE);
 		return (1);
 	}
 	return (0);

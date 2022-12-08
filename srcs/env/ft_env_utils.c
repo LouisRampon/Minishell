@@ -92,10 +92,10 @@ int	ft_parse_export_arg(char *str, t_arena *arena, int code)
 		{
 			temp = ft_substr_arena(str, 0, index + 1, arena);
 			if (temp && code == 1)
-				return (ft_check_valid_indentifier(temp,  code));
+				return (ft_check_valid_indentifier(temp, code));
 		}
 		else
-			return (ft_check_valid_indentifier(str,  code));
+			return (ft_check_valid_indentifier(str, code));
 	}
 	return (0);
 }

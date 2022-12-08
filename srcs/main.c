@@ -6,22 +6,22 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 12:28:44 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 17:47:19 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:47:53 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int g_return_value = 0;
+int	g_return_value = 0;
 
-void ft_reset_sh(t_shell *sh)
+void	ft_reset_sh(t_shell *sh)
 {
 	sh->is_piped = 0;
 	sh->saved_previous_fd = 0;
 	ft_free_arena(sh->arena);
 }
 
-int ft_init_sh(t_shell *sh, char **envp)
+int	ft_init_sh(t_shell *sh, char **envp)
 {
 	sh->is_piped = 0;
 	sh->saved_previous_fd = 0;
@@ -37,15 +37,8 @@ int ft_init_sh(t_shell *sh, char **envp)
 	return (1);
 }
 
-int	main(int ac, char **argv, char **env)
+void	ft_prompt(t_shell sh, char *buff)
 {
-	char		*buff;
-	t_shell		sh;
-
-	(void)ac;
-	(void)argv;
-	ft_init_sh(&sh, env);
-	tcgetattr(0, &sh.old);
 	while (1)
 	{
 		ft_init_arena(&sh, ARENA_SIZE);
@@ -61,10 +54,23 @@ int	main(int ac, char **argv, char **env)
 		if (ft_strlen(buff) > 0)
 		{
 			add_history(buff);
-			sh = ft_parsing(buff,  &sh);
+			sh = ft_parsing(buff, &sh);
 			ft_exec_loop(&sh);
 		}
 		ft_reset_sh(&sh);
 		free(buff);
 	}
+}
+
+int	main(int ac, char **argv, char **env)
+{
+	char		*buff;
+	t_shell		sh;
+
+	(void)ac;
+	(void)argv;
+	buff = NULL;
+	ft_init_sh(&sh, env);
+	tcgetattr(0, &sh.old);
+	ft_prompt(sh, buff);
 }

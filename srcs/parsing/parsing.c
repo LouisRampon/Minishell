@@ -6,25 +6,24 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:46:47 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 17:53:21 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:23:10 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../includes/minishell.h"
 
-char **ft_str_to_arg(char *str, t_shell *shell)
+char	**ft_str_to_arg(char *str, t_shell *shell)
 {
-	char **temp;
-	
+	char	**temp;
+
 	temp = ft_split_cmd(str, ' ', shell->arena);
-	return(temp);
+	return (temp);
 }
 
-
-t_command *ft_fill_cmd(char *str, t_shell *shell)
+t_command	*ft_fill_cmd(char *str, t_shell *shell)
 {
-	t_command *cmd;
-	
+	t_command	*cmd;
+
 	if (!str)
 		return (NULL);
 	cmd = ft_alloc(sizeof(t_command), shell->arena);
@@ -45,35 +44,40 @@ t_command *ft_fill_cmd(char *str, t_shell *shell)
 	return (cmd);
 }
 
-t_shell	ft_parsing(char *str, t_shell *shell)
+t_command	*ft_fill_list(char **arg, t_shell *shell, size_t nb_cmd)
 {
-	t_command *previous;
-	t_command *new;
-	char	**arg;
-	size_t nb_cmd;
-	size_t	i;
+	size_t		i;
+	t_command	*head;
+	t_command	*previous;
+	t_command	*new;
 
 	i = 0;
 	previous = NULL;
 	new = NULL;
-	if (check_syntax(str))
-	{
-		//printf("ici\n");
-		return (*shell);
-	}
-	nb_cmd = nb_pipe(str) + 1;
-	arg = ft_split_quote(str, '|', shell->arena);
 	while (i < nb_cmd)
 	{
 		new = ft_fill_cmd(arg[i], shell);
 		if (!new)
-			return (*shell);
+			return (head);
 		if (previous)
 			previous->next = new;
 		else
-			shell->cmd = new;
+			head = new;
 		previous = new;
 		i++;
 	}
+	return (head);
+}
+
+t_shell	ft_parsing(char *str, t_shell *shell)
+{
+	char		**arg;
+	size_t		nb_cmd;
+
+	if (check_syntax(str))
+		return (*shell);
+	nb_cmd = nb_pipe(str) + 1;
+	arg = ft_split_quote(str, '|', shell->arena);
+	shell->cmd = ft_fill_list(arg, shell, nb_cmd);
 	return (*shell);
 }

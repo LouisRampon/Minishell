@@ -6,26 +6,29 @@
 #    By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 11:47:12 by lorampon          #+#    #+#              #
-#    Updated: 2022/12/06 15:53:00 by lorampon         ###   ########.fr        #
+#    Updated: 2022/12/07 12:53:15 by lorampon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_PARSING_WITHOUT_PATH =	main.c						\
-						parsing.c 						\
-						check_synthax.c 				\
-						replace_var.c 					\
-						parsing_help.c					\
-						clean_function.c				\
-						manage_fd.c						\
-						ft_split_pipe.c					\
-						ft_split_cmd.c					\
-						heredoc.c						\
-						parsing_utils.c					\
-						manage_fd_utils.c
+SRCS_MAIN_WITHOUT_PATH = main.c	\
+
+SRCS_PARSING_WITHOUT_PATH = parsing.c 						\
+							check_synthax.c 				\
+							replace_var.c 					\
+							parsing_help.c					\
+							clean_function.c				\
+							manage_fd.c						\
+							ft_split_pipe.c					\
+							ft_split_cmd.c					\
+							heredoc.c						\
+							parsing_utils.c					\
+							manage_fd_utils.c				\
+							check_syntax_help.c
 
 SRCS_ENV_WITHOUT_PATH = ft_add_env.c 					\
+						ft_add_env_utils.c				\
 						ft_del_env.c					\
 						ft_env_get.c					\
 						ft_env_list_to_tab.c 			\
@@ -57,6 +60,7 @@ SRCS_UTILS_WITHOUT_PATH =	ft_perror.c					\
 							ft_itoa_arena.c				\
 							ft_signal.c					
 
+OBJS_SRCS_MAIN_WITHOUT_PATH = $(SRCS_MAIN_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_PARSING_WITHOUT_PATH = $(SRCS_PARSING_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_ENV_WITHOUT_PATH = $(SRCS_ENV_WITHOUT_PATH:.c=.o)
 OBJS_SRCS_EXEC_WITHOUT_PATH = $(SRCS_EXEC_WITHOUT_PATH:.c=.o)
@@ -65,6 +69,7 @@ OBJS_SRCS_BUILT_IN_WITHOUT_PATH = $(SRCS_BUILT_IN_WITHOUT_PATH:.c=.o)
 
 HEADER_WITHOUT_PATH = minishell.h
 
+PATH_TO_SRCS_MAIN = ./srcs/
 PATH_TO_SRCS_PARSING = ./srcs/parsing/
 PATH_TO_SRCS_ENV = ./srcs/env/
 PATH_TO_SRCS_EXEC = ./srcs/exec/
@@ -74,12 +79,14 @@ PATH_TO_HEADER = ./includes/
 PATH_TO_LIB_DIR = ./libft/
 PATH_TO_SRCS_BUILT_IN = ./srcs/built_in/
 
+SRCS_MAIN = $(addprefix $(PATH_TO_SRCS_MAIN), $(SRCS_MAIN_WITHOUT_PATH))
 SRCS_PARSING = $(addprefix $(PATH_TO_SRCS_PARSING), $(SRCS_PARSING_WITHOUT_PATH))
 SRCS_ENV= $(addprefix $(PATH_TO_SRCS_ENV), $(SRCS_ENV_WITHOUT_PATH))
 SRCS_EXEC = $(addprefix $(PATH_TO_SRCS_EXEC), $(SRCS_EXEC_WITHOUT_PATH))
 SRCS_UTILS = $(addprefix $(PATH_TO_SRCS_UTILS), $(SRCS_UTILS_WITHOUT_PATH))
 SRCS_BUILT_IN = $(addprefix $(PATH_TO_SRCS_BUILT_IN), $(SRCS_BUILT_IN_WITHOUT_PATH))
 
+OBJS_SRCS_MAIN = $(addprefix $(PATH_TO_OBJS), $(OBJS_SRCS_MAIN_WITHOUT_PATH))
 OBJS_SRCS_PARSING = $(addprefix $(PATH_TO_OBJS), $(OBJS_SRCS_PARSING_WITHOUT_PATH))
 OBJS_SRCS_ENV = $(addprefix $(PATH_TO_OBJS), $(OBJS_SRCS_ENV_WITHOUT_PATH))
 OBJS_SRCS_EXEC = $(addprefix $(PATH_TO_OBJS), $(OBJS_SRCS_EXEC_WITHOUT_PATH))
@@ -87,7 +94,8 @@ OBJS_SRCS_UTILS = $(addprefix $(PATH_TO_OBJS), $(OBJS_SRCS_UTILS_WITHOUT_PATH))
 OBJS_SRCS_BUILT_IN = $(addprefix $(PATH_TO_OBJS), $(OBJS_SRCS_BUILT_IN_WITHOUT_PATH))
 
 
-OBJS =	$(OBJS_SRCS_PARSING)	\
+OBJS =	$(OBJS_SRCS_MAIN)		\
+		$(OBJS_SRCS_PARSING)	\
 		$(OBJS_SRCS_ENV)		\
 		$(OBJS_SRCS_EXEC)		\
 		$(OBJS_SRCS_UTILS) 		\
@@ -119,12 +127,14 @@ all: rcs $(PATH_TO_OBJS) $(NAME)
 $(PATH_TO_OBJS):
 	mkdir -p ./.objs/
 
-# $(LIBFT_A): rsc
-	
-$(OBJS_SRCS_PARSING):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_PARSING)%.c Makefile $(HEADER) 
+$(OBJS_SRCS_MAIN):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_MAIN)%.c Makefile $(HEADER)
 	printf "\033[2K\r$(YELLOW) Compiling:$(WHITE) $<"
 	$(CC) $(CFLAGS) $(READLINE_HOMEBREW_INCLUDE) -c $< -o $@
-	
+
+$(OBJS_SRCS_PARSING):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_PARSING)%.c Makefile $(HEADER) 
+	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
+	$(CC) $(CFLAGS) -c $< -o $@
+
 $(OBJS_SRCS_ENV):$(PATH_TO_OBJS)%.o	: $(PATH_TO_SRCS_ENV)%.c Makefile $(HEADER) 
 	printf "\033[2K\r$(YELLOW)Compiling:$(WHITE) $< "
 	$(CC) $(CFLAGS) -c $< -o $@

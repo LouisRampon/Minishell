@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:52:50 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 17:13:35 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:48:13 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,6 @@ int	ft_heredoc(char *delimiter, t_shell *shell)
 	int	pid;
 
 	(void)shell;
-	if (!delimiter || ft_strlen(delimiter) == 0)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-		return (-1);
-	}
 	signal(SIGINT, SIG_IGN);
 	if (pipe(fd_pipe) == -1)
 	{
@@ -82,6 +77,5 @@ int	ft_heredoc(char *delimiter, t_shell *shell)
 		ft_child_heredoc(delimiter, fd_pipe);
 	else
 		return (ft_parent_heredoc(fd_pipe, pid));
-	
 	return (0);
 }

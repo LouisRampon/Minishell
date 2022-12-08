@@ -79,8 +79,8 @@ int			ft_putnbr_hexa_up(unsigned int nb);
 int			ft_ptrhexa(void *ptr);
 int			ft_putnbr(int nbr);
 int			ft_putnbr_unsigned(unsigned int nb);
-int   		ft_strcmp(char *s1, char *s2);
-char  		*ft_strcpy(char *dest, char *src);
+int			ft_strcmp(char *s1, char *s2);
+char		*ft_strcpy(char *dest, char *src);
 char		**ft_split(const char *str, char c);
 
 #endif

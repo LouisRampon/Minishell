@@ -6,7 +6,7 @@
 /*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:42:32 by lorampon          #+#    #+#             */
-/*   Updated: 2022/12/06 13:27:12 by lorampon         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:14:30 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ char	*find_var_name(char *str, int i, t_arena *arena)
 	size_t	size;
 	size_t	j;
 	char	*var_name;
+	t_quote	quote;
 
-	j = 0;
-	size = ft_strlen_alnum(&str[i]);
-	if (!size)
-		return (NULL);
+	quote._single = 0;
+	quote._double = 0;
+	j = 1;
+	size = ft_strlen_alnum(&str[i]) + 1;
 	var_name = ft_alloc(sizeof(char) * (size + 1), arena);
-	if (!var_name)
-		return (str);
+	var_name[0] = '$';
 	while (str[i] && j < size)
 	{
 		var_name[j] = str[i];
@@ -37,10 +37,8 @@ char	*find_var_name(char *str, int i, t_arena *arena)
 
 char	*replace_var_help(char *var_name, t_env *env)
 {
-	int		i;
 	t_env	*temp;
 
-	i = 0;
 	temp = env;
 	while (temp->next)
 	{
@@ -53,29 +51,17 @@ char	*replace_var_help(char *var_name, t_env *env)
 	return ("\0");
 }
 
-char	*ft_fill_final(char *str, char *var, int size, t_arena *arena)
+char	*ft_fill_final(char *str, char *var_name, char *var_val, t_arena *arena)
 {
-	int		j;
-	int		i;
-	int		k;
 	char	*final;
 
-	j = 0;
-	final = ft_alloc(sizeof(final) * (size + 1), arena);
-	while (str[j] != '$')
-	{
-		final[j] = str[j];
-		j++;
-	}
-	k = 0;
-	i = j + 1;
-	while (var[k])
-		final[j++] = var[k++];
-	while (ft_isalnum(str[i]))
-		i++;
-	while (str[i] && j < size)
-		final[j++] = str[i++];
-	final[j] = '\0';
+	final = ft_strnstr(str, var_name, ft_strlen(str));
+	str = ft_substr_arena(str, 0, (ft_strlen(str) - ft_strlen(final)), arena);
+	final = ft_substr_arena(final, ft_strlen(var_name),
+			ft_strlen(final) - ft_strlen(var_name), arena);
+	final = ft_strjoin_arena(var_val, final, arena);
+	final = ft_strjoin_arena(str, final, arena);
+	final[ft_strlen(final)] = '\0';
 	return (final);
 }
 
@@ -83,25 +69,14 @@ char	*replace_var_final(char *str, t_shell *shell, int i)
 {
 	char	*var_name;
 	char	*var_value;
-	char	*final;
-	int		size;
 
-	size = 0;
 	var_name = find_var_name(str, i + 1, shell->arena);
-	if (!var_name)
-		return (str);
-	var_value = replace_var_help(var_name, shell->env);
+	var_value = replace_var_help(var_name + 1, shell->env);
 	if (var_value)
-	{
-		size = ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) + 1;
-		final = ft_fill_final(str, var_value, size, shell->arena);
-	}
+		str = ft_fill_final(str, var_name, var_value, shell->arena);
 	else
-	{
-		size = ft_strlen(str) - ft_strlen(var_name) + 1;
-		final = ft_fill_final(str, NULL, size, shell->arena);
-	}
-	return (final);
+		str = ft_fill_final(str, var_name, NULL, shell->arena);
+	return (str);
 }
 
 char	*replace_var(char *str, t_shell *shell)
@@ -120,11 +95,14 @@ char	*replace_var(char *str, t_shell *shell)
 			if (!str[i + 1])
 				return (str);
 			if (str[i + 1] == '?')
-				str = ft_fill_final(str, ft_itoa_arena(g_return_value, shell->arena),
-						ft_strlen(ft_itoa_arena(g_return_value, shell->arena)), shell->arena);
+				str = ft_fill_final(str, "$?", \
+				ft_itoa_arena(g_return_value, shell->arena), shell->arena);
 			else
 				str = replace_var_final(str, shell, i);
+			i = 0;
 		}
+		if (!ft_strlen(str))
+			return (NULL);
 		i++;
 	}
 	return (str);

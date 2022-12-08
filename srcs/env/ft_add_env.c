@@ -12,40 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_last_list_elem(t_env **ptr)
-{
-	while (*ptr && (*ptr)->next)
-	{
-		*ptr = (*ptr)->next;
-	}
-
-}
-
-void	ft_modify_env_value(t_env *ptr, char *new_value)
-{
-	if (!new_value)
-		return ;
-	free(ptr->value);
-	ptr->value = new_value;
-}
-
-void	push_back_env(t_env *ptr, char *str)
-{
-	t_env	*cursor;
-	t_env	*new;
-
-	cursor = ptr;
-	new = NULL;
-	ft_last_list_elem(&cursor);
-	new = ft_new_env(str);
-	if (!new)
-	{
-		ft_putstr_fd("Failed to add a node to env list\n", 2);
-		return ;
-	}
-	cursor->next = new;
-}
-
 void	ft_concat_value(t_env *ptr, char *new_value)
 {
 	char	*temp;
@@ -56,16 +22,15 @@ void	ft_concat_value(t_env *ptr, char *new_value)
 	free(temp);
 }
 
-char 	*ft_remove_plus(char *str, char *name, char *value, t_arena *arena)
+char	*ft_remove_plus(char *str, char *name, char *value, t_arena *arena)
 {
-	char 	*temp;
+	char	*temp;
 
 	temp = ft_strjoin(name, "=");
 	str = ft_strjoin_arena(temp, value, arena);
 	free(temp);
 	return (str);
 }
-
 
 void	ft_add_back(t_shell *sh, char *str, char *value)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jereverd <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lorampon <lorampon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:16:22 by jereverd          #+#    #+#             */
-/*   Updated: 2022/11/25 18:16:23 by jereverd         ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 11:09:23 by lorampon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,22 +94,25 @@ int	ft_pipe(t_shell *sh)
 
 int	ft_exec_loop(t_shell *sh)
 {
-	while (sh->cmd)
+	if (sh->cmd)
 	{
-		ft_pipe(sh);
-		if (sh->is_piped == 0 && is_built_in(sh->cmd) == 1)
+		while (sh->cmd)
 		{
-			ft_set_fd(sh);
-			ft_exec_built_in(sh);
-			ft_fd_reset(sh);
-		}
-		else
-			ft_fork(sh);
-		if (sh->cmd->fd_in != 0)
-			close(sh->cmd->fd_in);
-		if (sh->cmd->fd_out != 1)
-			close(sh->cmd->fd_out);
-		sh->cmd = sh->cmd->next;
+			ft_pipe(sh);
+			if (sh->is_piped == 0 && is_built_in(sh->cmd) == 1)
+			{
+				ft_set_fd(sh);
+				ft_exec_built_in(sh);
+				ft_fd_reset(sh);
+			}
+			else
+				ft_fork(sh);
+			if (sh->cmd->fd_in != 0)
+				close(sh->cmd->fd_in);
+			if (sh->cmd->fd_out != 1)
+				close(sh->cmd->fd_out);
+			sh->cmd = sh->cmd->next;
+		}	
 	}
 	return (0);
 }
