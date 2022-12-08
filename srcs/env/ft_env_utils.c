@@ -69,7 +69,7 @@ int	ft_check_valid_indentifier(char *str, int flag)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '=' || (str[i] == '+' && !str[i + 1]))
+		if (str[i] == '=' || (str[i] == '+' && str[i + 1] == '='))
 			return (1);
 		if (!(ft_isalnum(str[i]) == 1 || str[i] == '_'))
 			return (0);
@@ -90,12 +90,12 @@ int	ft_parse_export_arg(char *str, t_arena *arena, int code)
 		index = ft_check_char_index(str, '=');
 		if (index != -1)
 		{
-			temp = ft_substr_arena(str, 0, index, arena);
+			temp = ft_substr_arena(str, 0, index + 1, arena);
 			if (temp && code == 1)
-				return (ft_check_valid_indentifier(temp, code));
+				return (ft_check_valid_indentifier(temp,  code));
 		}
 		else
-			return (ft_check_valid_indentifier(str, code));
+			return (ft_check_valid_indentifier(str,  code));
 	}
 	return (0);
 }

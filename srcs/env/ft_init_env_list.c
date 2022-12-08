@@ -15,21 +15,13 @@
 t_env	*ft_new_env(char *str)
 {
 	t_env	*env;
-	char	**temp;
 
 	env = malloc(sizeof(t_env));
 	if (env == NULL)
 		return (NULL);
 	env->next = NULL;
-	temp = ft_split(str, '=');
-	if (!temp)
-		return (NULL);
-	env->name = temp[0];
-	if (ft_check_char(str, '=') && !temp[1])
-		env->value = ft_calloc(1, 1);
-	else
-		env->value = temp[1];
-	free(temp);
+	env->name = ft_make_env_name(str);
+	env->value = ft_make_env_value(str);
 	return (env);
 }
 

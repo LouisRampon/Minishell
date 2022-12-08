@@ -65,7 +65,10 @@ static int	ft_arena_realloc(t_arena *arena, size_t size)
 		return (1);
 	}
 	else
-		return (0);//todo error
+	{
+		perror("minishell: malloc");
+		exit (EXIT_FAILURE);
+	}
 }
 
 void	*ft_arena_alloc(t_arena *arena, size_t size)

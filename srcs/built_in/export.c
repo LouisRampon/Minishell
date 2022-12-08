@@ -20,6 +20,7 @@ void	ft_create_first_elem(t_shell *sh, char *envp)
 	if (!envp)
 		return ;
 	new = ft_new_env(envp);
+	ft_add_env(envp, sh);
 	if (!new)
 	{
 		ft_free_env_list(sh->env, ft_env_lst_size(sh->env));

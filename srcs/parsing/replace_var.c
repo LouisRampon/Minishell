@@ -120,8 +120,8 @@ char	*replace_var(char *str, t_shell *shell)
 			if (!str[i + 1])
 				return (str);
 			if (str[i + 1] == '?')
-				str = ft_fill_final(str, ft_itoa(g_return_value),
-						ft_strlen(ft_itoa(g_return_value)), shell->arena);
+				str = ft_fill_final(str, ft_itoa_arena(g_return_value, shell->arena),
+						ft_strlen(ft_itoa_arena(g_return_value, shell->arena)), shell->arena);
 			else
 				str = replace_var_final(str, shell, i);
 		}

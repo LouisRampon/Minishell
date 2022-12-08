@@ -63,6 +63,15 @@ typedef struct s_env
 	struct s_env	*next;
 }t_env;
 
+typedef struct s_utils
+{
+	int 	index;
+	t_env	*ptr;
+	char	*name;
+	char	*value;
+	char 	*temp_name;
+}t_utils;
+
 typedef struct s_shell
 {
 	bool			is_piped;
@@ -76,21 +85,12 @@ typedef struct s_shell
 	t_command		*cmd;
 	t_arena			*arena;
 	t_env			*env;
+	t_utils			u;
 	struct termios	old;
 	struct termios	new;
 }t_shell;
 
 //############## EXEC #######################
-
-// arena storage pool
-void	ft_init_arena(t_shell *shell, size_t size);
-void	ft_free_arena(t_arena *arena);
-void 	*ft_arena_alloc(t_arena *arena, size_t size);
-void	*ft_alloc(size_t size, t_arena *arena);
-char	*ft_strjoin_arena(char const *s1, char const *s2, t_arena *arena);
-char	**ft_split_arena(const char *str, char c, t_arena *arena);
-char	*ft_strdup_arena(const char *src, t_arena *arena);
-char	*ft_substr_arena(char const *s, unsigned int start, size_t len, t_arena *arena);
 
 //built_in
 void	ft_echo(char **av);
@@ -122,7 +122,7 @@ char	*ft_make_env_name(char *str);
 char	*ft_make_env_value(char *str);
 void	ft_add_env(char *str, t_shell *sh);
 void	push_back_env(t_env *ptr, char *str);
-void	ft_modify_env_value(t_env *ptr, char *str, int is_equal);
+void	ft_modify_env_value(t_env *ptr, char *str);
 void	ft_last_list_elem(t_env **ptr);
 void	ft_inset_first_elem(t_shell *sh, char **cmd, t_arena *arena);
 //env_search
@@ -154,6 +154,17 @@ void	ft_unset_term(t_shell *shell);
 void	ft_signal_reset(int nothing);
 int		ft_signal_handle(int pid);
 void	ft_sig_ignit(int signal);
+
+// arena storage pool
+void	ft_init_arena(t_shell *shell, size_t size);
+void	ft_free_arena(t_arena *arena);
+void 	*ft_arena_alloc(t_arena *arena, size_t size);
+void	*ft_alloc(size_t size, t_arena *arena);
+char	*ft_strjoin_arena(char const *s1, char const *s2, t_arena *arena);
+char	**ft_split_arena(const char *str, char c, t_arena *arena);
+char	*ft_strdup_arena(const char *src, t_arena *arena);
+char	*ft_substr_arena(char const *s, unsigned int start, size_t len, t_arena *arena);
+char	*ft_itoa_arena(int n, t_arena *arena);
 
 //############## PARSING #######################
 

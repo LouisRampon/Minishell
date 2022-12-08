@@ -25,20 +25,12 @@ char	*ft_make_env_value(char *str)
 char	*ft_make_env_name(char *str)
 {
 	char	*name;
-	char	**temp;
+	int 	index;
 
 	name = NULL;
-	temp = ft_split(str, '=');
-	if (temp)
-	{
-		if (temp[1] != 0)
-			free(temp[2]);
-		free(temp[1]);
-		name = temp[0];
-		free(temp);
-	}
-	else
-		ft_putstr_fd("Malloc error", 2);
+	index = ft_check_char_index(str, '=');
+	if (index)
+		name = ft_substr(str, 0, index);
 	return (name);
 }
 
