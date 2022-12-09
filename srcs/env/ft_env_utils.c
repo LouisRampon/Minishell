@@ -65,6 +65,8 @@ int	ft_check_valid_indentifier(char *str, int flag)
 	i = 0;
 	if (ft_only_char(str, '=') == 1 || ft_isdigit(str[i]) == 1)
 		return (0);
+	if (*str == '+')
+		return (0);
 	if (ft_check_char(str, '=') == 1 && flag == 2)
 		return (0);
 	while (str[i])
